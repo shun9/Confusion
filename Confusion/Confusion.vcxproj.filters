@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>93aee24f-29ca-420f-ac3f-cb67588de494</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dds;dlg;fbx;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{836fbdca-dd69-45ba-bae6-b890c0d809fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wrapper">
+      <UniqueIdentifier>{32f764a4-66b2-487a-8cf9-6713ac062e20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wrapper\Matrix">
+      <UniqueIdentifier>{781daaf0-1e3d-496d-bed4-c77fedc8d562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wrapper\Vec2">
+      <UniqueIdentifier>{ac47542d-292d-4420-851b-2247842c15bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wrapper\Model">
+      <UniqueIdentifier>{ec6e0a10-02ba-4401-9985-92b28279f5af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wrapper\Vec3">
+      <UniqueIdentifier>{5c38d9d2-8d70-4b59-b51a-1e563381d6f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DefaultFile">
+      <UniqueIdentifier>{078ea942-b241-4246-b336-713a506fe275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Wrapper\Texture">
+      <UniqueIdentifier>{5ec8e05f-e7a4-44cc-95eb-49c8406b4928}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Classes\GameMain.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Wrapper\Matrix\Matrix.h">
+      <Filter>Wrapper\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Wrapper\Vec2\Vec2.h">
+      <Filter>Wrapper\Vec2</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Wrapper\Model\Model.h">
+      <Filter>Wrapper\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Wrapper\Vec3\Vec3.h">
+      <Filter>Wrapper\Vec3</Filter>
+    </ClInclude>
+    <ClInclude Include="StepTimer.h">
+      <Filter>DefaultFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>DefaultFile</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>DefaultFile</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Wrapper\Texture\Texture.h">
+      <Filter>Wrapper\Texture</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Classes\GameMain.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Wrapper\Matrix\Matrix.cpp">
+      <Filter>Wrapper\Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Wrapper\Vec2\Vec2.cpp">
+      <Filter>Wrapper\Vec2</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Wrapper\Model\Model.cpp">
+      <Filter>Wrapper\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Wrapper\Vec3\Vec3.cpp">
+      <Filter>Wrapper\Vec3</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>DefaultFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>DefaultFile</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>DefaultFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Wrapper\Texture\Texture.cpp">
+      <Filter>Wrapper\Texture</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="directx.ico">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="settings.manifest">
+      <Filter>Assets</Filter>
+    </Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>DefaultFile</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
