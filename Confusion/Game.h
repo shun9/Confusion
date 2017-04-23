@@ -10,7 +10,11 @@
 #include <wrl.h>
 #include <WICTextureLoader.h>
 
+#include <PrimitiveBatch.h>
+#include <VertexTypes.h>
+
 #include "Classes\GameMain.h"
+#include "Classes\Wrapper\GamePad\GamePadManager.h"
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -19,6 +23,10 @@ class Game
 private:
 	std::shared_ptr <DirectX::CommonStates> m_state;
 
+	//ゲームコントローラー
+	GamePadManager* m_gamePad;
+
+	//ゲーム本体
 	GameMain* m_gameMain;
 
 public:

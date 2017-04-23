@@ -36,7 +36,8 @@ namespace ShunLib
 		static void SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 							  Microsoft::WRL::ComPtr<ID3D11DeviceContext> context,
 							  std::shared_ptr<DirectX::CommonStates> state);
-
+		//モデル全体の終了処理
+		static void Release();
 
 		/*--メンバ変数--*/
 	private:

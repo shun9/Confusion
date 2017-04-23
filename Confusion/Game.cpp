@@ -8,9 +8,12 @@
 #include "Classes\Wrapper\Texture\Texture.h"
 #include <WICTextureLoader.h>
 
+#include <SimpleMath.h>
+
 extern void ExitGame();
 
 using namespace DirectX;
+using namespace DirectX::SimpleMath;
 
 using Microsoft::WRL::ComPtr;
 
@@ -46,9 +49,14 @@ void Game::Initialize(HWND window, int width, int height)
 	ShunLib::Model::SetDevice(m_d3dDevice,m_d3dContext,m_state);
 	ShunLib::Texture::SetDevice(m_d3dDevice, m_d3dContext, m_state);
 
+	//ゲームコントローラー取得
+	m_gamePad = GamePadManager::GetInstance();
+
 	//ゲーム生成
 	m_gameMain = new GameMain;
 	m_gameMain->Initialize(m_outputWidth, m_outputHeight);
+
+
 }
 
 // Executes the basic game loop.
@@ -69,10 +77,17 @@ void Game::Update(DX::StepTimer const& timer)
 
     // TODO: Add your game logic here.
     elapsedTime;
+	
+	//ゲームコントローラーの状態を更新
+	m_gamePad->Update();
 
 	//ゲーム更新
 	m_gameMain->Update();
 }
+
+
+
+
 
 // Draws the scene.
 void Game::Render()
@@ -86,6 +101,8 @@ void Game::Render()
     Clear();
 
     // TODO: Add your rendering code here.
+
+
 
 	//ゲーム描画
 	m_gameMain->Render();
@@ -130,16 +147,19 @@ void Game::Present()
 void Game::OnActivated()
 {
     // TODO: Game is becoming active window.
+	m_gamePad->Resume();
 }
 
 void Game::OnDeactivated()
 {
     // TODO: Game is becoming background window.
+	m_gamePad->Suspend();
 }
 
 void Game::OnSuspending()
 {
     // TODO: Game is being power-suspended (or minimized).
+	m_gamePad->Suspend();
 }
 
 void Game::OnResuming()
@@ -147,6 +167,8 @@ void Game::OnResuming()
     m_timer.ResetElapsedTime();
 
     // TODO: Game is being power-resumed (or returning from minimize).
+	m_gamePad->Resume();
+
 }
 
 void Game::OnWindowSizeChanged(int width, int height)
@@ -388,4 +410,8 @@ void Game::OnDeviceLost()
     CreateResources();
 
 	m_gameMain->Finalize();
+
+	ShunLib::Model::Release();
+
+	m_state.reset();
 }

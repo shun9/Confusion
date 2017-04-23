@@ -8,26 +8,44 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{836fbdca-dd69-45ba-bae6-b890c0d809fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Wrapper">
-      <UniqueIdentifier>{32f764a4-66b2-487a-8cf9-6713ac062e20}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Wrapper\Matrix">
-      <UniqueIdentifier>{781daaf0-1e3d-496d-bed4-c77fedc8d562}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Wrapper\Vec2">
-      <UniqueIdentifier>{ac47542d-292d-4420-851b-2247842c15bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Wrapper\Model">
-      <UniqueIdentifier>{ec6e0a10-02ba-4401-9985-92b28279f5af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Wrapper\Vec3">
-      <UniqueIdentifier>{5c38d9d2-8d70-4b59-b51a-1e563381d6f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DefaultFile">
       <UniqueIdentifier>{078ea942-b241-4246-b336-713a506fe275}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Wrapper\Texture">
+    <Filter Include="Classes\Scene">
+      <UniqueIdentifier>{63bb8c24-6d66-4536-b3fa-a1653b00a579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Player">
+      <UniqueIdentifier>{b5f58025-1d7e-41e6-9990-4d8eca0eb955}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Object">
+      <UniqueIdentifier>{0c6011b2-7564-415f-8316-b6221a2cb54a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib">
+      <UniqueIdentifier>{39306f68-e3e1-4b51-8d99-b45aa157b170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib\Wrapper">
+      <UniqueIdentifier>{32f764a4-66b2-487a-8cf9-6713ac062e20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib\Wrapper\Matrix">
+      <UniqueIdentifier>{781daaf0-1e3d-496d-bed4-c77fedc8d562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib\Wrapper\Vec2">
+      <UniqueIdentifier>{ac47542d-292d-4420-851b-2247842c15bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib\Wrapper\Model">
+      <UniqueIdentifier>{ec6e0a10-02ba-4401-9985-92b28279f5af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib\Wrapper\Vec3">
+      <UniqueIdentifier>{5c38d9d2-8d70-4b59-b51a-1e563381d6f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib\Wrapper\Texture">
       <UniqueIdentifier>{5ec8e05f-e7a4-44cc-95eb-49c8406b4928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib\Wrapper\GamePadManager">
+      <UniqueIdentifier>{e98fd9cc-14d6-45c8-8fba-b5734f1b29da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Gravity">
+      <UniqueIdentifier>{eae69d02-3117-4c26-bb15-796aab513a33}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -35,16 +53,16 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\Wrapper\Matrix\Matrix.h">
-      <Filter>Wrapper\Matrix</Filter>
+      <Filter>ShunLib\Wrapper\Matrix</Filter>
     </ClInclude>
     <ClInclude Include="Classes\Wrapper\Vec2\Vec2.h">
-      <Filter>Wrapper\Vec2</Filter>
+      <Filter>ShunLib\Wrapper\Vec2</Filter>
     </ClInclude>
     <ClInclude Include="Classes\Wrapper\Model\Model.h">
-      <Filter>Wrapper\Model</Filter>
+      <Filter>ShunLib\Wrapper\Model</Filter>
     </ClInclude>
     <ClInclude Include="Classes\Wrapper\Vec3\Vec3.h">
-      <Filter>Wrapper\Vec3</Filter>
+      <Filter>ShunLib\Wrapper\Vec3</Filter>
     </ClInclude>
     <ClInclude Include="StepTimer.h">
       <Filter>DefaultFile</Filter>
@@ -56,7 +74,25 @@
       <Filter>DefaultFile</Filter>
     </ClInclude>
     <ClInclude Include="Classes\Wrapper\Texture\Texture.h">
-      <Filter>Wrapper\Texture</Filter>
+      <Filter>ShunLib\Wrapper\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Scene\Scene.h">
+      <Filter>Classes\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Scene\PlayScene.h">
+      <Filter>Classes\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Player\Player.h">
+      <Filter>Classes\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Object\Object.h">
+      <Filter>Classes\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Wrapper\GamePad\GamePadManager.h">
+      <Filter>ShunLib\Wrapper\GamePadManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Gravity\Gravity.h">
+      <Filter>Classes\Gravity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -64,16 +100,16 @@
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Wrapper\Matrix\Matrix.cpp">
-      <Filter>Wrapper\Matrix</Filter>
+      <Filter>ShunLib\Wrapper\Matrix</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Wrapper\Vec2\Vec2.cpp">
-      <Filter>Wrapper\Vec2</Filter>
+      <Filter>ShunLib\Wrapper\Vec2</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Wrapper\Model\Model.cpp">
-      <Filter>Wrapper\Model</Filter>
+      <Filter>ShunLib\Wrapper\Model</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Wrapper\Vec3\Vec3.cpp">
-      <Filter>Wrapper\Vec3</Filter>
+      <Filter>ShunLib\Wrapper\Vec3</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>DefaultFile</Filter>
@@ -85,7 +121,22 @@
       <Filter>DefaultFile</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Wrapper\Texture\Texture.cpp">
-      <Filter>Wrapper\Texture</Filter>
+      <Filter>ShunLib\Wrapper\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Scene\PlayScene.cpp">
+      <Filter>Classes\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Object\Object.cpp">
+      <Filter>Classes\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Player\Player.cpp">
+      <Filter>Classes\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Wrapper\GamePad\GamePadManager.cpp">
+      <Filter>ShunLib\Wrapper\GamePadManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Gravity\Gravity.cpp">
+      <Filter>Classes\Gravity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

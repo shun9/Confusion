@@ -68,16 +68,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\cri\pc\include;C:\DirectXTK\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\DirectXTK\Bin\Desktop_2015\Win32\Debug\DirectXT.E0B52AE7.tlog;C:\cri\pc\libs\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\EffekseerRuntime122\Compiled\include;C:\cri\pc\include;C:\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\EffekseerRuntime122\Compiled\lib\VS2015\Debug;C:\DirectXTK\Bin\Desktop_2015\Win32\Debug\DirectXT.E0B52AE7.tlog;C:\cri\pc\libs\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\cri\pc\include;C:\DirectXTK\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\cri\pc\libs\x86;C:\DirectXTK\Bin\Desktop_2015\Win32\Release\DirectXT.E0B52AE7.tlog;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\EffekseerRuntime122\Compiled\include;C:\cri\pc\include;C:\DirectXTK\Inc;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\EffekseerRuntime122\Compiled\lib\VS2015\Release;C:\cri\pc\libs\x86;C:\DirectXTK\Bin\Desktop_2015\Win32\Release\DirectXT.E0B52AE7.tlog;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -157,6 +157,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h" />
+    <ClInclude Include="Classes\Gravity\Gravity.h" />
+    <ClInclude Include="Classes\Object\Object.h" />
+    <ClInclude Include="Classes\Player\Player.h" />
+    <ClInclude Include="Classes\Scene\PlayScene.h" />
+    <ClInclude Include="Classes\Scene\Scene.h" />
+    <ClInclude Include="Classes\Wrapper\GamePad\GamePadManager.h" />
     <ClInclude Include="Classes\Wrapper\Matrix\Matrix.h" />
     <ClInclude Include="Classes\Wrapper\Model\Model.h" />
     <ClInclude Include="Classes\Wrapper\Texture\Texture.h" />
@@ -168,6 +174,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\GameMain.cpp" />
+    <ClCompile Include="Classes\Gravity\Gravity.cpp" />
+    <ClCompile Include="Classes\Object\Object.cpp" />
+    <ClCompile Include="Classes\Player\Player.cpp" />
+    <ClCompile Include="Classes\Scene\PlayScene.cpp" />
+    <ClCompile Include="Classes\Wrapper\GamePad\GamePadManager.cpp" />
     <ClCompile Include="Classes\Wrapper\Matrix\Matrix.cpp" />
     <ClCompile Include="Classes\Wrapper\Model\Model.cpp" />
     <ClCompile Include="Classes\Wrapper\Texture\Texture.cpp" />
@@ -190,6 +201,11 @@
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="settings.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\DirectXTK\DirectXTK_Desktop_2015.vcxproj">
+      <Project>{e0b52ae7-e160-4d32-bf3f-910b785e5a8e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

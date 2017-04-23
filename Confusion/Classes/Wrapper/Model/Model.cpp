@@ -30,6 +30,17 @@ void ShunLib::Model::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 	m_effect  = std::make_unique<DirectX::EffectFactory>(m_device.Get());
 }
 
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :終了処理
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void ShunLib::Model::Release()
+{
+	m_effect->ReleaseCache();
+}
+
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :ファイル指定コンストラクタ	
 //｜引数  :cmoファイルの名前(wchar_t[])
@@ -45,6 +56,7 @@ Model::Model(const wchar_t cmo[])
 //＋ーーーーーーーーーーーーーー＋
 Model::~Model()
 {
+	m_model.reset();
 }
 
 

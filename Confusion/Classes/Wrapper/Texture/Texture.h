@@ -9,6 +9,11 @@
 #include <wrl.h>
 #include <WICTextureLoader.h>
 #include <CommonStates.h>
+#include <PrimitiveBatch.h>
+#include <VertexTypes.h>
+#include <Effects.h>
+
+#include "../Matrix/Matrix.h"
 
 namespace ShunLib
 {
@@ -24,6 +29,14 @@ namespace ShunLib
 		static std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
 		static std::shared_ptr<DirectX::CommonStates> m_state;
 
+		//エフェクト
+		static 	std::unique_ptr<DirectX::AlphaTestEffect> m_alphaTestEffect;
+
+		//プリミティブバッチ
+		static std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>> m_primitiveBatch;
+
+		//インプットレイアウト
+		static Microsoft::WRL::ComPtr<ID3D11InputLayout> m_input;
 
 		/*--静的関数--*/
 	public:
@@ -44,5 +57,6 @@ namespace ShunLib
 
 		//描画
 		void Draw(float x, float y, float scale = 1.0f, const RECT* rect = nullptr);
+		void Draw(const Matrix& world, const Matrix& view, const Matrix& proj);
 	};
 }

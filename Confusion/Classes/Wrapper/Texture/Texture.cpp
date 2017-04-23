@@ -18,6 +18,14 @@ std::unique_ptr<DirectX::SpriteBatch> Texture::m_spriteBatch;
 //ステート
 std::shared_ptr<DirectX::CommonStates> Texture::m_state;
 
+//エフェクト
+std::unique_ptr<DirectX::AlphaTestEffect> Texture::m_alphaTestEffect;
+
+//プリミティブバッチ
+std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>> Texture::m_primitiveBatch;
+
+//インプットレイアウト
+Microsoft::WRL::ComPtr<ID3D11InputLayout> Texture::m_input;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :デバイスの設定
@@ -30,6 +38,22 @@ void Texture::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 	m_context = context;
 	m_state = state;
 	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_context.Get());
+
+	m_primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>>(m_context.Get());
+
+	m_alphaTestEffect = std::make_unique<DirectX::AlphaTestEffect>(m_device.Get());
+
+	void const* shaderByteCode;
+	size_t byteCodeLength;
+
+	m_alphaTestEffect->GetVertexShaderBytecode(&shaderByteCode, &byteCodeLength);
+
+	m_device->CreateInputLayout(DirectX::VertexPositionTexture::InputElements,
+							    DirectX::VertexPositionTexture::InputElementCount,
+								shaderByteCode,
+								byteCodeLength,
+								m_input.GetAddressOf());
+
 }
 
 
@@ -50,6 +74,8 @@ Texture::~Texture()
 {
 	m_texture.Reset();
 	m_spriteBatch.reset();
+	m_primitiveBatch.reset();
+	m_alphaTestEffect.reset();
 }
 
 
@@ -67,8 +93,49 @@ void Texture::Draw(float x, float y, float scale, const RECT* rect)
 
 	m_spriteBatch->Begin(SpriteSortMode_Deferred, m_state->NonPremultiplied());
 
-	m_spriteBatch->Draw(m_texture.Get(), XMFLOAT2(x, y), rect, Colors::White, 0.0f, XMFLOAT2(0.0f, 0.0f), XMFLOAT2(scale,scale));
+	m_spriteBatch->Draw(m_texture.Get(), XMFLOAT2(x, y), rect, Colors::White, 0.0f, XMFLOAT2(0.0f, 0.0f), XMFLOAT2(scale, scale));
 
 	m_spriteBatch->End();
+
+}
+
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :３Ｄ描画処理
+//｜引数  :ワールド(Matrix)
+//｜引数  :ビュー　(Matrix)
+//｜引数  :射影行列(Matrix)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void ShunLib::Texture::Draw(const Matrix& world, const Matrix& view, const Matrix& proj)
+{
+	m_alphaTestEffect->SetTexture(m_texture.Get());
+
+	m_alphaTestEffect->SetWorld(world.GetDirectMatrix());
+	m_alphaTestEffect->SetView(view.GetDirectMatrix());
+	m_alphaTestEffect->SetProjection(proj.GetDirectMatrix());
+
+
+	m_context->OMSetBlendState(m_state->Opaque(), nullptr, 0xFFFFFFFF);
+	m_context->OMSetDepthStencilState(m_state->DepthNone(), 0);
+	m_context->RSSetState(m_state->CullNone());
+
+	m_alphaTestEffect->Apply(m_context.Get());
+	m_context->IASetInputLayout(m_input.Get());
+
+	DirectX::VertexPositionTexture vertexes[4] =
+	{
+		{ DirectX::SimpleMath::Vector3(-0.5f, 0.0f,0.5f),DirectX::SimpleMath::Vector2(0.0f,0.0f) },
+		{ DirectX::SimpleMath::Vector3(0.5f, 0.0f,0.5f),DirectX::SimpleMath::Vector2(1.0f,0.0f) },
+		{ DirectX::SimpleMath::Vector3(0.5f,0.0f,-0.5f),DirectX::SimpleMath::Vector2(1.0f,1.0f) },
+		{ DirectX::SimpleMath::Vector3(-0.5f,0.0f,-0.5f),DirectX::SimpleMath::Vector2(0.0f,1.0f) },
+	};
+
+	uint16_t indexes[6] = { 0,1,2,2,3,0 };
+
+	m_primitiveBatch->Begin();
+	m_primitiveBatch->DrawIndexed(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST, indexes, 6, vertexes, 4);
+	m_primitiveBatch->End();
+
 
 }

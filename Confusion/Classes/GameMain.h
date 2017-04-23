@@ -1,20 +1,22 @@
 //************************************************/
 //* @file  :GameMain.h
 //* @brief :ゲームのメインクラス　メソッド記入用
-//* @date  :2017/04/18
+//* @date  :2017/04/20
 //* @author:S.Katou
 //************************************************/
 #pragma once
-#include "Wrapper\Model\Model.h"
+#include "Scene\Scene.h"
 #include "Wrapper\Matrix\Matrix.h"
-#include "Wrapper\Texture\Texture.h"
-#include "Wrapper\Texture\Texture.h"
-#include "Wrapper\Model\Model.h"
-
 
 class GameMain
 {
+public:
+	static int screenW;
+	static int screenH;
+
 private:
+	Scene* m_scene;
+
 	ShunLib::Matrix m_view;	//ビュー行列
 	ShunLib::Matrix m_proj;	//プロジェクション行列
 
