@@ -16,15 +16,16 @@ const int Player::MAX_PLAYER = 2;
 //｜引数  :初期座標	 (ShunLib::Vec3)
 //＋ーーーーーーーーーーーーーー＋
 Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum,DIRECTION stick)
-	:Object(model, pos)
-	,m_gamePadNum(gamePadNum)
-	,m_stick(stick)
+	: Object(model, pos)
+	, m_gamePadNum(gamePadNum)
+	, m_stick(stick)
+	, m_gravityScale(0.1f)
 {
 	m_gamePad = GamePadManager::GetInstance();
 
 	//delete -> ~Player
 	m_gravity = new Gravity(L"Effect\\gravity.png");
-	m_gravity->Scale(0.1f);
+	m_gravity->Scale(m_gravityScale);
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -50,12 +51,8 @@ void Player::Update()
 	//移動
 	*m_pos = *m_pos + *m_spd;
 
-
-	//重力位置を移動
-	m_gravity->Pos(m_pos->m_x,-1.0f,m_pos->m_z);
-
-	//重力更新
-	m_gravity->Update();
+	//重力関連の更新
+	UpdateGravity();
 }
 
 
@@ -96,6 +93,71 @@ void Player::UpdateSpd()
 		m_spd->m_x = state.thumbSticks.leftX / 10.0f;
 		m_spd->m_z = -(state.thumbSticks.leftY / 10.0f);
 		break;
+	}
+}
+
+
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :重力関連の更新
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void Player::UpdateGravity()
+{
+	//重力位置を移動
+	m_gravity->Pos(m_pos->m_x, -1.0f, m_pos->m_z);
+
+
+	//重力の拡大率の更新
+	UpdateGravityScale();
+
+	//重力を設定
+	m_gravity->Scale(m_gravityScale);
+
+	//重力更新
+	m_gravity->Update();
+}
+
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :重力の拡大率更新
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void Player::UpdateGravityScale()
+{
+	auto state = m_gamePad->Get(m_gamePadNum);
+	bool isPushed = false;
+
+	//
+	switch (m_stick)
+	{
+	case RIGHT://右スティック
+		isPushed = state.IsRightShoulderPressed();
+		break;
+
+	case LEFT://左スティック
+		isPushed = state.IsLeftShoulderPressed();
+		break;
+
+	default://それ以外は左
+		isPushed = state.IsLeftShoulderPressed();
+		break;
+	}
+
+	if (isPushed)
+	{
+		m_gravityScale += 0.1f;
+	}
+	else
+	{
+		m_gravityScale -= 0.1f;
+	}
+
+	if (m_gravityScale <= 0.0f)
+	{
+		m_gravityScale = 0.1f;
 	}
 }
 

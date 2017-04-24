@@ -28,6 +28,7 @@ public:
 			const ShunLib::Vec3& pos = (0.0f, 0.0f, 0.0f));
 	~Gravity();
 
+	//çXêV
 	void Update();
 
 	//ï`âÊ
@@ -45,6 +46,5 @@ public:
 		m_pos.m_y = y;
 		m_pos.m_z = z;
 	}
-
 	ShunLib::Vec3 Pos() { return m_pos; }
 };

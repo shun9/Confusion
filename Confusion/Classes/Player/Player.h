@@ -43,6 +43,8 @@ private:
 
 	//重力
 	Gravity* m_gravity;
+	float m_gravityScale;
+
 
 	/*--メンバ関数--*/
 public:
@@ -55,10 +57,17 @@ public:
 	//更新処理
 	void Update()override;
 
+	//重力の描画
 	void DrawGravity(const ShunLib::Matrix& view,
 				  	 const ShunLib::Matrix& proj);
 
 private:
-	//移動
+	//移動速度の更新
 	void UpdateSpd();
+
+	//重力関連の更新
+	void UpdateGravity();
+
+	//重力の拡大率の更新
+	void UpdateGravityScale();
 };

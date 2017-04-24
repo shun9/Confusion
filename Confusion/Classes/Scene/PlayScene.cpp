@@ -30,6 +30,10 @@ PlayScene::PlayScene()
 //＋ーーーーーーーーーーーーーー＋
 PlayScene::~PlayScene()
 {
+	for (int i = 0; i < Player::MAX_PLAYER; i++)
+	{
+		delete m_player;
+	}
 	delete[] m_player;
 }
 
@@ -59,6 +63,7 @@ void PlayScene::Render()
 	{
 		m_player[i]->DrawGravity(m_view, m_proj);
 	}
+
 	for (int i = 0; i < Player::MAX_PLAYER; i++)
 	{
 		m_player[i]->Draw(m_view, m_proj);
