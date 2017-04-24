@@ -47,6 +47,9 @@
     <Filter Include="Classes\Gravity">
       <UniqueIdentifier>{eae69d02-3117-4c26-bb15-796aab513a33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Enemy">
+      <UniqueIdentifier>{7161e76b-ca34-47be-bb19-e3bb3663f985}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h">
@@ -94,6 +97,9 @@
     <ClInclude Include="Classes\Gravity\Gravity.h">
       <Filter>Classes\Gravity</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\Enemy\Enemy.h">
+      <Filter>Classes\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\GameMain.cpp">
@@ -137,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="Classes\Gravity\Gravity.cpp">
       <Filter>Classes\Gravity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Enemy\Enemy.cpp">
+      <Filter>Classes\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
