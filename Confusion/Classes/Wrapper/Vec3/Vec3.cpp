@@ -76,6 +76,21 @@ Vec3::~Vec3()
 
 
 //＋ーーーーーーーーーーーーーー＋
+//｜機能  :ベクトルを正規化する
+//｜引数  :なし　　(void)
+//｜戻り値:なし　　(void)	
+//＋ーーーーーーーーーーーーーー＋
+void ShunLib::Vec3::Normalize()
+{
+	float length = std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+
+	m_x /= length;
+	m_y /= length;
+	m_z /= length;
+}
+
+
+//＋ーーーーーーーーーーーーーー＋
 //｜機能  :ベクトルをDirectXの形式で返す
 //｜引数  :なし　　(void)
 //｜戻り値:ベクトル(DirectX::SimpleMath::Vector3)	
@@ -130,5 +145,21 @@ Vec3& ShunLib::Vec3::operator*(int num)
 	this->m_x *= num;
 	this->m_y *= num;
 	this->m_z *= num;
+	return *this;
+}
+
+Vec3 & ShunLib::Vec3::operator*(float num)
+{
+	this->m_x *= num;
+	this->m_y *= num;
+	this->m_z *= num;
+	return *this;
+}
+
+Vec3 & ShunLib::Vec3::operator*(double num)
+{
+	this->m_x *= static_cast<float>(num);
+	this->m_y *= static_cast<float>(num);
+	this->m_z *= static_cast<float>(num);
 	return *this;
 }

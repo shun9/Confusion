@@ -23,9 +23,11 @@ Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum,DIRECTION
 {
 	m_gamePad = GamePadManager::GetInstance();
 
+	m_radius = 0.8f;
+
 	//delete -> ~Player
 	m_gravity = new Gravity(L"Effect\\gravity.png");
-	m_gravity->Scale(m_gravityScale);
+	m_gravity->Radius(m_gravityScale);
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -113,7 +115,7 @@ void Player::UpdateGravity()
 	UpdateGravityScale();
 
 	//重力を設定
-	m_gravity->Scale(m_gravityScale);
+	m_gravity->Radius(m_gravityScale);
 
 	//重力更新
 	m_gravity->Update();
@@ -146,6 +148,7 @@ void Player::UpdateGravityScale()
 		break;
 	}
 
+	//押している間広がり続ける
 	if (isPushed)
 	{
 		m_gravityScale += 0.1f;
@@ -155,9 +158,10 @@ void Player::UpdateGravityScale()
 		m_gravityScale -= 0.1f;
 	}
 
+	//縮小しすぎないようにする
 	if (m_gravityScale <= 0.0f)
 	{
-		m_gravityScale = 0.1f;
+		m_gravityScale = 0.0f;
 	}
 }
 

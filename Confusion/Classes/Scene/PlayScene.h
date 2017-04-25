@@ -27,4 +27,9 @@ public:
 
 	void Update()override;
 	void Render()override;
+
+private:
+	bool Collision(Object* obj, Object* obj2);
+	bool Collision(Object* obj, Gravity* gra);
 };
+

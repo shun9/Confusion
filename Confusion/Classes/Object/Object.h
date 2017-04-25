@@ -25,6 +25,9 @@ protected:
 	//向きの方向
 	float m_angle;
 
+	//当たり判定用の半径
+	float m_radius;
+
 public:
 	//コンストラクタ＆デストラクタ
 	Object(const wchar_t* model,ShunLib::Vec3 pos = (0.0f,0.0f,0.0f));
@@ -36,6 +39,15 @@ public:
 	//描画処理
 	void Draw(const ShunLib::Matrix& view,
 		      const ShunLib::Matrix& proj);
+
+	//位置情報
+	ShunLib::Vec3 Pos() { return *m_pos; }
+	void Pos(ShunLib::Vec3 pos) { *m_pos = pos; }
+
+	//拡大率
+	void Radius(float radius) { m_radius = radius; }
+	float Radius() { return m_radius; }
+
 private:
 	//向きを計算する
 	void CalculateDirection();

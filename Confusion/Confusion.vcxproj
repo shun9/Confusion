@@ -221,6 +221,8 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Model\Player.FBX" />
+    <MeshContentTask Include="Model\PlayerB.FBX" />
+    <MeshContentTask Include="Model\tree.FBX" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

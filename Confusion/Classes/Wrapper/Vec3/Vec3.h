@@ -39,6 +39,8 @@ namespace ShunLib
 		Vec3(const Vec3& vec);
 		~Vec3();
 
+		void Normalize();
+
 		//ベクトルをDirectXの形式で返す
 		DirectX::SimpleMath::Vector3 GetDirectVec3();
 	
@@ -48,6 +50,7 @@ namespace ShunLib
 		Vec3& operator+(const Vec3& V);
 		Vec3& operator-(const Vec3& V);
 		Vec3& operator*(int num);
-
+		Vec3& operator*(float num);
+		Vec3& operator*(double num);
 	};
 }

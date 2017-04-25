@@ -61,6 +61,8 @@ public:
 	void DrawGravity(const ShunLib::Matrix& view,
 				  	 const ShunLib::Matrix& proj);
 
+	Gravity* GetGravity() { return m_gravity; }
+	
 private:
 	//ˆÚ“®‘¬“x‚ÌXV
 	void UpdateSpd();

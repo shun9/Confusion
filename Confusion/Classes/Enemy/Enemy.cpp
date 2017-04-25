@@ -12,9 +12,11 @@
 //｜引数  :初期座標	 (ShunLib::Vec3)
 //＋ーーーーーーーーーーーーーー＋
 Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos)
-	:Object(model,pos)
+	: Object(model,pos)
 {
 	m_spd->m_z = 0.0f;
+
+	m_radius = 1.0f;
 }
 
 

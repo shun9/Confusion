@@ -73,9 +73,9 @@ Texture::Texture(const wchar_t* texture)
 Texture::~Texture()
 {
 	m_texture.Reset();
-	m_spriteBatch.reset();
-	m_primitiveBatch.reset();
-	m_alphaTestEffect.reset();
+	m_spriteBatch.release();
+	m_primitiveBatch.release();
+	m_alphaTestEffect.release();
 }
 
 

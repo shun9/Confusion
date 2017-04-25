@@ -53,6 +53,12 @@
     <Filter Include="ShunLib\Wrapper\Conversion">
       <UniqueIdentifier>{98db4ddd-86e5-4937-bda1-0a08fb8ccf15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Player">
+      <UniqueIdentifier>{2509fc6f-7218-4e48-9e62-47ecde764077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Stage">
+      <UniqueIdentifier>{db2e090d-5224-4a8a-a82e-2ffaead58503}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h">
@@ -174,7 +180,13 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Model\Player.FBX">
-      <Filter>Assets</Filter>
+      <Filter>Assets\Player</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Model\PlayerB.FBX">
+      <Filter>Assets\Player</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Model\tree.FBX">
+      <Filter>Assets\Stage</Filter>
     </MeshContentTask>
   </ItemGroup>
 </Project>

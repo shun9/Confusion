@@ -11,10 +11,13 @@
 class Gravity
 {
 private:
+	static const float POWER;
+
+private:
 	ShunLib::Texture* m_texture;
 
 	//Šg‘å—¦
-	float m_scale;
+	float m_radius;
 
 	//ˆÊ’u
 	ShunLib::Vec3 m_pos;
@@ -34,9 +37,9 @@ public:
 	//•`‰æ
 	void Draw(ShunLib::Matrix view, ShunLib::Matrix proj);
 
-	//Šg‘å—¦
-	void Scale(float scale) { m_scale = scale; }
-	float Scale() { return m_scale; }
+	//”¼Œa
+	void Radius(float radius) { m_radius = radius; }
+	float Radius() { return m_radius; }
 
 	//ˆÊ’u
 	void Pos(ShunLib::Vec3 pos) { m_pos = pos; }
@@ -47,4 +50,7 @@ public:
 		m_pos.m_z = z;
 	}
 	ShunLib::Vec3 Pos() { return m_pos; }
+
+	//‘ÎÛ‚ğˆø‚«Šñ‚¹‚é
+	void Attract(ShunLib::Vec3* objPos);
 };

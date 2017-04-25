@@ -53,18 +53,23 @@ void Object::Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 	m_model->Draw(world, view, proj);
 }
 
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :向いている方向を計算する
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
 void Object::CalculateDirection()
 {
+	//動いていなければ計算しない
 	if (m_spd->m_x == 0.0f&&m_spd->m_y==0.0f&&m_spd->m_z==0.0f)
 	{
 		return;
 	}
-	DirectX::SimpleMath::Vector3 spd = m_spd->GetDirectVec3();
 
-	spd.Normalize();
+	m_spd->Normalize();
 
-	float rot = ShunLib::ToAngle(std::atan2(spd.z, spd.x)) - 90.0f;
+	float rot = ShunLib::ToAngle(std::atan2(m_spd->m_z, m_spd->m_x)) - 90.0f;
 
-	//m_angle = ShunLib::ToAngle(radian);
 	m_angle = rot;
 }

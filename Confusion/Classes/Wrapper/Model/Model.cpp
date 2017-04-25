@@ -40,6 +40,7 @@ void ShunLib::Model::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 void ShunLib::Model::Release()
 {
 	m_effect->ReleaseCache();
+	m_effect.release();
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -58,6 +59,7 @@ Model::Model(const wchar_t cmo[])
 Model::~Model()
 {
 	m_model.reset();
+	m_model.release();
 }
 
 

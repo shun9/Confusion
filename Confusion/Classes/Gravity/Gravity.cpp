@@ -7,6 +7,7 @@
 #include "Gravity.h"
 
 using namespace ShunLib;
+const float Gravity::POWER = 0.05f;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -16,7 +17,7 @@ using namespace ShunLib;
 Gravity::Gravity(const wchar_t* texture, const Vec3 & pos)
 	: m_texture(new Texture(texture)) //delete -> ~Gravity
 	, m_pos(pos)
-	, m_scale(1.0f)
+	, m_radius(1.0f)
 	, m_angle(360.0f)
 {
 
@@ -59,9 +60,28 @@ void Gravity::Update()
 void Gravity::Draw(Matrix view, Matrix proj)
 {
 	Matrix world;
-	world = Matrix::CreateScale(m_scale)
+	world = Matrix::CreateScale(m_radius)
 		  * Matrix::CreateRotationY(m_angle)
     	  * Matrix::CreateTranslation(m_pos);
 
 	m_texture->Draw(world, view, proj);
+}
+
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :対象を引き寄せる
+//｜引数  :対象の位置(Vec3*)書き換える
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void Gravity::Attract(ShunLib::Vec3* objPos)
+{
+	using namespace ShunLib;
+
+	float x = objPos->m_x - m_pos.m_x;
+	float z = objPos->m_z - m_pos.m_z;
+
+	Vec3 vec = { x, 0.0f, z };
+	vec.Normalize();
+	objPos->m_x -= vec.m_x*POWER;
+	objPos->m_z -= vec.m_z*POWER;
 }
