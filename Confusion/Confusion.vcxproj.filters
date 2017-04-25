@@ -50,6 +50,9 @@
     <Filter Include="Classes\Enemy">
       <UniqueIdentifier>{7161e76b-ca34-47be-bb19-e3bb3663f985}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ShunLib\Wrapper\Conversion">
+      <UniqueIdentifier>{98db4ddd-86e5-4937-bda1-0a08fb8ccf15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h">
@@ -100,6 +103,9 @@
     <ClInclude Include="Classes\Enemy\Enemy.h">
       <Filter>Classes\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\Conversion\Conversion.h">
+      <Filter>ShunLib\Wrapper\Conversion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\GameMain.cpp">
@@ -147,6 +153,9 @@
     <ClCompile Include="Classes\Enemy\Enemy.cpp">
       <Filter>Classes\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\Conversion\Conversion.cpp">
+      <Filter>ShunLib\Wrapper\Conversion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -162,5 +171,10 @@
     <ResourceCompile Include="resource.rc">
       <Filter>DefaultFile</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="Model\Player.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
   </ItemGroup>
 </Project>

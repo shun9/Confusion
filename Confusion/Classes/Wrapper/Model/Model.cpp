@@ -28,6 +28,7 @@ void ShunLib::Model::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 	m_context = context;
 	m_state   = state;
 	m_effect  = std::make_unique<DirectX::EffectFactory>(m_device.Get());
+	m_effect->SetDirectory(L"CModel");
 }
 
 

@@ -22,6 +22,9 @@ protected:
 	//速度
 	ShunLib::Vec3* m_spd;
 
+	//向きの方向
+	float m_angle;
+
 public:
 	//コンストラクタ＆デストラクタ
 	Object(const wchar_t* model,ShunLib::Vec3 pos = (0.0f,0.0f,0.0f));
@@ -33,4 +36,7 @@ public:
 	//描画処理
 	void Draw(const ShunLib::Matrix& view,
 		      const ShunLib::Matrix& proj);
+private:
+	//向きを計算する
+	void CalculateDirection();
 };

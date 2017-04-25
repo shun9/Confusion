@@ -14,7 +14,7 @@
 Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos)
 	:Object(model,pos)
 {
-
+	m_spd->m_z = 0.0f;
 }
 
 

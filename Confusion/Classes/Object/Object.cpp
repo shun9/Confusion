@@ -5,6 +5,7 @@
 //* @author:S.Katou
 //************************************************/
 #include "Object.h"
+#include "../Conversion/Conversion.h"
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -12,6 +13,7 @@
 //｜引数  :初期座標	 (ShunLib::Vec3)
 //＋ーーーーーーーーーーーーーー＋
 Object::Object(const wchar_t* model, ShunLib::Vec3 pos)
+	: m_angle(0.0f)
 {
 	using namespace ShunLib;
 
@@ -45,6 +47,24 @@ void Object::Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 {
 	using namespace ShunLib;
 
-	Matrix world = Matrix::CreateTranslation(*m_pos);
+	CalculateDirection();
+
+	Matrix world = Matrix::CreateRotationY(m_angle) * Matrix::CreateTranslation(*m_pos);
 	m_model->Draw(world, view, proj);
+}
+
+void Object::CalculateDirection()
+{
+	if (m_spd->m_x == 0.0f&&m_spd->m_y==0.0f&&m_spd->m_z==0.0f)
+	{
+		return;
+	}
+	DirectX::SimpleMath::Vector3 spd = m_spd->GetDirectVec3();
+
+	spd.Normalize();
+
+	float rot = ShunLib::ToAngle(std::atan2(spd.z, spd.x)) - 90.0f;
+
+	//m_angle = ShunLib::ToAngle(radian);
+	m_angle = rot;
 }

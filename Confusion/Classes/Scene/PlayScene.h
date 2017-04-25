@@ -6,9 +6,11 @@
 //************************************************/
 #pragma once
 #include "Scene.h"
+
+#include <vector>
 #include "../Wrapper/Matrix/Matrix.h"
 #include "../Player/Player.h"
-#include "../Wrapper/Texture/Texture.h"
+#include "../Enemy/Enemy.h"
 
 class PlayScene:public Scene
 {
@@ -17,6 +19,7 @@ private:
 	ShunLib::Matrix m_proj;	//プロジェクション行列
 
 	Player** m_player;
+	Enemy* m_enemy;
 
 public:
 	PlayScene();

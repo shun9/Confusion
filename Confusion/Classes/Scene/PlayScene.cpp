@@ -20,8 +20,10 @@ PlayScene::PlayScene()
 	m_player = new Player*[Player::MAX_PLAYER];
 
 
-	m_player[0] = new Player(L"CModel\\robot.cmo", Vec3(0.0f, 0.0f, 0.0f), 0, LEFT);
+	m_player[0] = new Player(L"CModel\\Player.cmo", Vec3(0.0f, 0.0f, 0.0f), 0, LEFT);
 	m_player[1] = new Player(L"CModel\\robot.cmo", Vec3(0.0f, 0.0f, 0.0f), 0, RIGHT);
+
+	m_enemy = new Enemy(L"CModel\\robot.cmo");
 }
 
 
@@ -35,6 +37,8 @@ PlayScene::~PlayScene()
 		delete m_player;
 	}
 	delete[] m_player;
+
+	delete m_enemy;
 }
 
 
@@ -49,6 +53,8 @@ void PlayScene::Update()
 	{
 		m_player[i]->Update();
 	}
+
+	m_enemy->Update();
 }
 
 
@@ -68,4 +74,7 @@ void PlayScene::Render()
 	{
 		m_player[i]->Draw(m_view, m_proj);
 	}
+
+	m_enemy->Draw(m_view, m_proj);
+
 }
