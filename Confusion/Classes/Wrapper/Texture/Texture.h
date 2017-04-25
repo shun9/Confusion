@@ -44,6 +44,7 @@ namespace ShunLib
 		static void SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 							  Microsoft::WRL::ComPtr<ID3D11DeviceContext> context,
 							  std::shared_ptr<DirectX::CommonStates> state);
+		static void Release();
 
 		/*--ƒƒ“ƒo•Ï”--*/
 	private:

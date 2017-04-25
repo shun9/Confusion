@@ -73,11 +73,21 @@ Texture::Texture(const wchar_t* texture)
 Texture::~Texture()
 {
 	m_texture.Reset();
+}
+
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :終了処理
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void Texture::Release()
+{
 	m_spriteBatch.release();
 	m_primitiveBatch.release();
 	m_alphaTestEffect.release();
+	m_input.Reset();
 }
-
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :描画処理

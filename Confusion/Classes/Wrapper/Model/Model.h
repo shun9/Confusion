@@ -54,9 +54,24 @@ namespace ShunLib
 		//デストラクタ
 		~Model();
 
-		//描画
+		//＋ーーーーーーーーーーーーーー＋
+		//｜機能  :モデルの描画
+		//｜引数  :ワールド行列	(Matrix)
+		//｜引数  :ビュー行列	(Matrix)
+		//｜引数  :射影行列		(Matrix)
+		//｜戻り値:なし(void)	
+		//＋ーーーーーーーーーーーーーー＋
 		void Draw(const Matrix& world,
 				  const Matrix& view,
-				  const Matrix& proj);
+				  const Matrix& proj)
+		{
+			DirectX::SimpleMath::Matrix w = world.GetDirectMatrix();	// ワールド
+			DirectX::SimpleMath::Matrix v = view.GetDirectMatrix();		// ビュー
+			DirectX::SimpleMath::Matrix p = proj.GetDirectMatrix();		// プロジェクション
+
+			// 描画		 コンテキスト,ステート,ワールド,ビュー,プロジェクション
+			m_model->Draw(m_context.Get(), *m_state, w, v, p);
+		}
+
 	};
 }

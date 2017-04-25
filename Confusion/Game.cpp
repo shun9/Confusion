@@ -412,6 +412,6 @@ void Game::OnDeviceLost()
 	m_gameMain->Finalize();
 
 	ShunLib::Model::Release();
-
+	ShunLib::Texture::Release();
 	m_state.reset();
 }

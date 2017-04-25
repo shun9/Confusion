@@ -39,7 +39,6 @@ void ShunLib::Model::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 //＋ーーーーーーーーーーーーーー＋
 void ShunLib::Model::Release()
 {
-	m_effect->ReleaseCache();
 	m_effect.release();
 }
 
@@ -70,14 +69,14 @@ Model::~Model()
 //｜引数  :射影行列		(Matrix)
 //｜戻り値:なし(void)	
 //＋ーーーーーーーーーーーーーー＋
-void Model::Draw(const Matrix& world,
-				 const Matrix& view,
-				 const Matrix& proj)
-{
-	DirectX::SimpleMath::Matrix w = world.GetDirectMatrix();	// ワールド
-	DirectX::SimpleMath::Matrix v = view.GetDirectMatrix();		// ビュー
-	DirectX::SimpleMath::Matrix p = proj.GetDirectMatrix();		// プロジェクション
-
-	// 描画		 コンテキスト,ステート,ワールド,ビュー,プロジェクション
-	m_model->Draw(m_context.Get() , *m_state, w, v, p);
-}
+//void Model::Draw(const Matrix& world,
+//				 const Matrix& view,
+//				 const Matrix& proj)
+//{
+//	DirectX::SimpleMath::Matrix w = world.GetDirectMatrix();	// ワールド
+//	DirectX::SimpleMath::Matrix v = view.GetDirectMatrix();		// ビュー
+//	DirectX::SimpleMath::Matrix p = proj.GetDirectMatrix();		// プロジェクション
+//
+//	// 描画		 コンテキスト,ステート,ワールド,ビュー,プロジェクション
+//	m_model->Draw(m_context.Get() , *m_state, w, v, p);
+//}
