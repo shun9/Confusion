@@ -29,7 +29,6 @@ Gravity::Gravity(const wchar_t* texture, const Vec3 & pos)
 //＋ーーーーーーーーーーーーーー＋
 Gravity::~Gravity()
 {
-	//new -> Gravity
 	delete m_texture;
 }
 

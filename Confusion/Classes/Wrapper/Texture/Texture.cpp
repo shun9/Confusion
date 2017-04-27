@@ -9,51 +9,16 @@
 using namespace ShunLib;
 
 //デバイス
-Microsoft::WRL::ComPtr<ID3D11Device> Texture::m_device;
-Microsoft::WRL::ComPtr<ID3D11DeviceContext> Texture::m_context;
-
-//スプライトバッチ
-std::unique_ptr<DirectX::SpriteBatch> Texture::m_spriteBatch;
-
-//ステート
-std::shared_ptr<DirectX::CommonStates> Texture::m_state;
-
-//エフェクト
-std::unique_ptr<DirectX::AlphaTestEffect> Texture::m_alphaTestEffect;
-
-//プリミティブバッチ
-std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>> Texture::m_primitiveBatch;
-
-//インプットレイアウト
-Microsoft::WRL::ComPtr<ID3D11InputLayout> Texture::m_input;
+ID3D11Device* Texture::m_device;
+ID3D11DeviceContext* Texture::m_context;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :デバイスの設定
 //＋ーーーーーーーーーーーーーー＋
-void Texture::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
-					    Microsoft::WRL::ComPtr<ID3D11DeviceContext> context,
-						std::shared_ptr<DirectX::CommonStates> state)
-{
+void Texture::SetDevice(ID3D11Device* device,
+					    ID3D11DeviceContext* context){
 	m_device = device;
 	m_context = context;
-	m_state = state;
-	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_context.Get());
-
-	m_primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>>(m_context.Get());
-
-	m_alphaTestEffect = std::make_unique<DirectX::AlphaTestEffect>(m_device.Get());
-
-	void const* shaderByteCode;
-	size_t byteCodeLength;
-
-	m_alphaTestEffect->GetVertexShaderBytecode(&shaderByteCode, &byteCodeLength);
-
-	m_device->CreateInputLayout(DirectX::VertexPositionTexture::InputElements,
-							    DirectX::VertexPositionTexture::InputElementCount,
-								shaderByteCode,
-								byteCodeLength,
-								m_input.GetAddressOf());
-
 }
 
 
@@ -63,7 +28,30 @@ void Texture::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 //＋ーーーーーーーーーーーーーー＋
 Texture::Texture(const wchar_t* texture)
 {
-	DirectX::CreateWICTextureFromFile(m_device.Get(), texture, nullptr, m_texture.ReleaseAndGetAddressOf());
+	//テクスチャ読み込み
+	DirectX::CreateWICTextureFromFile(m_device, texture, nullptr, m_texture.ReleaseAndGetAddressOf());
+	
+	//スプライトバッチ作成
+	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_context);
+
+	//ステート作成
+	m_state = std::make_unique<DirectX::CommonStates>(m_device);
+
+	//プリミティブバッチ作成
+	m_primitiveBatch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>>(m_context);
+
+	//アルファエフェクト作成
+	m_alphaTestEffect = std::make_unique<DirectX::AlphaTestEffect>(m_device);
+	void const* shaderByteCode;
+	size_t byteCodeLength;
+	m_alphaTestEffect->GetVertexShaderBytecode(&shaderByteCode, &byteCodeLength);
+
+	//インプットレイアウト作成
+	m_device->CreateInputLayout(DirectX::VertexPositionTexture::InputElements,
+		DirectX::VertexPositionTexture::InputElementCount,
+		shaderByteCode,
+		byteCodeLength,
+		m_input.GetAddressOf());
 }
 
 
@@ -73,21 +61,13 @@ Texture::Texture(const wchar_t* texture)
 Texture::~Texture()
 {
 	m_texture.Reset();
-}
-
-
-//＋ーーーーーーーーーーーーーー＋
-//｜機能  :終了処理
-//｜引数  :なし(void)
-//｜戻り値:なし(void)
-//＋ーーーーーーーーーーーーーー＋
-void Texture::Release()
-{
 	m_spriteBatch.release();
-	m_primitiveBatch.release();
-	m_alphaTestEffect.release();
 	m_input.Reset();
+	m_alphaTestEffect.reset();
+	m_primitiveBatch.reset();
+	m_state.reset();
 }
+
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :描画処理
@@ -130,8 +110,10 @@ void ShunLib::Texture::Draw(const Matrix& world, const Matrix& view, const Matri
 	m_context->OMSetDepthStencilState(m_state->DepthNone(), 0);
 	m_context->RSSetState(m_state->CullNone());
 
-	m_alphaTestEffect->Apply(m_context.Get());
+
+	m_alphaTestEffect->Apply(m_context);
 	m_context->IASetInputLayout(m_input.Get());
+
 
 	DirectX::VertexPositionTexture vertexes[4] =
 	{
@@ -146,6 +128,4 @@ void ShunLib::Texture::Draw(const Matrix& world, const Matrix& view, const Matri
 	m_primitiveBatch->Begin();
 	m_primitiveBatch->DrawIndexed(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST, indexes, 6, vertexes, 4);
 	m_primitiveBatch->End();
-
-
 }

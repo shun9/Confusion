@@ -26,21 +26,29 @@ GamePadManager* GamePadManager::GetInstance()
 //＋ーーーーーーーーーーーーーー＋
 void GamePadManager::Update()
 {
-	for (int i = 0; i < Player::MAX_PLAYER; i++)
-	{
-		m_state[i] = m_gamePad->GetState(i);
-	}
+	m_state1 = m_gamePad->GetState(0);
+	m_state2 = m_gamePad->GetState(1);
 }
 
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :ゲームパッドの状態を返す
-//｜引数  :なし(void)
+//｜引数  :なし(int)
 //｜戻り値:ゲームパッドの状態を返す(DirectX::GamePad::State)
 //＋ーーーーーーーーーーーーーー＋
 DirectX::GamePad::State GamePadManager::Get(int gamePadNum)
 { 
-	return m_state[gamePadNum]; 
+	switch (gamePadNum)
+	{
+	case 0:
+		return m_state1;
+	case 1:
+		return m_state2;
+
+	default:
+		break;
+	}
+	return m_state1; 
 }
 
 
@@ -48,13 +56,12 @@ DirectX::GamePad::State GamePadManager::Get(int gamePadNum)
 //コンストラクタ＆デストラクタ
 GamePadManager::GamePadManager()
 {
-
 	m_gamePad = std::make_unique<DirectX::GamePad>();
-	m_state = new DirectX::GamePad::State[Player::MAX_PLAYER];
+	m_state1 = m_gamePad->GetState(0);
+	m_state2 = m_gamePad->GetState(1);
 }
 
 
 GamePadManager::~GamePadManager() 
 {
-	delete[] m_state;
 }

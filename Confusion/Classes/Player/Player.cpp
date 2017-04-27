@@ -25,7 +25,6 @@ Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum,DIRECTION
 
 	m_radius = 0.8f;
 
-	//delete -> ~Player
 	m_gravity = new Gravity(L"Effect\\gravity.png");
 	m_gravity->Radius(m_gravityScale);
 }
@@ -35,7 +34,6 @@ Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum,DIRECTION
 //＋ーーーーーーーーーーーーーー＋
 Player::~Player()
 {
-	//new -> Player
 	delete m_gravity;
 }
 

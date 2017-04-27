@@ -20,35 +20,36 @@ namespace ShunLib
 	class Texture
 	{
 		/*--静的変数--*/
-	public:
+	private:
 		// デバイス
-		static Microsoft::WRL::ComPtr<ID3D11Device> m_device;
-		static Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_context;
-
-		//スプライトバッチ
-		static std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
-		static std::shared_ptr<DirectX::CommonStates> m_state;
-
-		//エフェクト
-		static 	std::unique_ptr<DirectX::AlphaTestEffect> m_alphaTestEffect;
-
-		//プリミティブバッチ
-		static std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>> m_primitiveBatch;
-
-		//インプットレイアウト
-		static Microsoft::WRL::ComPtr<ID3D11InputLayout> m_input;
+		static ID3D11Device* m_device;
+		static ID3D11DeviceContext* m_context;
 
 		/*--静的関数--*/
 	public:
-		//スプライトバッチの設定
-		static void SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
-							  Microsoft::WRL::ComPtr<ID3D11DeviceContext> context,
-							  std::shared_ptr<DirectX::CommonStates> state);
-		static void Release();
+		//デバイスの設定
+		static void SetDevice(ID3D11Device* device,
+							  ID3D11DeviceContext* context);
+
 
 		/*--メンバ変数--*/
 	private:
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture;
+
+		//スプライトバッチ
+		std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
+		
+		//ステート作成
+		std::unique_ptr<DirectX::CommonStates> m_state;
+
+		//エフェクト
+		std::unique_ptr<DirectX::AlphaTestEffect> m_alphaTestEffect;
+	
+		//プリミティブバッチ
+		std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>> m_primitiveBatch;
+
+		//インプットレイアウト
+		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_input;
 
 
 		/*--メンバ関数--*/

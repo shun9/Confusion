@@ -67,5 +67,9 @@ void GameMain::Render()
 //＋ーーーーーーーーーーーーーー＋
 void GameMain::Finalize()
 {
-	delete m_scene;
+	if (m_scene != nullptr)
+	{
+		delete m_scene;
+		m_scene = nullptr;
+	}
 }

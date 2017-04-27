@@ -2,6 +2,7 @@
 // Game.cpp
 //
 
+
 #include "pch.h"
 #include "Game.h"
 #include "Classes\Wrapper\Model\Model.h"
@@ -43,11 +44,10 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
     */
 
-	m_state = std::make_shared<DirectX::CommonStates>(m_d3dDevice.Get());
 
 	//モデルにデバイスを設定
-	ShunLib::Model::SetDevice(m_d3dDevice,m_d3dContext,m_state);
-	ShunLib::Texture::SetDevice(m_d3dDevice, m_d3dContext, m_state);
+	ShunLib::Model::SetDevice(m_d3dDevice.Get(),m_d3dContext.Get());
+	ShunLib::Texture::SetDevice(m_d3dDevice.Get(), m_d3dContext.Get());
 
 	//ゲームコントローラー取得
 	m_gamePad = GamePadManager::GetInstance();
@@ -55,8 +55,6 @@ void Game::Initialize(HWND window, int width, int height)
 	//ゲーム生成
 	m_gameMain = new GameMain;
 	m_gameMain->Initialize(m_outputWidth, m_outputHeight);
-
-
 }
 
 // Executes the basic game loop.
@@ -101,8 +99,6 @@ void Game::Render()
     Clear();
 
     // TODO: Add your rendering code here.
-
-
 
 	//ゲーム描画
 	m_gameMain->Render();
@@ -168,7 +164,6 @@ void Game::OnResuming()
 
     // TODO: Game is being power-resumed (or returning from minimize).
 	m_gamePad->Resume();
-
 }
 
 void Game::OnWindowSizeChanged(int width, int height)
@@ -195,7 +190,7 @@ void Game::CreateDevice()
     UINT creationFlags = 0;
 
 #ifdef _DEBUG
-    creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+    //creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
     static const D3D_FEATURE_LEVEL featureLevels [] =
@@ -215,8 +210,8 @@ void Game::CreateDevice()
         nullptr,                                // specify nullptr to use the default adapter
         D3D_DRIVER_TYPE_HARDWARE,
         nullptr,
-        creationFlags,
-        featureLevels,
+		creationFlags,
+		featureLevels,
         _countof(featureLevels),
         D3D11_SDK_VERSION,
         m_d3dDevice.ReleaseAndGetAddressOf(),   // returns the Direct3D device created
@@ -395,6 +390,9 @@ void Game::CreateResources()
 void Game::OnDeviceLost()
 {
     // TODO: Add Direct3D resource cleanup here.
+	m_gameMain->Finalize();
+	delete m_gameMain;
+
 
     m_depthStencilView.Reset();
     m_renderTargetView.Reset();
@@ -408,10 +406,4 @@ void Game::OnDeviceLost()
     CreateDevice();
 
     CreateResources();
-
-	m_gameMain->Finalize();
-
-	ShunLib::Model::Release();
-	ShunLib::Texture::Release();
-	m_state.reset();
 }

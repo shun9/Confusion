@@ -29,7 +29,6 @@ Object::Object(const wchar_t* model, ShunLib::Vec3 pos)
 //＋ーーーーーーーーーーーーーー＋
 Object::~Object()
 {
-	//new -> Object
 	delete m_model;
 	delete m_pos;
 	delete m_spd;

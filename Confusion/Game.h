@@ -13,6 +13,8 @@
 #include <PrimitiveBatch.h>
 #include <VertexTypes.h>
 
+#include <CommonStates.h>
+
 #include "Classes\GameMain.h"
 #include "Classes\Wrapper\GamePad\GamePadManager.h"
 
@@ -21,8 +23,6 @@
 class Game
 {
 private:
-	std::shared_ptr <DirectX::CommonStates> m_state;
-
 	//ゲームコントローラー
 	GamePadManager* m_gamePad;
 
@@ -68,7 +68,9 @@ private:
     int                                             m_outputHeight;
 
     D3D_FEATURE_LEVEL                               m_featureLevel;
-    Microsoft::WRL::ComPtr<ID3D11Device>            m_d3dDevice;
+	
+
+	Microsoft::WRL::ComPtr<ID3D11Device>            m_d3dDevice;
     Microsoft::WRL::ComPtr<ID3D11Device1>           m_d3dDevice1;
     Microsoft::WRL::ComPtr<ID3D11DeviceContext>     m_d3dContext;
     Microsoft::WRL::ComPtr<ID3D11DeviceContext1>    m_d3dContext1;

@@ -99,13 +99,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         {
             g_game->Tick();
         }
-    }
+	}
 
     g_game.reset();
 
     CoUninitialize();
 
-    return (int) msg.wParam;
+	return (int)msg.wParam;
 }
 
 // Windows procedure

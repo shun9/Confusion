@@ -6,6 +6,7 @@
 //************************************************/
 #pragma once
 #include <GamePad.h>
+#include <vector>
 #include "../../Player/Player.h"
 
 class GamePadManager
@@ -19,7 +20,8 @@ private:
 	std::unique_ptr<DirectX::GamePad>m_gamePad;
 
 	//ゲームパッドの状態
-	DirectX::GamePad::State* m_state;
+	DirectX::GamePad::State m_state1;
+	DirectX::GamePad::State m_state2;
 
 public:
 	//更新処理
@@ -29,7 +31,7 @@ public:
 	DirectX::GamePad::State Get(int gamePadNum);
 
 
-	//設定関連（よくわからないけど必要）
+	//設定関連
 	void Suspend() { m_gamePad->Suspend(); }
 	void Resume() { m_gamePad->Resume(); }
 
