@@ -16,7 +16,7 @@ private:
 private:
 	ShunLib::Texture* m_texture;
 
-	//Šg‘å—¦
+	//”¼Œa
 	float m_radius;
 
 	//ˆÊ’u

@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Player.h
 //* @brief :プレイヤーのヘッダー
-//* @date  :2017/04/22
+//* @date  :2017/04/28
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -45,8 +45,13 @@ private:
 	Gravity* m_gravity;
 	float m_gravityScale;
 
+	//ヒットポイント
+	int m_hp;
+	
+	//無敵時間
+	int m_invincibleTime;
 
-	/*--メンバ関数--*/
+	/*--公開関数--*/
 public:
 	Player(const wchar_t* model,
 		   ShunLib::Vec3 pos,
@@ -58,11 +63,24 @@ public:
 	void Update()override;
 
 	//重力の描画
-	void DrawGravity(const ShunLib::Matrix& view,
-				  	 const ShunLib::Matrix& proj);
+	void DrawGravity(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
+	{	m_gravity->Draw(view, proj);	}
 
+	//重力の情報を返す
 	Gravity* GetGravity() { return m_gravity; }
 	
+	//ダメージを受ける
+	void TakeDamage(int damage) {m_hp -= damage;}
+
+	//ＨＰ
+	int Hp() { return m_hp; }
+
+	//無敵時間
+	int InvincibleTime() { return m_invincibleTime; }
+	void InvincibleTime(int time) { m_invincibleTime = time; }
+
+
+	/*--非公開関数--*/
 private:
 	//移動速度の更新
 	void UpdateSpd();

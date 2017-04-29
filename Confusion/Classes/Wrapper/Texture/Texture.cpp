@@ -99,13 +99,15 @@ void Texture::Draw(float x, float y, float scale, const RECT* rect)
 //＋ーーーーーーーーーーーーーー＋
 void ShunLib::Texture::Draw(const Matrix& world, const Matrix& view, const Matrix& proj)
 {
+	//テクスチャを設定
 	m_alphaTestEffect->SetTexture(m_texture.Get());
 
+	//各種行列を設定
 	m_alphaTestEffect->SetWorld(world.GetDirectMatrix());
 	m_alphaTestEffect->SetView(view.GetDirectMatrix());
 	m_alphaTestEffect->SetProjection(proj.GetDirectMatrix());
 
-
+	//描画設定
 	m_context->OMSetBlendState(m_state->Opaque(), nullptr, 0xFFFFFFFF);
 	m_context->OMSetDepthStencilState(m_state->DepthNone(), 0);
 	m_context->RSSetState(m_state->CullNone());
@@ -114,13 +116,13 @@ void ShunLib::Texture::Draw(const Matrix& world, const Matrix& view, const Matri
 	m_alphaTestEffect->Apply(m_context);
 	m_context->IASetInputLayout(m_input.Get());
 
-
+	//描画用座標
 	DirectX::VertexPositionTexture vertexes[4] =
 	{
-		{ DirectX::SimpleMath::Vector3(-0.5f, 0.0f,0.5f),DirectX::SimpleMath::Vector2(0.0f,0.0f) },
-		{ DirectX::SimpleMath::Vector3(0.5f, 0.0f,0.5f),DirectX::SimpleMath::Vector2(1.0f,0.0f) },
-		{ DirectX::SimpleMath::Vector3(0.5f,0.0f,-0.5f),DirectX::SimpleMath::Vector2(1.0f,1.0f) },
-		{ DirectX::SimpleMath::Vector3(-0.5f,0.0f,-0.5f),DirectX::SimpleMath::Vector2(0.0f,1.0f) },
+		{ DirectX::SimpleMath::Vector3(-0.5f, 0.0f, 0.5f),DirectX::SimpleMath::Vector2(0.0f,0.0f) },
+		{ DirectX::SimpleMath::Vector3( 0.5f, 0.0f, 0.5f),DirectX::SimpleMath::Vector2(1.0f,0.0f) },
+		{ DirectX::SimpleMath::Vector3( 0.5f, 0.0f,-0.5f),DirectX::SimpleMath::Vector2(1.0f,1.0f) },
+		{ DirectX::SimpleMath::Vector3(-0.5f, 0.0f,-0.5f),DirectX::SimpleMath::Vector2(0.0f,1.0f) },
 	};
 
 	uint16_t indexes[6] = { 0,1,2,2,3,0 };

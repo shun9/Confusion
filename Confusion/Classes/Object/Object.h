@@ -44,7 +44,7 @@ public:
 	ShunLib::Vec3 Pos() { return *m_pos; }
 	void Pos(ShunLib::Vec3 pos) { *m_pos = pos; }
 
-	//Šg‘å—¦
+	//“–‚½‚è”»’è—p‚Ì”¼Œa
 	void Radius(float radius) { m_radius = radius; }
 	float Radius() { return m_radius; }
 

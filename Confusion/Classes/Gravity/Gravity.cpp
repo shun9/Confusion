@@ -7,7 +7,7 @@
 #include "Gravity.h"
 
 using namespace ShunLib;
-const float Gravity::POWER = 0.05f;
+const float Gravity::POWER = 0.03f;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -59,7 +59,7 @@ void Gravity::Update()
 void Gravity::Draw(Matrix view, Matrix proj)
 {
 	Matrix world;
-	world = Matrix::CreateScale(m_radius)
+	world = Matrix::CreateScale(m_radius*2)
 		  * Matrix::CreateRotationY(m_angle)
     	  * Matrix::CreateTranslation(m_pos);
 

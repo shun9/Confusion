@@ -59,6 +59,9 @@
     <Filter Include="Assets\Stage">
       <UniqueIdentifier>{db2e090d-5224-4a8a-a82e-2ffaead58503}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Enemy">
+      <UniqueIdentifier>{e8716320-4428-4c75-9f78-3fda136ebf58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h">
@@ -112,6 +115,9 @@
     <ClInclude Include="Classes\Conversion\Conversion.h">
       <Filter>ShunLib\Wrapper\Conversion</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\Scene\TitleScene.h">
+      <Filter>Classes\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\GameMain.cpp">
@@ -162,6 +168,9 @@
     <ClCompile Include="Classes\Conversion\Conversion.cpp">
       <Filter>ShunLib\Wrapper\Conversion</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\Scene\TitleScene.cpp">
+      <Filter>Classes\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -187,6 +196,9 @@
     </MeshContentTask>
     <MeshContentTask Include="Model\tree.FBX">
       <Filter>Assets\Stage</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Model\Enemy.FBX">
+      <Filter>Assets\Enemy</Filter>
     </MeshContentTask>
   </ItemGroup>
 </Project>

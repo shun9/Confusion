@@ -20,6 +20,8 @@ Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum,DIRECTION
 	, m_gamePadNum(gamePadNum)
 	, m_stick(stick)
 	, m_gravityScale(0.1f)
+	, m_hp(10)
+	, m_invincibleTime(0)
 {
 	m_gamePad = GamePadManager::GetInstance();
 
@@ -51,20 +53,16 @@ void Player::Update()
 	//移動
 	*m_pos = *m_pos + *m_spd;
 
+	//無敵時間減少
+	if (m_invincibleTime > 0)
+	{
+		m_invincibleTime--;
+	}
+
 	//重力関連の更新
 	UpdateGravity();
 }
 
-
-//＋ーーーーーーーーーーーーーー＋
-//｜機能  :重力の描画
-//｜引数  :なし(void)
-//｜戻り値:なし(void)
-//＋ーーーーーーーーーーーーーー＋
-void Player::DrawGravity(const ShunLib::Matrix & view, const ShunLib::Matrix & proj)
-{
-	m_gravity->Draw(view, proj);
-}
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :速度の更新
@@ -157,9 +155,14 @@ void Player::UpdateGravityScale()
 	}
 
 	//縮小しすぎないようにする
-	if (m_gravityScale <= 0.0f)
+	if (m_gravityScale < 0.0f)
 	{
 		m_gravityScale = 0.0f;
+	}
+	//拡大しすぎないようにする
+	if (m_gravityScale > 10.0f)
+	{
+		m_gravityScale = 10.0f;
 	}
 }
 

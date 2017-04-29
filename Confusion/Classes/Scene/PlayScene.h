@@ -19,7 +19,7 @@ private:
 	ShunLib::Matrix m_proj;	//プロジェクション行列
 
 	Player** m_player;
-	Enemy* m_enemy;
+	std::vector<Enemy*> m_enemy;
 
 public:
 	PlayScene();
@@ -29,6 +29,10 @@ public:
 	void Render()override;
 
 private:
+	//当たり判定総合
+	void Collision();
+
+	//当たり判定それぞれ
 	bool Collision(Object* obj, Object* obj2);
 	bool Collision(Object* obj, Gravity* gra);
 };
