@@ -25,6 +25,10 @@ enum DIRECTION
 class Player :public Object
 {
 	/*--静的変数--*/
+private:
+	//速度倍率
+	static const float SPD_MAGNIFICATION;
+
 public:
 	//プレイヤー最大数
 	static const int MAX_PLAYER;
@@ -79,6 +83,8 @@ public:
 	int InvincibleTime() { return m_invincibleTime; }
 	void InvincibleTime(int time) { m_invincibleTime = time; }
 
+	//ステージ外に出ないようにする
+	void Clamp(float top,float bottom,float right,float left);
 
 	/*--非公開関数--*/
 private:

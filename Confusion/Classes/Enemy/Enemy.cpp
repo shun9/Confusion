@@ -1,22 +1,26 @@
 //************************************************/
 //* @file  :Enemy.cpp
 //* @brief :敵のソースファイル
-//* @date  :2017/04/24
+//* @date  :2017/05/01
 //* @author:S.Katou
 //************************************************/
 #include "Enemy.h"
+//速度倍率
+const float Enemy::SPD_MAGNIFICATION = 3.0f;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
 //｜引数  :画像のパス(wchar_t*)
 //｜引数  :初期座標	 (ShunLib::Vec3)
 //＋ーーーーーーーーーーーーーー＋
-Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos)
-	: Object(model,pos)
+Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
+	: Object(model,pos,spd)
+	, m_isDead(false)
+	, m_confusedTime(0)
+	, m_isConfused(false)
 {
-	m_spd->m_z = 0.0f;
-
 	m_radius = 1.0f;
+	m_firstSpd = spd;
 }
 
 
@@ -35,5 +39,79 @@ Enemy::~Enemy()
 //＋ーーーーーーーーーーーーーー＋
 void Enemy::Update()
 {
-	*m_pos = *m_pos + *m_spd;
+	//移動
+	*m_pos = *m_pos + (*m_spd * SPD_MAGNIFICATION / 60.0f);
+
+	//混乱時間経過
+	if (m_isConfused)
+	{
+		m_confusedTime--;
+	}
+
+	//時間経過で混乱状態解除
+	if (m_confusedTime <= 0)
+	{
+		*m_spd = m_firstSpd;
+		m_confusedTime = 0;
+		m_isConfused = false;
+	}
+}
+
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :速度ベクトルを回転させる
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void Enemy::Fluster()
+{
+	m_isConfused = true;
+
+	//速度ベクトルを回転させる
+	m_spd->m_x = cosf(static_cast<float>(m_confusedTime/30));
+	m_spd->m_z = sinf(static_cast<float>(m_confusedTime/30));
+
+	//混乱時間を加算 0.5秒
+	m_confusedTime += 30;
+}
+
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :範囲外に出たら死
+//｜引数  :ステージの上(float)
+//｜引数  :ステージの下(float)
+//｜引数  :ステージの右(float)
+//｜引数  :ステージの左(float)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void Enemy::Dead(float top, float bottom, float right, float left)
+{
+	//Ｚ軸正側判定
+	if (m_pos->m_z > top)
+	{
+		Dead();	
+		return;
+	}
+
+	//Ｚ軸負側判定
+	if (m_pos->m_z < bottom)
+	{
+		Dead();
+		return;
+	}
+
+
+	//Ｘ軸正側判定
+	if (m_pos->m_x > right)
+	{
+		Dead();
+		return;
+	}
+
+	//Ｘ軸負側判定
+	if (m_pos->m_x < left)
+	{
+		Dead();
+		return;
+	}
 }

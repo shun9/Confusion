@@ -49,8 +49,29 @@ namespace ShunLib
 		Vec3& operator=(const DirectX::SimpleMath::Vector3& V);
 		Vec3& operator+(const Vec3& V);
 		Vec3& operator-(const Vec3& V);
-		Vec3& operator*(int num);
-		Vec3& operator*(float num);
-		Vec3& operator*(double num);
+
+		template<class T>Vec3& operator*(T num);
+		template<class T>Vec3& operator/(T num);
+
 	};
+
+	template<class T>
+	inline Vec3& Vec3::operator*(T num)
+	{
+		this->m_x *= static_cast<float>(num);
+		this->m_y *= static_cast<float>(num);
+		this->m_z *= static_cast<float>(num);
+		return *this;
+	}
+
+	template<class T>
+	inline Vec3& Vec3::operator/(T num)
+	{
+		this->m_x /= static_cast<float>(num);
+		this->m_y /= static_cast<float>(num);
+		this->m_z /= static_cast<float>(num);
+		return *this;
+	}
+
 }
+

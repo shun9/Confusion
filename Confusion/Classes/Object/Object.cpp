@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Object.cpp
 //* @brief :オブジェクトの基底クラス
-//* @date  :2017/04/20
+//* @date  :2017/05/02
 //* @author:S.Katou
 //************************************************/
 #include "Object.h"
@@ -12,7 +12,7 @@
 //｜引数  :画像のパス(wchar_t*)
 //｜引数  :初期座標	 (ShunLib::Vec3)
 //＋ーーーーーーーーーーーーーー＋
-Object::Object(const wchar_t* model, ShunLib::Vec3 pos)
+Object::Object(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 	: m_angle(0.0f)
 {
 	using namespace ShunLib;
@@ -20,7 +20,7 @@ Object::Object(const wchar_t* model, ShunLib::Vec3 pos)
 	//delete -> ~Object
 	m_model = new Model(model);
 	m_pos   = new Vec3(pos);
-	m_spd   = new Vec3(0.0f, 0.0f, 0.0f);
+	m_spd   = new Vec3(spd);
 }
 
 
@@ -46,6 +46,7 @@ void Object::Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 {
 	using namespace ShunLib;
 
+	//向いている方向を計算する
 	CalculateDirection();
 
 	Matrix world = Matrix::CreateRotationY(m_angle) * Matrix::CreateTranslation(*m_pos);

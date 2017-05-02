@@ -62,6 +62,9 @@
     <Filter Include="Assets\Enemy">
       <UniqueIdentifier>{e8716320-4428-4c75-9f78-3fda136ebf58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Stage">
+      <UniqueIdentifier>{51f1e236-c946-4bf6-83e9-21f4d5fe80d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h">
@@ -118,6 +121,9 @@
     <ClInclude Include="Classes\Scene\TitleScene.h">
       <Filter>Classes\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\Stage\Stage.h">
+      <Filter>Classes\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\GameMain.cpp">
@@ -171,6 +177,9 @@
     <ClCompile Include="Classes\Scene\TitleScene.cpp">
       <Filter>Classes\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\Stage\Stage.cpp">
+      <Filter>Classes\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -199,6 +208,9 @@
     </MeshContentTask>
     <MeshContentTask Include="Model\Enemy.FBX">
       <Filter>Assets\Enemy</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Model\Glass.FBX">
+      <Filter>Assets\Stage</Filter>
     </MeshContentTask>
   </ItemGroup>
 </Project>

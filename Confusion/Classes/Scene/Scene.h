@@ -11,14 +11,18 @@ class Scene
 public:
 	enum
 	{
+		TITLE,
 		PLAY,
 	};
 
-	static int nextScene;
+private:
+	static int m_nextScene;
 
 public:
 	~Scene() {}
 	virtual void Update() = 0;
 	virtual void Render() = 0;
 
+	//Ÿ‚ÌƒV[ƒ“‚ğ•Ô‚·
+	int NextScene() { return m_nextScene; }
 };

@@ -140,26 +140,3 @@ Vec3& ShunLib::Vec3::operator-(const Vec3& V)
 	return *this;
 }
 
-Vec3& ShunLib::Vec3::operator*(int num)
-{
-	this->m_x *= num;
-	this->m_y *= num;
-	this->m_z *= num;
-	return *this;
-}
-
-Vec3 & ShunLib::Vec3::operator*(float num)
-{
-	this->m_x *= num;
-	this->m_y *= num;
-	this->m_z *= num;
-	return *this;
-}
-
-Vec3 & ShunLib::Vec3::operator*(double num)
-{
-	this->m_x *= static_cast<float>(num);
-	this->m_y *= static_cast<float>(num);
-	this->m_z *= static_cast<float>(num);
-	return *this;
-}

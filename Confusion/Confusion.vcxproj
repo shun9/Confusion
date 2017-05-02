@@ -173,6 +173,7 @@
     <ClInclude Include="Classes\Scene\PlayScene.h" />
     <ClInclude Include="Classes\Scene\Scene.h" />
     <ClInclude Include="Classes\Scene\TitleScene.h" />
+    <ClInclude Include="Classes\Stage\Stage.h" />
     <ClInclude Include="Classes\Wrapper\GamePad\GamePadManager.h" />
     <ClInclude Include="Classes\Wrapper\Matrix\Matrix.h" />
     <ClInclude Include="Classes\Wrapper\Model\Model.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="Classes\Player\Player.cpp" />
     <ClCompile Include="Classes\Scene\PlayScene.cpp" />
     <ClCompile Include="Classes\Scene\TitleScene.cpp" />
+    <ClCompile Include="Classes\Stage\Stage.cpp" />
     <ClCompile Include="Classes\Wrapper\GamePad\GamePadManager.cpp" />
     <ClCompile Include="Classes\Wrapper\Matrix\Matrix.cpp" />
     <ClCompile Include="Classes\Wrapper\Model\Model.cpp" />
@@ -223,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Model\Enemy.FBX" />
+    <MeshContentTask Include="Model\Glass.FBX" />
     <MeshContentTask Include="Model\Player.FBX" />
     <MeshContentTask Include="Model\PlayerB.FBX" />
     <MeshContentTask Include="Model\tree.FBX" />

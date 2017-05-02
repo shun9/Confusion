@@ -7,7 +7,7 @@
 #include "Gravity.h"
 
 using namespace ShunLib;
-const float Gravity::POWER = 0.03f;
+const float Gravity::POWER = 0.07f;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -40,7 +40,7 @@ Gravity::~Gravity()
 //＋ーーーーーーーーーーーーーー＋
 void Gravity::Update()
 {
-	//時計回り
+	//時計回りで回転させる
 	m_angle -= 2.0f;
 
 	if (m_angle <= 0.0f)
@@ -75,6 +75,12 @@ void Gravity::Draw(Matrix view, Matrix proj)
 void Gravity::Attract(ShunLib::Vec3* objPos)
 {
 	using namespace ShunLib;
+
+	//重力が発生していなければ終了
+	if (m_radius <= 0.0f)
+	{
+		return;
+	}
 
 	float x = objPos->m_x - m_pos.m_x;
 	float z = objPos->m_z - m_pos.m_z;

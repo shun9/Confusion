@@ -41,7 +41,6 @@ void GameMain::Initialize(int screenW, int screenH)
 void GameMain::Update()
 {
 	//シーン切り替え
-	Scene::nextScene;
 
 	//シーン更新
 	m_scene->Update();

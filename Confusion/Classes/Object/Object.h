@@ -30,7 +30,9 @@ protected:
 
 public:
 	//コンストラクタ＆デストラクタ
-	Object(const wchar_t* model,ShunLib::Vec3 pos = (0.0f,0.0f,0.0f));
+	Object(const wchar_t* model,
+		   ShunLib::Vec3 pos = (0.0f, 0.0f, 0.0f), 
+		   ShunLib::Vec3 spd = (0.0f, 0.0f, 0.0f));
 	~Object();
 	
 	//更新処理
@@ -43,6 +45,10 @@ public:
 	//位置情報
 	ShunLib::Vec3 Pos() { return *m_pos; }
 	void Pos(ShunLib::Vec3 pos) { *m_pos = pos; }
+
+	//速度情報
+	ShunLib::Vec3 Spd() { return *m_spd; }
+	void Spd(ShunLib::Vec3 spd) { *m_spd = spd; }
 
 	//当たり判定用の半径
 	void Radius(float radius) { m_radius = radius; }

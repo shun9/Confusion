@@ -54,7 +54,5 @@ namespace ShunLib
 		void Draw(const Matrix& world,
 				  const Matrix& view,
 				  const Matrix& proj);
-		
-
 	};
 }
