@@ -65,6 +65,9 @@
     <Filter Include="Classes\Stage">
       <UniqueIdentifier>{51f1e236-c946-4bf6-83e9-21f4d5fe80d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ShunLib\Wrapper\Effect">
+      <UniqueIdentifier>{eb1ea42b-3c86-4468-aa78-0569c7f9cf10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h">
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="Classes\Stage\Stage.h">
       <Filter>Classes\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Wrapper\Effekseer\Effect.h">
+      <Filter>ShunLib\Wrapper\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,18 +5,10 @@
 #pragma once
 
 #include "StepTimer.h"
-#include <SpriteBatch.h>
-#include <CommonStates.h>
-#include <wrl.h>
-#include <WICTextureLoader.h>
-
-#include <PrimitiveBatch.h>
-#include <VertexTypes.h>
-
-#include <CommonStates.h>
 
 #include "Classes\GameMain.h"
 #include "Classes\Wrapper\GamePad\GamePadManager.h"
+
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -28,6 +20,8 @@ private:
 
 	//ÉQÅ[ÉÄñ{ëÃ
 	GameMain* m_gameMain;
+
+
 
 public:
 

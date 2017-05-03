@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :PlayScene.h
 //* @brief :プレイ画面のヘッダー
-//* @date  :2017/05/01
+//* @date  :2017/05/02
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -12,6 +12,9 @@
 #include "../Player/Player.h"
 #include "../Enemy/Enemy.h"
 #include "../Stage/Stage.h"
+
+#include <Effekseer.h>
+#include <EffekseerRendererDX11.h>
 
 class PlayScene:public Scene
 {

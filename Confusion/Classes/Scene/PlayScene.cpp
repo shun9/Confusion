@@ -37,6 +37,30 @@ PlayScene::PlayScene()
 
 	//ステージ生成
 	m_stage = new Stage;
+
+	//// 描画管理インスタンスの生成
+	//EffekseerRenderer::Renderer* renderer = ::EffekseerRendererDX11::Renderer::Create(m_d3dDevice.Get(), m_d3dContext.Get(), 32);
+
+	//// エフェクト管理用インスタンスの生成
+	//Effekseer::Manager* manager = ::Effekseer::Manager::Create(32);
+
+	//// 描画方法の指定、独自に拡張しない限り定形文です。
+	//manager->SetSpriteRenderer(renderer->CreateSpriteRenderer());
+	//manager->SetRibbonRenderer(renderer->CreateRibbonRenderer());
+	//manager->SetRingRenderer(renderer->CreateRingRenderer());
+
+	//// テクスチャ画像の読込方法の指定(パッケージ等から読み込む場合拡張する必要があります。)
+	//manager->SetTextureLoader(renderer->CreateTextureLoader());
+
+	//// 座標系の指定(RHで右手系、LHで左手系)
+	//manager->SetCoordinateSystem(Effekseer::CoordinateSystem::RH);
+
+	//// エフェクトの読込
+	//effect = Effekseer::Effect::Create(manager, (EFK_CHAR*)L"Effect\\Gravity.efk");
+
+	//// エフェクトの再生
+	//handle = manager->Play(effect, 0.0f, -1.0f, 0.0f);
+
 }
 
 
