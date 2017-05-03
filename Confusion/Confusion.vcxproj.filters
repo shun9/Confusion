@@ -180,6 +180,9 @@
     <ClCompile Include="Classes\Stage\Stage.cpp">
       <Filter>Classes\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\Scene\Scene.cpp">
+      <Filter>Classes\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

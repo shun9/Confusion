@@ -28,6 +28,7 @@ class Player :public Object
 private:
 	//速度倍率
 	static const float SPD_MAGNIFICATION;
+	static const int MAX_HP;
 
 public:
 	//プレイヤー最大数
@@ -51,7 +52,9 @@ private:
 
 	//ヒットポイント
 	int m_hp;
-	
+	ShunLib::Texture* m_hpGaugeRed;
+	ShunLib::Texture* m_hpGaugeGreen;
+
 	//無敵時間
 	int m_invincibleTime;
 
@@ -70,11 +73,13 @@ public:
 	void DrawGravity(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 	{	m_gravity->Draw(view, proj);	}
 
+	void DrawHpGauge(const ShunLib::Matrix& view, const ShunLib::Matrix& proj);
+
 	//重力の情報を返す
 	Gravity* GetGravity() { return m_gravity; }
 	
 	//ダメージを受ける
-	void TakeDamage(int damage) {m_hp -= damage;}
+	void TakeDamage(int damage) { m_hp -= damage; }
 
 	//ＨＰ
 	int Hp() { return m_hp; }

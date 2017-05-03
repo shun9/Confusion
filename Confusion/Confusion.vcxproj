@@ -192,6 +192,7 @@
     <ClCompile Include="Classes\Object\Object.cpp" />
     <ClCompile Include="Classes\Player\Player.cpp" />
     <ClCompile Include="Classes\Scene\PlayScene.cpp" />
+    <ClCompile Include="Classes\Scene\Scene.cpp" />
     <ClCompile Include="Classes\Scene\TitleScene.cpp" />
     <ClCompile Include="Classes\Stage\Stage.cpp" />
     <ClCompile Include="Classes\Wrapper\GamePad\GamePadManager.cpp" />

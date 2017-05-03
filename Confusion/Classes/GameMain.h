@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :GameMain.h
-//* @brief :ゲームのメインクラス　メソッド記入用
-//* @date  :2017/04/20
+//* @brief :ゲームのメインクラス　記入用
+//* @date  :2017/05/02
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -15,7 +15,14 @@ public:
 	static int screenH;
 
 private:
+	//シーン
 	Scene* m_scene;
+
+	//現在のシーン
+	int m_currentScene;
+
+	//次のシーン
+	int m_nextScene;
 
 	ShunLib::Matrix m_view;	//ビュー行列
 	ShunLib::Matrix m_proj;	//プロジェクション行列

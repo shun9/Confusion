@@ -11,7 +11,8 @@
 const int Player::MAX_PLAYER = 2;
 
 //速度倍率
-const float Player::SPD_MAGNIFICATION = 6.0f;
+const float Player::SPD_MAGNIFICATION = 8.0f;
+const int Player::MAX_HP = 17;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -23,15 +24,20 @@ Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum,DIRECTION
 	, m_gamePadNum(gamePadNum)
 	, m_stick(stick)
 	, m_gravityScale(0.1f)
-	, m_hp(10)
+	, m_hp(MAX_HP)
 	, m_invincibleTime(0)
 {
 	m_gamePad = GamePadManager::GetInstance();
 
 	m_radius = 0.8f;
 
+	//delete -> ~Player
 	m_gravity = new Gravity(L"Effect\\gravity.png");
 	m_gravity->Radius(m_gravityScale);
+
+	//delete -> ~Player
+	m_hpGaugeRed = new ShunLib::Texture(L"Images\\GaugeRed.png");
+	m_hpGaugeGreen = new ShunLib::Texture(L"Images\\GaugeGreen.png");
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -40,6 +46,9 @@ Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum,DIRECTION
 Player::~Player()
 {
 	delete m_gravity;
+
+	delete m_hpGaugeRed;
+	delete m_hpGaugeGreen;
 }
 
 
@@ -64,6 +73,34 @@ void Player::Update()
 
 	//重力関連の更新
 	UpdateGravity();
+}
+
+
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :HPゲージの描画
+//｜引数  :ビュー行列		   (ShunLib::Matrix)
+//｜引数  :プロジェクション行列(ShunLib::Matrix)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void Player::DrawHpGauge(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
+{
+	using namespace ShunLib;
+
+	//バグが起きるので行列を２つ分作りました
+	Matrix scale = Matrix::CreateScale(Vec3(2.0f, 0.5f, 1.0f));
+	Matrix rotate = Matrix::CreateRotationX(90.0f);
+	Matrix trans = Matrix::CreateTranslation(Vec3(m_pos->m_x, 0.0f, m_pos->m_z + 0.5f));
+
+	Matrix scale2 = Matrix::CreateScale(Vec3(2.0f*m_hp/ MAX_HP, 0.5f, 1.0f));
+	Matrix rotate2 = Matrix::CreateRotationX(90.0f);
+	Matrix trans2 = Matrix::CreateTranslation(Vec3(m_pos->m_x - ((1.0f- m_hp/(float)MAX_HP)), 0.0f, m_pos->m_z + 0.5f));
+
+	Matrix worldRed = scale*rotate*trans;
+	Matrix worldGreen = scale2*rotate2*trans2;
+
+	m_hpGaugeRed->Draw(worldRed, view, proj);
+	m_hpGaugeGreen->Draw(worldGreen, view, proj);
 }
 
 //＋ーーーーーーーーーーーーーー＋

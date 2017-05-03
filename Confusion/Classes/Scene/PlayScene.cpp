@@ -132,6 +132,7 @@ void PlayScene::Render()
 		{
 			m_player[i]->Draw(m_view, m_proj);
 		}
+		m_player[i]->DrawHpGauge(m_view, m_proj);
 	}
 
 	//“G•`‰æ
@@ -298,6 +299,7 @@ void PlayScene::CreateEnemy()
 	//—”¶¬—p
 	std::random_device random;
 	std::mt19937 mt(random());
+
 	//—”‚Ì’l‚ğ§ŒÀ
 	std::uniform_real_distribution<float> num(STAGE_LEFT, STAGE_RIGHT);
 
