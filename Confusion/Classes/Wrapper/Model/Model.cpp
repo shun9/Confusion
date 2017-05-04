@@ -12,7 +12,6 @@ ID3D11DeviceContext* Model::m_context;
 //｜機能  :デバイスの設定
 //｜引数  :デバイス
 //｜引数  :デバイスコンテキスト
-//｜引数  :ステート
 //｜戻り値:なし(void)
 //＋ーーーーーーーーーーーーーー＋
 void ShunLib::Model::SetDevice(ID3D11Device* device, 

@@ -189,6 +189,9 @@
     <ClCompile Include="Classes\Scene\Scene.cpp">
       <Filter>Classes\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\Wrapper\Effekseer\Effect.cpp">
+      <Filter>ShunLib\Wrapper\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

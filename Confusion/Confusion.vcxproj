@@ -196,6 +196,7 @@
     <ClCompile Include="Classes\Scene\Scene.cpp" />
     <ClCompile Include="Classes\Scene\TitleScene.cpp" />
     <ClCompile Include="Classes\Stage\Stage.cpp" />
+    <ClCompile Include="Classes\Wrapper\Effekseer\Effect.cpp" />
     <ClCompile Include="Classes\Wrapper\GamePad\GamePadManager.cpp" />
     <ClCompile Include="Classes\Wrapper\Matrix\Matrix.cpp" />
     <ClCompile Include="Classes\Wrapper\Model\Model.cpp" />

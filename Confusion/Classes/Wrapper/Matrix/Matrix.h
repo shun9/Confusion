@@ -44,8 +44,8 @@ namespace ShunLib
 
 
 		/*--[Ã“I‚Å‚Í‚È‚¢‚â‚Â‚ç]--*/
-	private:
-		float m_matrix[4][4];
+	public:
+		float m_value[4][4];
 
 	public:
 		Matrix();

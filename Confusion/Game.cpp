@@ -2,14 +2,15 @@
 // Game.cpp
 //
 
+#include <WICTextureLoader.h>
+
+#include <SimpleMath.h>
 
 #include "pch.h"
 #include "Game.h"
 #include "Classes\Wrapper\Model\Model.h"
 #include "Classes\Wrapper\Texture\Texture.h"
-#include <WICTextureLoader.h>
-
-#include <SimpleMath.h>
+#include "Classes\Wrapper\Effekseer\Effect.h"
 
 extern void ExitGame();
 
@@ -30,8 +31,8 @@ Game::Game() :
 void Game::Initialize(HWND window, int width, int height)
 {
     m_window = window;
-    m_outputWidth = std::max(width, 1);
-    m_outputHeight = std::max(height, 1);
+    m_outputWidth = (width > 1) ? (width) : (1);
+    m_outputHeight = (height > 1) ? (height) : (1);
 
     CreateDevice();
 
@@ -48,6 +49,7 @@ void Game::Initialize(HWND window, int width, int height)
 	//モデルにデバイスを設定
 	ShunLib::Model::SetDevice(m_d3dDevice.Get(),m_d3dContext.Get());
 	ShunLib::Texture::SetDevice(m_d3dDevice.Get(), m_d3dContext.Get());
+	ShunLib::Effect::SetDevice(m_d3dDevice.Get(), m_d3dContext.Get());
 
 	//ゲームコントローラー取得
 	m_gamePad = GamePadManager::GetInstance();
@@ -168,8 +170,8 @@ void Game::OnResuming()
 
 void Game::OnWindowSizeChanged(int width, int height)
 {
-    m_outputWidth = std::max(width, 1);
-    m_outputHeight = std::max(height, 1);
+	m_outputWidth = (width > 1) ? (width) : (1);
+	m_outputHeight = (height > 1) ? (height) : (1);
 
     CreateResources();
 

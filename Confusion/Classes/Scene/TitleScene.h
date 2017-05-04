@@ -9,6 +9,7 @@
 #include "../Stage/Stage.h"
 #include "../Wrapper/Texture/Texture.h"
 #include "../Wrapper/GamePad/GamePadManager.h"
+#include "../Wrapper/Effekseer/Effect.h"
 
 class TitleScene : public Scene
 {
@@ -24,6 +25,9 @@ private:
 
 	//ゲームパッド
 	GamePadManager* m_pad;
+
+	ShunLib::Effect* m_testEffect;
+
 
 public:
 	TitleScene();

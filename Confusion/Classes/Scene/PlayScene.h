@@ -15,6 +15,7 @@
 
 #include <Effekseer.h>
 #include <EffekseerRendererDX11.h>
+#include "../Wrapper/Effekseer/Effect.h"
 
 class PlayScene:public Scene
 {
