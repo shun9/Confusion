@@ -43,6 +43,9 @@ namespace ShunLib
 		//フレームのカウント
 		int m_flameCnt;
 
+		//再生が終了したらtrue
+		bool m_isEnded;
+
 		/*--メンバ関数--*/
 	public:
 
@@ -62,6 +65,7 @@ namespace ShunLib
 		void SetDraw(const ShunLib::Vec3 pos = ShunLib::Vec3::Zero)
 		{
 			handle = manager->Play(effect, pos.m_x,pos.m_y,pos.m_z);
+			m_isEnded = false;
 		}
 
 		//位置を設定
@@ -90,5 +94,8 @@ namespace ShunLib
 			Effekseer::Vector3D e_axis = { axis.m_x,axis.m_y,axis.m_z };
 			manager->SetRotation(handle, e_axis, angle);
 		}
+
+		//再生が終了したかどうか
+		bool IsEnded() { return m_isEnded; }
 	};
 }

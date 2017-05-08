@@ -34,6 +34,7 @@ void ShunLib::Effect::SetDevice(ID3D11Device* device,
 ShunLib::Effect::Effect(const wchar_t efk[], int flame,int spriteNum, bool isDrawFirst)
 	:m_flame(flame)
 	,m_flameCnt(0)
+	,m_isEnded(false)
 {
 	// 描画管理インスタンスの生成
 	renderer = EffekseerRendererDX11::Renderer::Create(m_device, m_context, spriteNum);
@@ -76,11 +77,9 @@ ShunLib::Effect::~Effect()
 }
 
 //＋ーーーーーーーーーーーーーー＋
-//｜機能  :モデルの描画
+//｜機能  :エフェクトの描画
 //｜引数  :ビュー行列	(Matrix)
 //｜引数  :射影行列		(Matrix)
-//｜引数  :位置ベクトル	(Vec3)
-//｜引数  :拡大率		(Vec3)
 //｜戻り値:なし(void)	
 //＋ーーーーーーーーーーーーーー＋
 void ShunLib::Effect::Draw(const ShunLib::Matrix& view,		
@@ -112,14 +111,25 @@ void ShunLib::Effect::Draw(const ShunLib::Matrix& view,
 	renderer->BeginRendering();
 	manager->Draw();
 	renderer->EndRendering();
+
+	m_flameCnt++;
+
+	if (m_flameCnt >= m_flame)
+	{
+		m_isEnded = true;
+	}
 }
 
-void ShunLib::Effect::DrawLoop(const ShunLib::Matrix & view, const ShunLib::Matrix & proj)
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :エフェクトの描画(ループ)
+//｜引数  :ビュー行列	(Matrix)
+//｜引数  :射影行列		(Matrix)
+//｜戻り値:なし(void)	
+//＋ーーーーーーーーーーーーーー＋
+void ShunLib::Effect::DrawLoop(const ShunLib::Matrix& view, const ShunLib::Matrix & proj)
 {
 	
 	this->Draw(view, proj);
-
-	m_flameCnt++;
 
 	if (m_flameCnt >= m_flame)
 	{

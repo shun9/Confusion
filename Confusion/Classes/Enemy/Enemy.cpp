@@ -22,10 +22,7 @@ Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 	m_radius = 1.0f;
 	m_firstSpd = spd;
 
-	m_summonEffect = new ShunLib::Effect(L"Effect\\MAGICALxSPIRAL\\Magic.efk",60,true);
-	m_summonEffect->SetScale(1.5f);
-	m_summonEffect->SetPos(*m_pos);
-	
+	m_confusionEffect = new ShunLib::Effect(L"Effect\\Confusion.efk",130,256,true);	
 }
 
 
@@ -34,7 +31,7 @@ Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 //＋ーーーーーーーーーーーーーー＋
 Enemy::~Enemy()
 {
-	delete m_summonEffect;
+	delete m_confusionEffect;
 }
 
 
@@ -74,6 +71,15 @@ void Enemy::Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 	using namespace ShunLib;
 	
 	Object::Draw(view,proj);
+
+	//混乱していたらエフェクト表示
+	if (m_isConfused)
+	{
+		m_confusionEffect->SetScale(0.5f);
+		m_confusionEffect->SetRotate(ShunLib::Vec3::UnitX, 30.0f);
+		m_confusionEffect->SetPos(*m_pos+Vec3(0.0f,3.0f,0.0f));
+		m_confusionEffect->DrawLoop(view, proj);
+	}
 }
 
 

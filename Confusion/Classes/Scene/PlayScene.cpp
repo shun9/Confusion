@@ -21,6 +21,8 @@ const float PlayScene::STAGE_LEFT = -15.0f;
 //｜機能  :コンストラクタ
 //＋ーーーーーーーーーーーーーー＋
 PlayScene::PlayScene()
+	:m_isStarted(false)
+	,m_isEnded(false)
 {
 	using namespace ShunLib;
 	m_view = Matrix::CreateLookAt(Vec3(0.0f, 30.0f, 40.0f), Vec3::Zero, Vec3::UnitY);
@@ -71,49 +73,24 @@ PlayScene::~PlayScene()
 //＋ーーーーーーーーーーーーーー＋
 void PlayScene::Update()
 {
-	//敵出現(仮)
-	static int t = 0;
-	t++;
-	if (t > 120)
+	PlayAgo();
+
+	//プレイ中の処理
+	if (m_isStarted
+	&& !m_isEnded)
 	{
-		CreateEnemy();
-		t = 0;
+		PlayMain();
 	}
 
 
-	//プレイヤー更新
-	for (int i = 0; i < Player::MAX_PLAYER; i++)
+	if (IsGameOver())
 	{
-		m_player[i]->Update();
-		m_player[i]->Clamp(STAGE_TOP, STAGE_BOTTOM, STAGE_RIGHT, STAGE_LEFT);
+		PlayGameOver();
 	}
 
-	//敵更新
-	for (int i = 0; i < static_cast<int>(m_enemy.size()); i++)
+	if (IsCleared())
 	{
-		m_enemy[i]->Update();
-		m_enemy[i]->Dead(STAGE_TOP, STAGE_BOTTOM, STAGE_RIGHT, STAGE_LEFT);
-	}
-
-	//当たり判定
-	Collision();
-
-	for (int i = 0; i < static_cast<int>(m_enemy.size()); i++)
-	{
-		//死んでいたら敵を削除
-		if (m_enemy[i]->IsDead())
-		{
-			//爆破エフェクト設定
-			m_blastEffect->SetDraw(m_enemy[i]->Pos()+ ShunLib::Vec3(0.0f, 1.0f, 0.0f));
-			//m_blastEffect->SetPos(ShunLib::Vec3(0.0f,1.0f,0.0f));
-
-			//敵削除
-			delete m_enemy[i];
-			m_enemy.erase(m_enemy.begin() + i);
-
-			//ずれた分戻す
-			i--;
-		}
+		PlayClear();
 	}
 }
 
@@ -134,6 +111,10 @@ void PlayScene::Render()
 		m_player[i]->DrawGravity(m_view, m_proj);
 	}
 
+	//エフェクト表示
+	m_summonEffect->Draw(m_view, m_proj);
+	m_blastEffect->Draw(m_view, m_proj);
+
 	//プレイヤー描画
 	for (int i = 0; i < Player::MAX_PLAYER; i++)
 	{
@@ -144,14 +125,69 @@ void PlayScene::Render()
 		m_player[i]->DrawHpGauge(m_view, m_proj);
 	}
 
-	m_summonEffect->Draw(m_view, m_proj);
-	m_blastEffect->Draw(m_view, m_proj);
-
 	//敵描画
 	for (int i = 0; i < static_cast<int>(m_enemy.size()); i++)
 	{
 		m_enemy[i]->Draw(m_view,m_proj);
 	}
+}
+
+
+void PlayScene::PlayAgo()
+{
+	m_isStarted = true;
+}
+
+void PlayScene::PlayMain()
+{
+	//敵出現(仮)
+	static int t = 0;
+	t++;
+	if (t > 120)
+	{
+		CreateEnemy();
+		t = 0;
+	}
+
+	//プレイヤー更新
+	for (int i = 0; i < Player::MAX_PLAYER; i++)
+	{
+		m_player[i]->Update();
+		m_player[i]->Clamp(STAGE_TOP, STAGE_BOTTOM, STAGE_RIGHT, STAGE_LEFT);
+	}
+
+	//敵更新
+	for (int i = 0; i < static_cast<int>(m_enemy.size()); i++)
+	{
+		m_enemy[i]->Update();
+		m_enemy[i]->Dead(STAGE_TOP, STAGE_BOTTOM, STAGE_RIGHT, STAGE_LEFT);
+	
+		if (m_enemy[i]->IsDead())
+		{
+			//爆破エフェクト設定
+			m_blastEffect->SetDraw(m_enemy[i]->Pos() + ShunLib::Vec3(0.0f, 1.0f, 0.0f));
+
+			//敵削除
+			delete m_enemy[i];
+			m_enemy.erase(m_enemy.begin() + i);
+
+			//ずれた分戻す
+			i--;
+		}
+	}
+
+	//当たり判定
+	Collision();
+}
+
+void PlayScene::PlayClear()
+{
+	m_isEnded = true;
+}
+
+void PlayScene::PlayGameOver()
+{
+	m_isEnded = true;
 }
 
 
@@ -182,6 +218,8 @@ void PlayScene::Collision()
 			{
 				m_player[j]->TakeDamage(1);
 				m_player[j]->InvincibleTime(60);
+
+				m_enemy[i]->Dead();
 			}
 		}
 
@@ -318,8 +356,38 @@ void PlayScene::CreateEnemy()
 	//敵生成　delete ー> ~PlayScene
 	m_enemy.push_back(new Enemy(L"CModel\\Enemy.cmo", ShunLib::Vec3(num(mt), 0.0f,STAGE_BOTTOM),ShunLib::Vec3(0.0f,0.0f,0.1f)));
 
+	//召喚エフェクト設定
 	m_summonEffect->SetDraw();
 	m_summonEffect->SetScale(1.5f);
 	m_summonEffect->SetPos(m_enemy.back()->Pos());
 }
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :ゲームクリア判定
+//｜引数  :なし(void)
+//｜戻り値:クリアしたらtrue(bool)
+//＋ーーーーーーーーーーーーーー＋
+bool PlayScene::IsCleared()
+{
+	return false;
+}
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :ゲームオーバー判定
+//｜引数  :なし(void)
+//｜戻り値:ゲームオーバーでtrue(bool)
+//＋ーーーーーーーーーーーーーー＋
+bool PlayScene::IsGameOver()
+{
+
+	for (int i = 0; i < Player::MAX_PLAYER; i++)
+	{
+		if (m_player[i]->Hp() <= 0)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 

@@ -37,18 +37,38 @@ private:
 	Player** m_player;
 	std::vector<Enemy*> m_enemy;
 
-	//登場時のエフェクト
+	//エフェクト
 	ShunLib::Effect* m_summonEffect;
 	ShunLib::Effect* m_blastEffect;
+
+	//プレイ開始でtrue
+	bool m_isStarted;
+
+	//クリアorゲームオーバーでtrue
+	bool m_isEnded;
 
 public:
 	PlayScene();
 	~PlayScene();
 
+	//更新＆描画
 	void Update()override;
 	void Render()override;
 
+
 private:
+	//プレイ開始前の処理
+	void PlayAgo();
+
+	//プレイ中の処理
+	void PlayMain();
+
+	//プレイクリアの処理
+	void PlayClear();
+
+	//プレイゲームオーバーの処理
+	void PlayGameOver();
+
 	//当たり判定総合
 	void Collision();
 
@@ -61,5 +81,10 @@ private:
 
 	//敵を生成
 	void CreateEnemy();
+
+	//クリア判定
+	bool IsCleared();
+	bool IsGameOver();
+
 };
 

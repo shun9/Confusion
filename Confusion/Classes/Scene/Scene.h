@@ -14,6 +14,7 @@ public:
 	{
 		TITLE,
 		PLAY,
+		CLEAR,
 	};
 
 protected:

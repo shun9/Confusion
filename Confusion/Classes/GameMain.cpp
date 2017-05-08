@@ -64,6 +64,10 @@ void GameMain::Update()
 			m_scene = new PlayScene;
 			break;
 
+		case Scene::CLEAR:
+			m_scene = new PlayScene;
+			break;
+		
 		default:
 			break;
 		}

@@ -29,7 +29,7 @@ private:
 	ShunLib::Vec3 m_firstSpd;
 
 	//登場時のエフェクト
-	ShunLib::Effect* m_summonEffect;
+	ShunLib::Effect* m_confusionEffect;
 
 public:
 	Enemy(const wchar_t* model,
