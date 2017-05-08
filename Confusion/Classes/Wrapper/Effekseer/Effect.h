@@ -37,19 +37,58 @@ namespace ShunLib
 		Effekseer::Effect* effect;
 		Effekseer::Handle handle;
 
+		//エフェクトのフレーム数（時間）
+		int m_flame;
+
+		//フレームのカウント
+		int m_flameCnt;
 
 		/*--メンバ関数--*/
 	public:
 
 		//ファイル指定コンストラクタ
-		Effect(const wchar_t efk[]);
+		Effect(const wchar_t efk[], int flame, int spriteNum = 32, bool isDrawFirst = false);
 
 		//デストラクタ
 		~Effect();
 
-		void Draw(const ShunLib::Vec3 pos, 
-				  const ShunLib::Matrix& view,
-				  const ShunLib::Matrix& proj, 
-				  const ShunLib::Vec3 scale = (1.0f,1.0f,1.0f));
+		void Draw(const ShunLib::Matrix& view,
+				  const ShunLib::Matrix& proj);
+
+		void DrawLoop(const ShunLib::Matrix& view,
+					  const ShunLib::Matrix& proj);
+
+		//描画の状態をリセットする
+		void SetDraw(const ShunLib::Vec3 pos = ShunLib::Vec3::Zero)
+		{
+			handle = manager->Play(effect, pos.m_x,pos.m_y,pos.m_z);
+		}
+
+		//位置を設定
+		void SetPos(const ShunLib::Vec3 pos)
+		{
+			//位置ベクトルコピー
+			Effekseer::Vector3D e_pos = { pos.m_x,pos.m_y,pos.m_z };
+			manager->SetLocation(handle, e_pos);
+		}
+
+		//拡大率を設定
+		void SetScale(const ShunLib::Vec3 scale)
+		{
+			manager->SetScale(handle, scale.m_x, scale.m_y, scale.m_z);
+		}
+
+		//再生速度を設定
+		void SetSpd(float spd)
+		{
+			manager->SetSpeed(handle, spd);
+		}
+
+		//傾きを設定
+		void SetRotate(const ShunLib::Vec3 axis,float angle)
+		{
+			Effekseer::Vector3D e_axis = { axis.m_x,axis.m_y,axis.m_z };
+			manager->SetRotation(handle, e_axis, angle);
+		}
 	};
 }

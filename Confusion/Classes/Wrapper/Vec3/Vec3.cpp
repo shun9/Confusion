@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Vec3.cpp
 //* @brief :３次元ベクトル用のラップクラス
-//* @date  :2017/02/17
+//* @date  :2017/05/06
 //* @author:S.Katou
 //************************************************/
 #include "Vec3.h"
@@ -58,7 +58,7 @@ Vec3::Vec3(float num)
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コピーコンストラクタ
 //＋ーーーーーーーーーーーーーー＋
-ShunLib::Vec3::Vec3(const Vec3& vec)
+Vec3::Vec3(const Vec3& vec)
 	: m_x(vec.m_x)
 	, m_y(vec.m_y)
 	, m_z(vec.m_z)
@@ -80,7 +80,7 @@ Vec3::~Vec3()
 //｜引数  :なし　　(void)
 //｜戻り値:なし　　(void)	
 //＋ーーーーーーーーーーーーーー＋
-void ShunLib::Vec3::Normalize()
+void Vec3::Normalize()
 {
 	float length = std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
 
@@ -95,7 +95,7 @@ void ShunLib::Vec3::Normalize()
 //｜引数  :なし　　(void)
 //｜戻り値:ベクトル(DirectX::SimpleMath::Vector3)	
 //＋ーーーーーーーーーーーーーー＋
-DirectX::SimpleMath::Vector3 ShunLib::Vec3::GetDirectVec3()
+DirectX::SimpleMath::Vector3 Vec3::GetDirectVec3()
 {
 	DirectX::SimpleMath::Vector3 vec;
 	vec.x = m_x;
@@ -105,8 +105,26 @@ DirectX::SimpleMath::Vector3 ShunLib::Vec3::GetDirectVec3()
 }
 
 /*--[以下　演算子のオーバーロード]--*/
+bool  operator==(const ShunLib::Vec3& V, const ShunLib::Vec3& V2)
+{
+	return (V.m_x == V2.m_x
+		  &&V.m_y == V2.m_y
+		  &&V.m_z == V2.m_z);
+}
 
-Vec3& ShunLib::Vec3::operator=(const Vec3& V)
+//bool Vec3::operator==(const Vec3& V)
+//{
+//	if (this->m_x == V.m_x
+//	  &&this->m_y == V.m_y
+//	  &&this->m_z == V.m_z)
+//	{
+//		return true;
+//	}
+//
+//	return false;
+//}
+
+Vec3& Vec3::operator=(const Vec3& V)
 {
 	this->m_x = V.m_x;
 	this->m_y = V.m_y;
@@ -115,7 +133,7 @@ Vec3& ShunLib::Vec3::operator=(const Vec3& V)
 	return *this;
 }
 
-Vec3& ShunLib::Vec3::operator=(const DirectX::SimpleMath::Vector3& V)
+Vec3& Vec3::operator=(const DirectX::SimpleMath::Vector3& V)
 {
 	this->m_x = V.x;
 	this->m_y = V.y;
@@ -124,19 +142,55 @@ Vec3& ShunLib::Vec3::operator=(const DirectX::SimpleMath::Vector3& V)
 	return *this;
 }
 
-Vec3& ShunLib::Vec3::operator+(const Vec3& V)
+Vec3 Vec3::operator+(const Vec3& V)
 {
-	this->m_x += V.m_x;
-	this->m_y += V.m_y;
-	this->m_z += V.m_z;
-	return *this;
+	Vec3 vec;
+	vec.m_x = this->m_x + V.m_x;
+	vec.m_y = this->m_y + V.m_y;
+	vec.m_z = this->m_z + V.m_z;
+	return vec;
 }
 
-Vec3& ShunLib::Vec3::operator-(const Vec3& V)
+Vec3 Vec3::operator-(const Vec3& V)
 {
-	this->m_x -= V.m_x;
-	this->m_y -= V.m_y;
-	this->m_z -= V.m_z;
-	return *this;
+	Vec3 vec;
+	vec.m_x = this->m_x - V.m_x;
+	vec.m_y = this->m_y - V.m_y;
+	vec.m_z = this->m_z - V.m_z;
+	return vec;
 }
 
+ShunLib::Vec3 ShunLib::Vec3::operator*(float num)
+{
+	Vec3 vec;
+	vec.m_x = this->m_x * static_cast<float>(num);
+	vec.m_y = this->m_y * static_cast<float>(num);
+	vec.m_z = this->m_z * static_cast<float>(num);
+	return vec;
+}
+
+ShunLib::Vec3 ShunLib::Vec3::operator/(float num)
+{
+	Vec3 vec;
+	vec.m_x = this->m_x / static_cast<float>(num);
+	vec.m_y = this->m_y / static_cast<float>(num);
+	vec.m_z = this->m_z / static_cast<float>(num);
+	return vec;
+}
+
+//ShunLib::Vec3 & operator*(ShunLib::Vec3& V,float num)
+//{
+//	V.m_x *= static_cast<float>(num);
+//	V.m_y *= static_cast<float>(num);
+//	V.m_z *= static_cast<float>(num);
+//	return V;
+//}
+//
+//ShunLib::Vec3 & operator/(ShunLib::Vec3& V,float num)
+//{
+//	V.m_x /= static_cast<float>(num);
+//	V.m_y /= static_cast<float>(num);
+//	V.m_z /= static_cast<float>(num);
+//	return V;
+//}
+//

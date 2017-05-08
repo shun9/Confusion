@@ -31,16 +31,16 @@ protected:
 public:
 	//コンストラクタ＆デストラクタ
 	Object(const wchar_t* model,
-		   ShunLib::Vec3 pos = (0.0f, 0.0f, 0.0f), 
-		   ShunLib::Vec3 spd = (0.0f, 0.0f, 0.0f));
+		ShunLib::Vec3 pos = (0.0f, 0.0f, 0.0f),
+		ShunLib::Vec3 spd = (0.0f, 0.0f, 0.0f));
 	~Object();
 	
 	//更新処理
 	virtual void Update() = 0;
 	
 	//描画処理
-	void Draw(const ShunLib::Matrix& view,
-		      const ShunLib::Matrix& proj);
+	virtual void Draw(const ShunLib::Matrix& view,
+					  const ShunLib::Matrix& proj);
 
 	//位置情報
 	ShunLib::Vec3 Pos() { return *m_pos; }
@@ -54,7 +54,7 @@ public:
 	void Radius(float radius) { m_radius = radius; }
 	float Radius() { return m_radius; }
 
-private:
+protected:
 	//向きを計算する
 	void CalculateDirection();
 };

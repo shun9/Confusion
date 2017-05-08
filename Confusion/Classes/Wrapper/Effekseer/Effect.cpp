@@ -31,13 +31,15 @@ void ShunLib::Effect::SetDevice(ID3D11Device* device,
 //｜機能  :ファイル指定コンストラクタ	
 //｜引数  :cmoファイルの名前(wchar_t[])
 //＋ーーーーーーーーーーーーーー＋
-ShunLib::Effect::Effect(const wchar_t efk[])
+ShunLib::Effect::Effect(const wchar_t efk[], int flame,int spriteNum, bool isDrawFirst)
+	:m_flame(flame)
+	,m_flameCnt(0)
 {
 	// 描画管理インスタンスの生成
-	renderer = EffekseerRendererDX11::Renderer::Create(m_device, m_context, 32);
+	renderer = EffekseerRendererDX11::Renderer::Create(m_device, m_context, spriteNum);
 	
 	// エフェクト管理用インスタンスの生成
-	manager = Effekseer::Manager::Create(32);
+	manager = Effekseer::Manager::Create(spriteNum);
 
 	// 描画方法の指定、独自に拡張しない限り定形文です。
 	manager->SetSpriteRenderer(renderer->CreateSpriteRenderer());
@@ -51,10 +53,12 @@ ShunLib::Effect::Effect(const wchar_t efk[])
 	manager->SetCoordinateSystem(Effekseer::CoordinateSystem::RH);
 
 	// エフェクトの読込
-	effect = Effekseer::Effect::Create(manager, (EFK_CHAR*)L"Effect\\Gravity.efk");
-
-	// エフェクトの再生
-	handle = manager->Play(effect, 0.0f, 0.0f, 0.0f);
+	effect = Effekseer::Effect::Create(manager, (EFK_CHAR*)efk);
+	
+	if (isDrawFirst)
+	{
+		handle = manager->Play(effect, 0.0f, 0.0f, 0.0f);
+	}
 }
 
 
@@ -71,23 +75,17 @@ ShunLib::Effect::~Effect()
 	renderer->Destory();
 }
 
-
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :モデルの描画
-//｜引数  :位置ベクトル	(Vec3)
 //｜引数  :ビュー行列	(Matrix)
 //｜引数  :射影行列		(Matrix)
+//｜引数  :位置ベクトル	(Vec3)
 //｜引数  :拡大率		(Vec3)
 //｜戻り値:なし(void)	
 //＋ーーーーーーーーーーーーーー＋
-void ShunLib::Effect::Draw(const ShunLib::Vec3 pos,
-						   const ShunLib::Matrix& view,		
-						   const ShunLib::Matrix & proj, 
-						   const ShunLib::Vec3 scale)
-{
-	//位置ベクトルコピー
-	Effekseer::Vector3D e_pos = { pos.m_x,pos.m_y,pos.m_z };
-
+void ShunLib::Effect::Draw(const ShunLib::Matrix& view,		
+						   const ShunLib::Matrix & proj)
+{	
 	//行列をコピー
 	Effekseer::Matrix44 e_view;
 	Effekseer::Matrix44 e_proj;
@@ -99,19 +97,13 @@ void ShunLib::Effect::Draw(const ShunLib::Vec3 pos,
 			e_proj.Values[i][j] = proj.m_value[i][j];
 		}
 	}
-
 	
-	// 再生中のエフェクトの移動
-	manager->SetLocation(handle, e_pos);
-
-	//拡大率
-	manager->SetScale(handle, scale.m_x,scale.m_y,scale.m_z);
-
 	// 投影行列の更新
 	renderer->SetProjectionMatrix(e_proj);
 	
 	// カメラ行列の更新
 	renderer->SetCameraMatrix(e_view);
+
 
 	// 全てのエフェクトの更新
 	manager->Update();
@@ -120,4 +112,18 @@ void ShunLib::Effect::Draw(const ShunLib::Vec3 pos,
 	renderer->BeginRendering();
 	manager->Draw();
 	renderer->EndRendering();
+}
+
+void ShunLib::Effect::DrawLoop(const ShunLib::Matrix & view, const ShunLib::Matrix & proj)
+{
+	
+	this->Draw(view, proj);
+
+	m_flameCnt++;
+
+	if (m_flameCnt >= m_flame)
+	{
+		m_flameCnt = 0;
+		this->SetDraw();
+	}
 }

@@ -31,9 +31,10 @@ PlayScene::PlayScene()
 	m_player[0] = new Player(L"CModel\\Player.cmo", Vec3(-5.0f, 0.0f, 0.0f), 0, LEFT);
 	m_player[1] = new Player(L"CModel\\PlayerB.cmo", Vec3(5.0f, 0.0f, 0.0f), 0, RIGHT);
 
-	//敵生成　delete ー> ~PlayScene
-	m_enemy.push_back(new Enemy(L"CModel\\Enemy.cmo", Vec3(0.0f, 0.0f, -15.0f)));
-	m_enemy.push_back(new Enemy(L"CModel\\Enemy.cmo", Vec3(0.0f, 0.0f, -5.0f), Vec3(0.0f, 0.0f, 0.001f)));
+
+	//m_summonEffect = new ShunLib::Effect(L"Effect\\MAGICALxSPIRAL\\Magic.efk", 60);
+	m_summonEffect = new ShunLib::Effect(L"Effect\\Magic.efk", 60);
+	m_blastEffect = new ShunLib::Effect(L"Effect\\Blast.efk", 0,512);
 
 	//ステージ生成
 	m_stage = new Stage;
@@ -102,8 +103,16 @@ void PlayScene::Update()
 		//死んでいたら敵を削除
 		if (m_enemy[i]->IsDead())
 		{
+			//爆破エフェクト設定
+			m_blastEffect->SetDraw(m_enemy[i]->Pos()+ ShunLib::Vec3(0.0f, 1.0f, 0.0f));
+			//m_blastEffect->SetPos(ShunLib::Vec3(0.0f,1.0f,0.0f));
+
+			//敵削除
 			delete m_enemy[i];
 			m_enemy.erase(m_enemy.begin() + i);
+
+			//ずれた分戻す
+			i--;
 		}
 	}
 }
@@ -134,6 +143,9 @@ void PlayScene::Render()
 		}
 		m_player[i]->DrawHpGauge(m_view, m_proj);
 	}
+
+	m_summonEffect->Draw(m_view, m_proj);
+	m_blastEffect->Draw(m_view, m_proj);
 
 	//敵描画
 	for (int i = 0; i < static_cast<int>(m_enemy.size()); i++)
@@ -280,7 +292,7 @@ bool PlayScene::IsSandwiched(bool isHitGravity[], Enemy* enemy)
 	float angle = ToAngle(acos(dot));
 
 	//角度が一定以上なら挟まれている
-	if (std::abs(angle) >= 120.0f)
+	if (std::abs(angle) >= 90.0f)
 	{
 		return true;
 	}
@@ -303,6 +315,11 @@ void PlayScene::CreateEnemy()
 	//乱数の値を制限
 	std::uniform_real_distribution<float> num(STAGE_LEFT, STAGE_RIGHT);
 
+	//敵生成　delete ー> ~PlayScene
 	m_enemy.push_back(new Enemy(L"CModel\\Enemy.cmo", ShunLib::Vec3(num(mt), 0.0f,STAGE_BOTTOM),ShunLib::Vec3(0.0f,0.0f,0.1f)));
+
+	m_summonEffect->SetDraw();
+	m_summonEffect->SetScale(1.5f);
+	m_summonEffect->SetPos(m_enemy.back()->Pos());
 }
 

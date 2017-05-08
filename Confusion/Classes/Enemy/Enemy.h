@@ -1,12 +1,13 @@
 //************************************************/
 //* @file  :Enemy.h
 //* @brief :敵のヘッダーファイル
-//* @date  :2017/05/01
+//* @date  :2017/05/06
 //* @author:S.Katou
 //************************************************/
 #pragma once
 #include "../Object/Object.h"
 #include "../Wrapper/Vec3/Vec3.h"
+#include "../Wrapper/Effekseer/Effect.h"
 
 class Enemy : public Object
 {
@@ -27,14 +28,21 @@ private:
 	//最初の速度
 	ShunLib::Vec3 m_firstSpd;
 
+	//登場時のエフェクト
+	ShunLib::Effect* m_summonEffect;
+
 public:
-	Enemy(const wchar_t* model, 
+	Enemy(const wchar_t* model,
 		ShunLib::Vec3 pos = (0.0f, 0.0f, 0.0f),
-		ShunLib::Vec3 spd=(0.0f,0.0f,0.0f));
+		ShunLib::Vec3 spd = (0.0f, 0.0f, 0.0f));
 	~Enemy();
 
 	//更新
 	void Update()override;
+
+	//描画処理
+	void Draw(const ShunLib::Matrix& view,
+			  const ShunLib::Matrix& proj);
 
 	//混乱する
 	void Fluster();

@@ -45,33 +45,38 @@ namespace ShunLib
 		DirectX::SimpleMath::Vector3 GetDirectVec3();
 	
 		/*--[演算子のオーバーロード]--*/
+		//bool  operator==(const Vec3& V);
 		Vec3& operator=(const Vec3& V);
 		Vec3& operator=(const DirectX::SimpleMath::Vector3& V);
-		Vec3& operator+(const Vec3& V);
-		Vec3& operator-(const Vec3& V);
-
-		template<class T>Vec3& operator*(T num);
-		template<class T>Vec3& operator/(T num);
+		Vec3 operator+(const Vec3& V);
+		Vec3 operator-(const Vec3& V);
+		Vec3 operator*(float num);
+		Vec3 operator/(float num);
 
 	};
 
-	template<class T>
-	inline Vec3& Vec3::operator*(T num)
-	{
-		this->m_x *= static_cast<float>(num);
-		this->m_y *= static_cast<float>(num);
-		this->m_z *= static_cast<float>(num);
-		return *this;
-	}
 
-	template<class T>
-	inline Vec3& Vec3::operator/(T num)
-	{
-		this->m_x /= static_cast<float>(num);
-		this->m_y /= static_cast<float>(num);
-		this->m_z /= static_cast<float>(num);
-		return *this;
-	}
+	////演算子のオーバーロード
+	//template<class T>
+	//inline Vec3& Vec3::operator*(T num)
+	//{
+	//	this->m_x *= static_cast<float>(num);
+	//	this->m_y *= static_cast<float>(num);
+	//	this->m_z *= static_cast<float>(num);
+	//	return *this;
+	//}
+
+	//template<class T>
+	//inline Vec3& Vec3::operator/(T num)
+	//{
+	//	this->m_x /= static_cast<float>(num);
+	//	this->m_y /= static_cast<float>(num);
+	//	this->m_z /= static_cast<float>(num);
+	//	return *this;
+	//}
 
 }
+//比較演算子のオーバーロード
+//メンバで上手くいかなかったのでグローバル
+bool  operator==(const ShunLib::Vec3& V, const ShunLib::Vec3& V2);
 

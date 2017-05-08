@@ -37,6 +37,10 @@ private:
 	Player** m_player;
 	std::vector<Enemy*> m_enemy;
 
+	//登場時のエフェクト
+	ShunLib::Effect* m_summonEffect;
+	ShunLib::Effect* m_blastEffect;
+
 public:
 	PlayScene();
 	~PlayScene();

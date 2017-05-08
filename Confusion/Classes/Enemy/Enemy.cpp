@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Enemy.cpp
 //* @brief :敵のソースファイル
-//* @date  :2017/05/01
+//* @date  :2017/05/06
 //* @author:S.Katou
 //************************************************/
 #include "Enemy.h"
@@ -21,6 +21,11 @@ Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 {
 	m_radius = 1.0f;
 	m_firstSpd = spd;
+
+	m_summonEffect = new ShunLib::Effect(L"Effect\\MAGICALxSPIRAL\\Magic.efk",60,true);
+	m_summonEffect->SetScale(1.5f);
+	m_summonEffect->SetPos(*m_pos);
+	
 }
 
 
@@ -29,6 +34,7 @@ Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 //＋ーーーーーーーーーーーーーー＋
 Enemy::~Enemy()
 {
+	delete m_summonEffect;
 }
 
 
@@ -55,6 +61,19 @@ void Enemy::Update()
 		m_confusedTime = 0;
 		m_isConfused = false;
 	}
+}
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :描画
+//｜引数  :ビュー行列		   (ShunLib::Matrix)
+//｜引数  :プロジェクション行列(ShunLib::Matrix)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void Enemy::Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
+{
+	using namespace ShunLib;
+	
+	Object::Draw(view,proj);
 }
 
 

@@ -19,14 +19,12 @@ TitleScene::TitleScene()
 
 	m_pad = GamePadManager::GetInstance();
 
-	m_testEffect = new ShunLib::Effect(L"Effect\\Gravity.efk");
 }
 
 TitleScene::~TitleScene()
 {
 	delete m_stage;
 	delete m_logo;
-	delete m_testEffect;
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -56,5 +54,22 @@ void TitleScene::Render()
 
 	m_logo->Draw(0.0f, 0.0f);
 
-	m_testEffect->Draw(ShunLib::Vec3(0.0f, 1.0f, 0.0f), m_view, m_proj, ShunLib::Vec3(4.0f, 4.0f, 4.0f));
+	//m_testEffect->Draw(m_view, m_proj, ShunLib::Vec3::Zero, ShunLib::Vec3(1.0f,1.0f,1.0f)* 2.0f , 0.2f);
+
+
+	//static int a = 0;
+	//a++;
+
+	//static float b = 0.0f;
+
+	//if (a > 20)
+	//{
+	//	m_testEffect->ResetDraw(ShunLib::Vec3(b , 0.0f, 0.0f));
+	//	a = 0;
+	//	b++;
+	//	if (b > 20.0f)
+	//	{
+	//		b = 0.0f;
+	//	}
+	//}
 }
