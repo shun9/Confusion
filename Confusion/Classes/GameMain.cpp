@@ -5,9 +5,11 @@
 //* @author:S.Katou
 //************************************************/
 #include "GameMain.h"
+#include <ctime>
 #include "Wrapper\Vec3\Vec3.h"
 #include "Scene\PlayScene.h"
 #include "Scene\TitleScene.h"
+#include "Scene\GameOverScene.h"
 
 using namespace ShunLib;
 
@@ -27,11 +29,12 @@ void GameMain::Initialize(int screenW, int screenH)
 	this->screenW = screenW;
 	this->screenH = screenH;
 
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
 	m_view = Matrix::CreateLookAt(Vec3(0.0f,0.0f,5.0f),Vec3::Zero,Vec3::UnitY);
 	m_proj = Matrix::CreateProj(45.0f, static_cast<float>(screenW / screenH), 1.0f, 100.0f);
-
+	
 	//ç≈èâÇÃÉVÅ[Éì
-	//m_scene = new PlayScene;
 	m_scene = new TitleScene;
 	m_currentScene = Scene::TITLE;
 	m_nextScene = m_currentScene;
@@ -53,7 +56,8 @@ void GameMain::Update()
 	{
 		m_currentScene = m_nextScene;
 
-		delete m_scene;
+		if (m_scene != nullptr){ delete m_scene; }
+
 		switch (m_nextScene)
 		{
 		case Scene::TITLE:
@@ -67,7 +71,11 @@ void GameMain::Update()
 		case Scene::CLEAR:
 			m_scene = new PlayScene;
 			break;
-		
+
+		case Scene::OVER:
+			m_scene = new GameOverScene;
+			break;
+
 		default:
 			break;
 		}

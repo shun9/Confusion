@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :PlayScene.cpp
-//* @brief :プレイ画面のソース
-//* @date  :2017/05/01
+//* @brief :プレイ画面のクラス
+//* @date  :2017/05/11
 //* @author:S.Katou
 //************************************************/
 #include <random>
@@ -23,20 +23,32 @@ const float PlayScene::STAGE_LEFT = -15.0f;
 PlayScene::PlayScene()
 	:m_isStarted(false)
 	,m_isEnded(false)
+	,m_stageLife(5)
 {
 	using namespace ShunLib;
 	m_view = Matrix::CreateLookAt(Vec3(0.0f, 30.0f, 40.0f), Vec3::Zero, Vec3::UnitY);
 	m_proj = Matrix::CreateProj(45.0f, static_cast<float>(GameMain::screenW / GameMain::screenH), 1.0f, 200.0f);
+
+	m_hpGauge = new HPGauge(m_stageLife, Vec3(0.0f, 1.0f, 21.2f), Vec3(27.5f, 1.0f, 2.0f), Vec3(-55.0f, 0.0f, 0.0f));
 
 	//プレイヤー生成  delete ー> ~PlayScene
 	m_player	= new Player*[Player::MAX_PLAYER];
 	m_player[0] = new Player(L"CModel\\Player.cmo", Vec3(-5.0f, 0.0f, 0.0f), 0, LEFT);
 	m_player[1] = new Player(L"CModel\\PlayerB.cmo", Vec3(5.0f, 0.0f, 0.0f), 0, RIGHT);
 
-
-	//m_summonEffect = new ShunLib::Effect(L"Effect\\MAGICALxSPIRAL\\Magic.efk", 60);
-	m_summonEffect = new ShunLib::Effect(L"Effect\\Magic.efk", 60);
+	//爆破エフェクト生成
 	m_blastEffect = new ShunLib::Effect(L"Effect\\Blast.efk", 0,512);
+	
+	//魔法陣の数をランダムで決定
+	m_maxMagic = rand() % 5 + 2;
+	
+	//魔法陣の生成  delete ー> ~PlayScene
+	m_magic = new SummonMagic*[m_maxMagic];
+	for (int i = 0; i < m_maxMagic; i++)
+	{
+		m_magic[i] = new SummonMagic(Vec3(static_cast<float>(std::rand() % 20-10.0f),0.0f, -(static_cast<float>(std::rand() % 40 + 10))),
+									 rand()%500+30,i*10,5.0f);
+	}
 
 	//ステージ生成
 	m_stage = new Stage;
@@ -51,18 +63,22 @@ PlayScene::~PlayScene()
 	//プレイヤー削除
 	for (int i = 0; i < Player::MAX_PLAYER; i++)
 	{
-		delete m_player;
+		if (m_player[i] != nullptr) { delete m_player[i]; }
 	}
-	delete[] m_player;
+	if (m_player != nullptr) { delete[] m_player; }
 
-	//敵削除
-	for (int i = 0; i < static_cast<int>(m_enemy.size()); i++)
+	//魔法陣の削除
+	for (int i = 0; i < m_maxMagic; i++)
 	{
-		delete m_enemy[i];
+		if (m_magic[i] != nullptr) { delete m_magic[i]; }
 	}
+	if (m_magic != nullptr) { delete[] m_magic; }
 
 	//ステージ削除
-	delete m_stage;
+	if (m_stage != nullptr){ delete m_stage; }
+	
+	//HPゲージ削除
+	if (m_hpGauge != nullptr) { delete m_hpGauge; }	
 }
 
 
@@ -73,7 +89,11 @@ PlayScene::~PlayScene()
 //＋ーーーーーーーーーーーーーー＋
 void PlayScene::Update()
 {
-	PlayAgo();
+	//プレイ前の処理
+	if (!m_isStarted)
+	{
+		PlayAgo();
+	}
 
 	//プレイ中の処理
 	if (m_isStarted
@@ -83,14 +103,22 @@ void PlayScene::Update()
 	}
 
 
+	//ゲームオーバー
 	if (IsGameOver())
 	{
-		PlayGameOver();
+		if (PlayGameOver())
+		{
+			m_nextScene = Scene::OVER;
+		}
 	}
 
+	//ゲームクリア
 	if (IsCleared())
 	{
-		PlayClear();
+		if (PlayClear())
+		{
+			m_nextScene = Scene::CLEAR;
+		}
 	}
 }
 
@@ -111,8 +139,13 @@ void PlayScene::Render()
 		m_player[i]->DrawGravity(m_view, m_proj);
 	}
 
+	//魔法陣描画
+	for (int i = 0; i < m_maxMagic; i++)
+	{
+		m_magic[i]->Draw(m_view, m_proj);
+	}
+
 	//エフェクト表示
-	m_summonEffect->Draw(m_view, m_proj);
 	m_blastEffect->Draw(m_view, m_proj);
 
 	//プレイヤー描画
@@ -128,26 +161,40 @@ void PlayScene::Render()
 	//敵描画
 	for (int i = 0; i < static_cast<int>(m_enemy.size()); i++)
 	{
-		m_enemy[i]->Draw(m_view,m_proj);
+		m_enemy[i]->Draw(m_view,m_proj);		
 	}
+
+	//ＨＰゲージ描画
+	m_hpGauge->HP(m_stageLife);
+	m_hpGauge->Draw(m_view, m_proj);
 }
 
 
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :プレイ開始前の処理
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
 void PlayScene::PlayAgo()
 {
 	m_isStarted = true;
+	for (int i = 0; i < m_maxMagic; i++)
+	{
+		m_magic[i]->Update();
+		if (!m_magic[i]->IsStarted())
+		{
+			m_isStarted = false;
+		}
+	}
 }
 
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :プレイ中の処理
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
 void PlayScene::PlayMain()
 {
-	//敵出現(仮)
-	static int t = 0;
-	t++;
-	if (t > 120)
-	{
-		CreateEnemy();
-		t = 0;
-	}
 
 	//プレイヤー更新
 	for (int i = 0; i < Player::MAX_PLAYER; i++)
@@ -160,15 +207,20 @@ void PlayScene::PlayMain()
 	for (int i = 0; i < static_cast<int>(m_enemy.size()); i++)
 	{
 		m_enemy[i]->Update();
-		m_enemy[i]->Dead(STAGE_TOP, STAGE_BOTTOM, STAGE_RIGHT, STAGE_LEFT);
-	
+		
+		//敵が下に当たって死んだらダメージ	
+		if (m_enemy[i]->Dead(STAGE_TOP, STAGE_BOTTOM, STAGE_RIGHT, STAGE_LEFT) == ShunLib::DIRECTION_2D::BOTTOM)
+		{
+			m_stageLife--;
+		}
+		
+		//死んでいた時の処理
 		if (m_enemy[i]->IsDead())
 		{
 			//爆破エフェクト設定
 			m_blastEffect->SetDraw(m_enemy[i]->Pos() + ShunLib::Vec3(0.0f, 1.0f, 0.0f));
 
 			//敵削除
-			delete m_enemy[i];
 			m_enemy.erase(m_enemy.begin() + i);
 
 			//ずれた分戻す
@@ -176,18 +228,52 @@ void PlayScene::PlayMain()
 		}
 	}
 
+	//魔法陣更新
+	for (int i = 0; i < m_maxMagic; i++)
+	{
+		m_magic[i]->Update();
+	}
+
+	//敵生成
+	CreateEnemy();
+
 	//当たり判定
 	Collision();
 }
 
-void PlayScene::PlayClear()
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :クリアの処理
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+bool PlayScene::PlayClear()
 {
 	m_isEnded = true;
+	static int b = 0;
+	b++;
+	if (b < 260)
+	{
+		return false;
+	}
+	return true;
 }
 
-void PlayScene::PlayGameOver()
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :ゲームオーバーの処理
+//｜引数  :なし(void)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+bool PlayScene::PlayGameOver()
 {
 	m_isEnded = true;
+
+	static int a = 0;
+	a++;
+	if (a < 260)
+	{
+		return false;
+	}
+	return true;
 }
 
 
@@ -208,13 +294,13 @@ void PlayScene::Collision()
 		for (int j = 0; j < Player::MAX_PLAYER; j++)
 		{
 			//敵と重力の当たり判定
-			isHitGravity[j] = Collision(m_enemy[i], m_player[j]->GetGravity());
+			isHitGravity[j] = Collision(m_enemy[i].get(), m_player[j]->GetGravity());
 
 			//プレイヤーが無敵ならば当たり判定を飛ばす
 			if (m_player[j]->InvincibleTime() > 0){	break;}
 
 			//敵とプレイヤーの当たり判定
-			if (Collision(m_enemy[i], m_player[j]))
+			if (Collision(m_enemy[i].get(), m_player[j]))
 			{
 				m_player[j]->TakeDamage(1);
 				m_player[j]->InvincibleTime(60);
@@ -226,7 +312,7 @@ void PlayScene::Collision()
 		//敵同士の当たり判定
 		for (int j = i + 1; j < static_cast<int>(m_enemy.size()); j++)
 		{
-			if (Collision(m_enemy[i], m_enemy[j]))
+			if (Collision(m_enemy[i].get(), m_enemy[j].get()))
 			{
 				//どちらかが混乱状態ならば両死
 				if (m_enemy[i]->IsConfused() || m_enemy[j]->IsConfused())
@@ -238,7 +324,7 @@ void PlayScene::Collision()
 		}
 
 		//挟み撃ちの処理
-		if (IsSandwiched(isHitGravity, m_enemy[i])) { m_enemy[i]->Fluster(); }
+		if (IsSandwiched(isHitGravity, m_enemy[i].get())) { m_enemy[i]->Fluster(); }
 	}
 }
 
@@ -259,7 +345,8 @@ bool PlayScene::Collision(Object* obj,Object* obj2)
 	float y = pos1.m_z - pos2.m_z;
 	float r = obj->Radius() + obj2->Radius();
 
-	if (x*x + y*y <= r*r){
+	if (x*x + y*y <= r*r)
+	{
 		return true;
 	}
 
@@ -330,7 +417,7 @@ bool PlayScene::IsSandwiched(bool isHitGravity[], Enemy* enemy)
 	float angle = ToAngle(acos(dot));
 
 	//角度が一定以上なら挟まれている
-	if (std::abs(angle) >= 90.0f)
+	if (std::abs(angle) >= 80.0f)
 	{
 		return true;
 	}
@@ -346,20 +433,14 @@ bool PlayScene::IsSandwiched(bool isHitGravity[], Enemy* enemy)
 //＋ーーーーーーーーーーーーーー＋
 void PlayScene::CreateEnemy()
 {
-	//乱数生成用
-	std::random_device random;
-	std::mt19937 mt(random());
-
-	//乱数の値を制限
-	std::uniform_real_distribution<float> num(STAGE_LEFT, STAGE_RIGHT);
-
-	//敵生成　delete ー> ~PlayScene
-	m_enemy.push_back(new Enemy(L"CModel\\Enemy.cmo", ShunLib::Vec3(num(mt), 0.0f,STAGE_BOTTOM),ShunLib::Vec3(0.0f,0.0f,0.1f)));
-
-	//召喚エフェクト設定
-	m_summonEffect->SetDraw();
-	m_summonEffect->SetScale(1.5f);
-	m_summonEffect->SetPos(m_enemy.back()->Pos());
+	for (int i = 0; i < m_maxMagic; i++)
+	{
+		//魔法陣が召喚可能ならば敵召喚
+		if (m_magic[i]->CanSummon())
+		{
+			m_enemy.push_back(m_magic[i]->Create());
+		}
+	}
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -369,7 +450,21 @@ void PlayScene::CreateEnemy()
 //＋ーーーーーーーーーーーーーー＋
 bool PlayScene::IsCleared()
 {
-	return false;
+	for (int i = 0; i < m_maxMagic; i++)
+	{
+		//魔法陣が一つでも存在していたらNOT CLEAR
+		if (m_magic[i]->Scale() > 0.0f)
+		{
+			return false;
+		}
+	}
+
+	//敵が存在していたらNOT CLEAR
+	if (!m_enemy.empty())
+	{
+		return false;
+	}
+	return true;
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -379,13 +474,18 @@ bool PlayScene::IsCleared()
 //＋ーーーーーーーーーーーーーー＋
 bool PlayScene::IsGameOver()
 {
-
+	//プレイヤーが片方でも死んだらGameOver
 	for (int i = 0; i < Player::MAX_PLAYER; i++)
 	{
 		if (m_player[i]->Hp() <= 0)
 		{
 			return true;
 		}
+	}
+
+	if (m_stageLife <= 0)
+	{
+		return true;
 	}
 	return false;
 }

@@ -37,7 +37,7 @@ namespace ShunLib
 
 		//エフェクトデータ
 		std::unique_ptr<DirectX::EffectFactory> m_effect;
-
+		
 		//ステート
 		std::unique_ptr<DirectX::CommonStates> m_state;
 

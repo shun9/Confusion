@@ -268,87 +268,93 @@ Matrix& Matrix::operator=(const DirectX::SimpleMath::Matrix& M)
 	return *this;
 }
 
-Matrix& Matrix::operator+(const Matrix& M)
+Matrix Matrix::operator+(const Matrix& M)
 {
+	Matrix m;
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			this->m_value[i][j] += M.m_value[i][j];
+			m.m_value[i][j] = this->m_value[i][j] + M.m_value[i][j];
 		}
 	}
 
-	return *this;
+	return m;
 
 	// TODO: return ÉXÉeÅ[ÉgÉÅÉìÉgÇÇ±Ç±Ç…ë}ì¸ÇµÇ‹Ç∑
 }
 
-Matrix& Matrix::operator-(const Matrix& M)
+Matrix Matrix::operator-(const Matrix& M)
 {
+	Matrix m;
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			this->m_value[i][j] -= M.m_value[i][j];
+			m.m_value[i][j]=this->m_value[i][j] - M.m_value[i][j];
 		}
 	}
-	return *this;
+	return m;
 }
 
-Matrix& Matrix::operator*(const Matrix& M)
+Matrix Matrix::operator*(const Matrix& M)
 {
+	Matrix m;
+
 	// ÇPçsñ⁄ÇÃåvéZ
 	float x = this->m_value[0][0];
 	float y = this->m_value[0][1];
 	float z = this->m_value[0][2];
 	float w = this->m_value[0][3];
-	this->m_value[0][0] = (M.m_value[0][0] * x) + (M.m_value[1][0] * y) + (M.m_value[2][0] * z) + (M.m_value[3][0] * w);
-	this->m_value[0][1] = (M.m_value[0][1] * x) + (M.m_value[1][1] * y) + (M.m_value[2][1] * z) + (M.m_value[3][1] * w);
-	this->m_value[0][2] = (M.m_value[0][2] * x) + (M.m_value[1][2] * y) + (M.m_value[2][2] * z) + (M.m_value[3][2] * w);
-	this->m_value[0][3] = (M.m_value[0][3] * x) + (M.m_value[1][3] * y) + (M.m_value[2][3] * z) + (M.m_value[3][3] * w);
+	m.m_value[0][0] = (M.m_value[0][0] * x) + (M.m_value[1][0] * y) + (M.m_value[2][0] * z) + (M.m_value[3][0] * w);
+	m.m_value[0][1] = (M.m_value[0][1] * x) + (M.m_value[1][1] * y) + (M.m_value[2][1] * z) + (M.m_value[3][1] * w);
+	m.m_value[0][2] = (M.m_value[0][2] * x) + (M.m_value[1][2] * y) + (M.m_value[2][2] * z) + (M.m_value[3][2] * w);
+	m.m_value[0][3] = (M.m_value[0][3] * x) + (M.m_value[1][3] * y) + (M.m_value[2][3] * z) + (M.m_value[3][3] * w);
 	
 	// ÇQçsñ⁄ÇÃåvéZ
 	x = this->m_value[1][0];
 	y = this->m_value[1][1];
 	z = this->m_value[1][2];
 	w = this->m_value[1][3];
-	this->m_value[1][0] = (M.m_value[0][0] * x) + (M.m_value[1][0] * y) + (M.m_value[2][0] * z) + (M.m_value[3][0] * w);
-	this->m_value[1][1] = (M.m_value[0][1] * x) + (M.m_value[1][1] * y) + (M.m_value[2][1] * z) + (M.m_value[3][1] * w);
-	this->m_value[1][2] = (M.m_value[0][2] * x) + (M.m_value[1][2] * y) + (M.m_value[2][2] * z) + (M.m_value[3][2] * w);
-	this->m_value[1][3] = (M.m_value[0][3] * x) + (M.m_value[1][3] * y) + (M.m_value[2][3] * z) + (M.m_value[3][3] * w);
+	m.m_value[1][0] = (M.m_value[0][0] * x) + (M.m_value[1][0] * y) + (M.m_value[2][0] * z) + (M.m_value[3][0] * w);
+	m.m_value[1][1] = (M.m_value[0][1] * x) + (M.m_value[1][1] * y) + (M.m_value[2][1] * z) + (M.m_value[3][1] * w);
+	m.m_value[1][2] = (M.m_value[0][2] * x) + (M.m_value[1][2] * y) + (M.m_value[2][2] * z) + (M.m_value[3][2] * w);
+	m.m_value[1][3] = (M.m_value[0][3] * x) + (M.m_value[1][3] * y) + (M.m_value[2][3] * z) + (M.m_value[3][3] * w);
 
 	// ÇRçsñ⁄ÇÃåvéZ
 	x = this->m_value[2][0];
 	y = this->m_value[2][1];
 	z = this->m_value[2][2];
 	w = this->m_value[2][3];
-	this->m_value[2][0] = (M.m_value[0][0] * x) + (M.m_value[1][0] * y) + (M.m_value[2][0] * z) + (M.m_value[3][0] * w);
-	this->m_value[2][1] = (M.m_value[0][1] * x) + (M.m_value[1][1] * y) + (M.m_value[2][1] * z) + (M.m_value[3][1] * w);
-	this->m_value[2][2] = (M.m_value[0][2] * x) + (M.m_value[1][2] * y) + (M.m_value[2][2] * z) + (M.m_value[3][2] * w);
-	this->m_value[2][3] = (M.m_value[0][3] * x) + (M.m_value[1][3] * y) + (M.m_value[2][3] * z) + (M.m_value[3][3] * w);
+	m.m_value[2][0] = (M.m_value[0][0] * x) + (M.m_value[1][0] * y) + (M.m_value[2][0] * z) + (M.m_value[3][0] * w);
+	m.m_value[2][1] = (M.m_value[0][1] * x) + (M.m_value[1][1] * y) + (M.m_value[2][1] * z) + (M.m_value[3][1] * w);
+	m.m_value[2][2] = (M.m_value[0][2] * x) + (M.m_value[1][2] * y) + (M.m_value[2][2] * z) + (M.m_value[3][2] * w);
+	m.m_value[2][3] = (M.m_value[0][3] * x) + (M.m_value[1][3] * y) + (M.m_value[2][3] * z) + (M.m_value[3][3] * w);
 
 	// ÇSçsñ⁄ÇÃåvéZ
 	x = this->m_value[3][0];
 	y = this->m_value[3][1];
 	z = this->m_value[3][2];
 	w = this->m_value[3][3];
-	this->m_value[3][0] = (M.m_value[0][0] * x) + (M.m_value[1][0] * y) + (M.m_value[2][0] * z) + (M.m_value[3][0] * w);
-	this->m_value[3][1] = (M.m_value[0][1] * x) + (M.m_value[1][1] * y) + (M.m_value[2][1] * z) + (M.m_value[3][1] * w);
-	this->m_value[3][2] = (M.m_value[0][2] * x) + (M.m_value[1][2] * y) + (M.m_value[2][2] * z) + (M.m_value[3][2] * w);
-	this->m_value[3][3] = (M.m_value[0][3] * x) + (M.m_value[1][3] * y) + (M.m_value[2][3] * z) + (M.m_value[3][3] * w);
+	m.m_value[3][0] = (M.m_value[0][0] * x) + (M.m_value[1][0] * y) + (M.m_value[2][0] * z) + (M.m_value[3][0] * w);
+	m.m_value[3][1] = (M.m_value[0][1] * x) + (M.m_value[1][1] * y) + (M.m_value[2][1] * z) + (M.m_value[3][1] * w);
+	m.m_value[3][2] = (M.m_value[0][2] * x) + (M.m_value[1][2] * y) + (M.m_value[2][2] * z) + (M.m_value[3][2] * w);
+	m.m_value[3][3] = (M.m_value[0][3] * x) + (M.m_value[1][3] * y) + (M.m_value[2][3] * z) + (M.m_value[3][3] * w);
 	
-	return *this;
+	return m;
 }
 
-Matrix& Matrix::operator*(int num)
+Matrix Matrix::operator*(int num)
 {
+	Matrix m;
+	
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j  < 4; j ++)
 		{
-			this->m_value[i][j] *= num;
+			m.m_value[i][j]=this->m_value[i][j] * num;
 		}
 	}
 	
-	return *this;
+	return m;
 }

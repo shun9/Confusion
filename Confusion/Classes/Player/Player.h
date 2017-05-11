@@ -1,25 +1,16 @@
 //************************************************/
 //* @file  :Player.h
-//* @brief :プレイヤーのヘッダー
-//* @date  :2017/04/28
+//* @brief :プレイヤークラス
+//* @date  :2017/05/11
 //* @author:S.Katou
 //************************************************/
 #pragma once
 #include "../Object/Object.h"
 #include "../Gravity/Gravity.h"
+#include "../Wrapper/ConstantNumber/ConstantNumber.h"
+#include "../Object/HPGauge.h"
 
 class GamePadManager;
-
-
-//定数　方向
-enum DIRECTION
-{
-	TOP,
-	BOTTOM,
-	RIGHT,
-	LEFT,
-};
-
 
 //プレイヤークラス
 class Player :public Object
@@ -44,16 +35,15 @@ private:
 	int m_gamePadNum;
 
 	//移動用に対応するスティック（右 or 左）
-	DIRECTION m_stick;
+	ShunLib::DIRECTION_2D m_stick;
 
 	//重力
 	Gravity* m_gravity;
 	float m_gravityScale;
 
 	//ヒットポイント
+	HPGauge* m_hpGauge;
 	int m_hp;
-	ShunLib::Texture* m_hpGaugeRed;
-	ShunLib::Texture* m_hpGaugeGreen;
 
 	//無敵時間
 	int m_invincibleTime;
@@ -63,7 +53,7 @@ public:
 	Player(const wchar_t* model,
 		   ShunLib::Vec3 pos,
 		   int gamePadNum,
-		   DIRECTION stick);
+		   ShunLib::DIRECTION_2D stick);
 	~Player();
 
 	//更新処理

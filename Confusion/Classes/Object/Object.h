@@ -33,7 +33,7 @@ public:
 	Object(const wchar_t* model,
 		ShunLib::Vec3 pos = (0.0f, 0.0f, 0.0f),
 		ShunLib::Vec3 spd = (0.0f, 0.0f, 0.0f));
-	~Object();
+	virtual ~Object();
 	
 	//XVˆ—
 	virtual void Update() = 0;

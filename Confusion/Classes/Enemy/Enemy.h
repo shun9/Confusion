@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Enemy.h
 //* @brief :敵のヘッダーファイル
-//* @date  :2017/05/06
+//* @date  :2017/05/10
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -54,7 +54,9 @@ public:
 	void Dead() { m_isDead = true; }
 	
 	//範囲外に出たら死
-	void Dead(float top, float bottom, float right, float left);
+	//出た方向を返す
+	//出なかったら　-1
+	int Dead(float top, float bottom, float right, float left);
 
 	//死んでいるかどうか
 	bool IsDead() { return m_isDead; }

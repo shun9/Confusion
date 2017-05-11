@@ -5,6 +5,8 @@
 //* @author:S.Katou
 //************************************************/
 #include "Enemy.h"
+#include "../Wrapper/ConstantNumber/ConstantNumber.h"
+
 //速度倍率
 const float Enemy::SPD_MAGNIFICATION = 3.0f;
 
@@ -109,20 +111,21 @@ void Enemy::Fluster()
 //｜引数  :ステージの左(float)
 //｜戻り値:なし(void)
 //＋ーーーーーーーーーーーーーー＋
-void Enemy::Dead(float top, float bottom, float right, float left)
+int Enemy::Dead(float top, float bottom, float right, float left)
 {
+
 	//Ｚ軸正側判定
 	if (m_pos->m_z > top)
 	{
 		Dead();	
-		return;
+		return ShunLib::DIRECTION_2D::BOTTOM;
 	}
 
 	//Ｚ軸負側判定
 	if (m_pos->m_z < bottom)
 	{
 		Dead();
-		return;
+		return ShunLib::DIRECTION_2D::TOP;
 	}
 
 
@@ -130,13 +133,15 @@ void Enemy::Dead(float top, float bottom, float right, float left)
 	if (m_pos->m_x > right)
 	{
 		Dead();
-		return;
+		return ShunLib::DIRECTION_2D::RIGHT;
 	}
 
 	//Ｘ軸負側判定
 	if (m_pos->m_x < left)
 	{
 		Dead();
-		return;
+		return ShunLib::DIRECTION_2D::LEFT;
 	}
+
+	return -1;
 }

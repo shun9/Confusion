@@ -12,14 +12,14 @@ const int Player::MAX_PLAYER = 2;
 
 //速度倍率
 const float Player::SPD_MAGNIFICATION = 8.0f;
-const int Player::MAX_HP = 17;
+const int Player::MAX_HP = 20;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
 //｜引数  :画像のパス(wchar_t*)
 //｜引数  :初期座標	 (ShunLib::Vec3)
 //＋ーーーーーーーーーーーーーー＋
-Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum,DIRECTION stick)
+Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum, ShunLib::DIRECTION_2D stick)
 	: Object(model, pos)
 	, m_gamePadNum(gamePadNum)
 	, m_stick(stick)
@@ -36,8 +36,7 @@ Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum,DIRECTION
 	m_gravity->Radius(m_gravityScale);
 
 	//delete -> ~Player
-	m_hpGaugeRed = new ShunLib::Texture(L"Images\\GaugeRed.png");
-	m_hpGaugeGreen = new ShunLib::Texture(L"Images\\GaugeGreen.png");
+	m_hpGauge = new HPGauge(m_hp, *m_pos, ShunLib::Vec3(2.0f, 0.5f, 1.0f), ShunLib::Vec3(90.0f, 0.0f, 0.0f));
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -47,8 +46,7 @@ Player::~Player()
 {
 	delete m_gravity;
 
-	delete m_hpGaugeRed;
-	delete m_hpGaugeGreen;
+	delete m_hpGauge;
 }
 
 
@@ -86,21 +84,9 @@ void Player::Update()
 void Player::DrawHpGauge(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 {
 	using namespace ShunLib;
-
-	//バグが起きるので行列を２つ分作りました
-	Matrix scale = Matrix::CreateScale(Vec3(2.0f, 0.5f, 1.0f));
-	Matrix rotate = Matrix::CreateRotationX(90.0f);
-	Matrix trans = Matrix::CreateTranslation(Vec3(m_pos->m_x, 0.0f, m_pos->m_z + 0.5f));
-
-	Matrix scale2 = Matrix::CreateScale(Vec3(2.0f*m_hp/ MAX_HP, 0.5f, 1.0f));
-	Matrix rotate2 = Matrix::CreateRotationX(90.0f);
-	Matrix trans2 = Matrix::CreateTranslation(Vec3(m_pos->m_x - ((1.0f- m_hp/(float)MAX_HP)), 0.0f, m_pos->m_z + 0.5f));
-
-	Matrix worldRed = scale*rotate*trans;
-	Matrix worldGreen = scale2*rotate2*trans2;
-
-	m_hpGaugeRed->Draw(worldRed, view, proj);
-	m_hpGaugeGreen->Draw(worldGreen, view, proj);
+	m_hpGauge->HP(m_hp);
+	m_hpGauge->Pos(*m_pos);
+	m_hpGauge->Draw(view, proj);
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -146,18 +132,20 @@ void Player::Clamp(float top, float bottom, float right, float left)
 //＋ーーーーーーーーーーーーーー＋
 void Player::UpdateSpd()
 {
+	using namespace ShunLib;
+
 	auto state = m_gamePad->Get(m_gamePadNum);
 
 	//速度を設定
 	//Ｚ軸は座標系の関連でマイナスを掛ける
 	switch (m_stick)
 	{
-	case RIGHT://右スティック
+	case DIRECTION_2D::RIGHT://右スティック
 		m_spd->m_x = state.thumbSticks.rightX;	
 		m_spd->m_z = -(state.thumbSticks.rightY);
 		break;
 
-	case LEFT://左スティック
+	case DIRECTION_2D::LEFT://左スティック
 		m_spd->m_x = state.thumbSticks.leftX;
 		m_spd->m_z = -(state.thumbSticks.leftY);
 		break;
@@ -201,6 +189,8 @@ void Player::UpdateGravity()
 //＋ーーーーーーーーーーーーーー＋
 void Player::UpdateGravityScale()
 {
+	using namespace ShunLib;
+
 	auto state = m_gamePad->Get(m_gamePadNum);
 
 	//ボタンが押されているかどうか
@@ -209,11 +199,11 @@ void Player::UpdateGravityScale()
 	//スティックと対応するボタンで判定をとる
 	switch (m_stick)
 	{
-	case RIGHT://右スティック
+	case DIRECTION_2D::RIGHT://右スティック
 		isPushed = state.IsRightShoulderPressed();
 		break;
 
-	case LEFT://左スティック
+	case DIRECTION_2D::LEFT://左スティック
 		isPushed = state.IsLeftShoulderPressed();
 		break;
 

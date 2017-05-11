@@ -60,9 +60,9 @@ namespace ShunLib
 		/*--[演算子のオーバーロード]--*/
 		Matrix& operator=(const Matrix& M);
 		Matrix& operator=(const DirectX::SimpleMath::Matrix& M);
-		Matrix& operator+(const Matrix& M);
-		Matrix& operator-(const Matrix& M);
-		Matrix& operator*(const Matrix& M);
-		Matrix& operator*(int num);
+		Matrix operator+(const Matrix& M);
+		Matrix operator-(const Matrix& M);
+		Matrix operator*(const Matrix& M);
+		Matrix operator*(int num);
 	};
 }

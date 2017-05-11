@@ -6,16 +6,17 @@
 //************************************************/
 #pragma once
 #include "Scene.h"
-
+#include <memory>
 #include <vector>
+#include <Effekseer.h>
+#include <EffekseerRendererDX11.h>
+#include "../Wrapper/Effekseer/Effect.h"
 #include "../Wrapper/Matrix/Matrix.h"
 #include "../Player/Player.h"
 #include "../Enemy/Enemy.h"
 #include "../Stage/Stage.h"
-
-#include <Effekseer.h>
-#include <EffekseerRendererDX11.h>
-#include "../Wrapper/Effekseer/Effect.h"
+#include "../Enemy/SummonMagic.h"
+#include "../Object/HPGauge.h"
 
 class PlayScene:public Scene
 {
@@ -25,7 +26,8 @@ public:
 	static const float STAGE_BOTTOM;
 	static const float STAGE_RIGHT;
 	static const float STAGE_LEFT;
-
+	
+	
 private:
 	ShunLib::Matrix m_view;	//ビュー行列
 	ShunLib::Matrix m_proj;	//プロジェクション行列
@@ -33,13 +35,21 @@ private:
 	//ステージ
 	Stage* m_stage;
 
+	//残り体力
+	int m_stageLife;
+	HPGauge* m_hpGauge;
+
 	//プレイヤー＆敵
 	Player** m_player;
-	std::vector<Enemy*> m_enemy;
+	std::vector<std::shared_ptr<Enemy>> m_enemy;
+
+	//敵召喚魔法陣
+	SummonMagic** m_magic;
+	int m_maxMagic;
 
 	//エフェクト
-	ShunLib::Effect* m_summonEffect;
 	ShunLib::Effect* m_blastEffect;
+	ShunLib::Effect* m_clearEffect;
 
 	//プレイ開始でtrue
 	bool m_isStarted;
@@ -64,10 +74,12 @@ private:
 	void PlayMain();
 
 	//プレイクリアの処理
-	void PlayClear();
+	//終了したらtrue
+	bool PlayClear();
 
 	//プレイゲームオーバーの処理
-	void PlayGameOver();
+	//終了したらtrue
+	bool PlayGameOver();
 
 	//当たり判定総合
 	void Collision();

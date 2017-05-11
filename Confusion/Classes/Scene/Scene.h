@@ -15,6 +15,7 @@ public:
 		TITLE,
 		PLAY,
 		CLEAR,
+		OVER,
 	};
 
 protected:
@@ -26,7 +27,7 @@ public:
 	static int NextScene() { return m_nextScene; }
 
 public:
-	~Scene() {}
+	virtual ~Scene() {}
 	virtual void Update() = 0;
 	virtual void Render() = 0;
 

@@ -68,6 +68,9 @@
     <Filter Include="ShunLib\Wrapper\Effect">
       <UniqueIdentifier>{eb1ea42b-3c86-4468-aa78-0569c7f9cf10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ShunLib\Wrapper\Constant">
+      <UniqueIdentifier>{6c48c0a5-5ce0-40ed-a4c6-e00bfba31877}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h">
@@ -129,6 +132,18 @@
     </ClInclude>
     <ClInclude Include="Classes\Wrapper\Effekseer\Effect.h">
       <Filter>ShunLib\Wrapper\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Scene\GameOverScene.h">
+      <Filter>Classes\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Enemy\SummonMagic.h">
+      <Filter>Classes\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Wrapper\ConstantNumber\ConstantNumber.h">
+      <Filter>ShunLib\Wrapper\Constant</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Object\HPGauge.h">
+      <Filter>Classes\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +207,13 @@
     <ClCompile Include="Classes\Wrapper\Effekseer\Effect.cpp">
       <Filter>ShunLib\Wrapper\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\Scene\GameOverScene.cpp">
+      <Filter>Classes\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Enemy\SummonMagic.cpp">
+      <Filter>Classes\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Object\HPGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
