@@ -71,6 +71,9 @@
     <Filter Include="ShunLib\Wrapper\Constant">
       <UniqueIdentifier>{6c48c0a5-5ce0-40ed-a4c6-e00bfba31877}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Sound">
+      <UniqueIdentifier>{ab906a8d-168d-4199-92fb-5d758dcf15d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h">
@@ -145,6 +148,15 @@
     <ClInclude Include="Classes\Object\HPGauge.h">
       <Filter>Classes\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Classes\Sound\ADX2Le.h">
+      <Filter>Classes\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Sound\Confusion_acf.h">
+      <Filter>Classes\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Sound\PlayScene.h">
+      <Filter>Classes\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\GameMain.cpp">
@@ -214,6 +226,9 @@
       <Filter>Classes\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Object\HPGauge.cpp" />
+    <ClCompile Include="Classes\Sound\ADX2Le.cpp">
+      <Filter>Classes\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">

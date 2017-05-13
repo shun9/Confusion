@@ -1,0 +1,14 @@
+使用ツール
+・Effekseer
+・
+
+使用素材
+Effekseer 投稿エフェクト
+・Effekseer様　 Simple_Sprite_BillBoard
+・BirdStrike様　AddEnemy
+・BrokenDesk様　Magic2_fire
+・
+
+効果音ラボ様
+・爆発2
+・

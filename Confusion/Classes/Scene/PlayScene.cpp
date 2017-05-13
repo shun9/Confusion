@@ -1,11 +1,13 @@
 //************************************************/
 //* @file  :PlayScene.cpp
 //* @brief :プレイ画面のクラス
-//* @date  :2017/05/11
+//* @date  :2017/05/13
 //* @author:S.Katou
 //************************************************/
 #include <random>
 #include "PlayScene.h"
+#include "../Sound/PlayScene.h"
+#include "../Sound/ADX2Le.h"
 #include "../Wrapper/Vec3/Vec3.h"
 #include "../GameMain.h"
 #include "../Conversion/Conversion.h"
@@ -47,11 +49,14 @@ PlayScene::PlayScene()
 	for (int i = 0; i < m_maxMagic; i++)
 	{
 		m_magic[i] = new SummonMagic(Vec3(static_cast<float>(std::rand() % 20-10.0f),0.0f, -(static_cast<float>(std::rand() % 40 + 10))),
-									 rand()%500+30,i*10,5.0f);
+									 rand()%500+30,
+									 i*20,5.0f);
 	}
 
 	//ステージ生成
 	m_stage = new Stage;
+
+	ADX2Le::LoadAcb("Sounds\\PlayScene.acb");
 }
 
 
@@ -180,7 +185,10 @@ void PlayScene::PlayAgo()
 	m_isStarted = true;
 	for (int i = 0; i < m_maxMagic; i++)
 	{
+		//魔法陣更新
 		m_magic[i]->Update();
+		
+		//魔法陣が出現していなかったら始まらない
 		if (!m_magic[i]->IsStarted())
 		{
 			m_isStarted = false;
@@ -219,6 +227,7 @@ void PlayScene::PlayMain()
 		{
 			//爆破エフェクト設定
 			m_blastEffect->SetDraw(m_enemy[i]->Pos() + ShunLib::Vec3(0.0f, 1.0f, 0.0f));
+			ADX2Le::Play(CRI_PLAYSCENE_BOMB2);
 
 			//敵削除
 			m_enemy.erase(m_enemy.begin() + i);
@@ -483,6 +492,7 @@ bool PlayScene::IsGameOver()
 		}
 	}
 
+	//ステージのライフが０になったらGameOver
 	if (m_stageLife <= 0)
 	{
 		return true;

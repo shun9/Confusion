@@ -177,6 +177,9 @@
     <ClInclude Include="Classes\Scene\PlayScene.h" />
     <ClInclude Include="Classes\Scene\Scene.h" />
     <ClInclude Include="Classes\Scene\TitleScene.h" />
+    <ClInclude Include="Classes\Sound\ADX2Le.h" />
+    <ClInclude Include="Classes\Sound\Confusion_acf.h" />
+    <ClInclude Include="Classes\Sound\PlayScene.h" />
     <ClInclude Include="Classes\Stage\Stage.h" />
     <ClInclude Include="Classes\Wrapper\ConstantNumber\ConstantNumber.h" />
     <ClInclude Include="Classes\Wrapper\Effekseer\Effect.h" />
@@ -203,6 +206,7 @@
     <ClCompile Include="Classes\Scene\PlayScene.cpp" />
     <ClCompile Include="Classes\Scene\Scene.cpp" />
     <ClCompile Include="Classes\Scene\TitleScene.cpp" />
+    <ClCompile Include="Classes\Sound\ADX2Le.cpp" />
     <ClCompile Include="Classes\Stage\Stage.cpp" />
     <ClCompile Include="Classes\Wrapper\Effekseer\Effect.cpp" />
     <ClCompile Include="Classes\Wrapper\GamePad\GamePadManager.cpp" />

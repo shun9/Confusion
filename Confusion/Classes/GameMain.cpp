@@ -6,6 +6,7 @@
 //************************************************/
 #include "GameMain.h"
 #include <ctime>
+#include "Sound\ADX2Le.h"
 #include "Wrapper\Vec3\Vec3.h"
 #include "Scene\PlayScene.h"
 #include "Scene\TitleScene.h"
@@ -38,6 +39,9 @@ void GameMain::Initialize(int screenW, int screenH)
 	m_scene = new TitleScene;
 	m_currentScene = Scene::TITLE;
 	m_nextScene = m_currentScene;
+
+
+	ADX2Le::Initialize("Sounds\\Confusion.acf");
 }
 
 
@@ -83,6 +87,8 @@ void GameMain::Update()
 
 	//シーン更新
 	m_scene->Update();
+
+	ADX2Le::Update();
 }
 
 
@@ -110,4 +116,6 @@ void GameMain::Finalize()
 		delete m_scene;
 		m_scene = nullptr;
 	}
+
+	ADX2Le::Finalize();
 }
