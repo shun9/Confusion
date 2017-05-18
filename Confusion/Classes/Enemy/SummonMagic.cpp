@@ -51,9 +51,8 @@ std::shared_ptr<Enemy> SummonMagic::SummonEnemy()
 	Vec3 randSpd(0.0f, 0.0f, randNum(0.1f, 100.0f));
 
 	//敵生成
-	std::shared_ptr<Enemy>enemy = std::make_shared<Enemy>(L"CModel\\Enemy.cmo",
-								  *m_pos+ randPos,
-		randSpd);
+	std::shared_ptr<Enemy>enemy = 
+		std::make_shared<Enemy>(L"CModel\\Enemy.cmo",*m_pos+ randPos,randSpd);
 	
 	//エフェクト設定
 	m_summonEffect->SetDraw();

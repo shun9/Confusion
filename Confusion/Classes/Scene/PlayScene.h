@@ -108,9 +108,6 @@ private:
 	//‹²‚Ü‚ê‚Ä‚¢‚é‚©‚Ì”»’è
 	bool IsSandwiched(bool isHitGravity[],Enemy* enemy);
 
-	//–‚–@w¶¬
-	void CreateMagic();
-
 	//‘S‚Ä‚Ì–‚–@w‚ğíœ
 	void DeleteAllMagic();
 

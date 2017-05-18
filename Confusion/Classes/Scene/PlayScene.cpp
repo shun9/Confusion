@@ -519,27 +519,6 @@ bool PlayScene::IsSandwiched(bool isHitGravity[], Enemy* enemy)
 }
 
 //＋ーーーーーーーーーーーーーー＋
-//｜機能  :魔法陣の生成
-//｜引数  :なし(void)
-//｜戻り値:なし(void)
-//＋ーーーーーーーーーーーーーー＋
-void PlayScene::CreateMagic()
-{	
-	float randPosX = static_cast<float>(std::rand() % std::abs((int)(STAGE_RIGHT + STAGE_LEFT + 1)));
-	float randPosZ= -(static_cast<float>(std::rand() % std::abs((int)STAGE_BOTTOM)));
-	int summonInterval = std::rand() % 500 + 30;
-	int firstInterval = std::rand() % 120 + 120;
-	float scale = (rand() % 100 + 1) / 10.0f;
-
-	m_magic.push_back(std::make_unique<SummonMagic>(
-		ShunLib::Vec3(randPosX,0.0f,randPosZ),
-		summonInterval,
-		firstInterval,
-		scale));
-}
-
-
-//＋ーーーーーーーーーーーーーー＋
 //｜機能  :すべての魔法陣を消す
 //｜引数  :なし(void)
 //｜戻り値:なし(void)
