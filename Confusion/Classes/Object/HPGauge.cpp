@@ -47,7 +47,7 @@ void HPGauge::Draw(const ShunLib::Matrix & view, const ShunLib::Matrix & proj)
 				  * Matrix::CreateRotationX(m_rotate->m_x)
 				  * Matrix::CreateRotationY(m_rotate->m_y);
 	Matrix trans  = Matrix::CreateTranslation(Vec3(m_pos->m_x, 
-												   0.0f, 
+												   m_pos->m_y, 
 												   m_pos->m_z));
 
 	//—Î—p
@@ -55,7 +55,7 @@ void HPGauge::Draw(const ShunLib::Matrix & view, const ShunLib::Matrix & proj)
 											  m_scale->m_y, 
 											  m_scale->m_z));
 	Matrix trans2  = Matrix::CreateTranslation(Vec3(m_pos->m_x - ((1.0f - m_hp / (float)MAX_HP)*(m_scale->m_x/2)),
-													0.0f, 
+													m_pos->m_y, 
 													m_pos->m_z));
 	//‡Z
 	Matrix worldRed = scale*rotate*trans;

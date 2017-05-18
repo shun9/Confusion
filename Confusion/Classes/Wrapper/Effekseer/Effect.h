@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Effect.h
 //* @brief :Effekseerを使用したエフェクト再生クラス
-//* @date  :2017/05/04
+//* @date  :2017/05/16
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -46,6 +46,9 @@ namespace ShunLib
 		//再生が終了したらtrue
 		bool m_isEnded;
 
+		//再生速度倍率
+		float m_spd;
+
 		/*--メンバ関数--*/
 	public:
 
@@ -66,6 +69,7 @@ namespace ShunLib
 		{
 			handle = manager->Play(effect, pos.m_x,pos.m_y,pos.m_z);
 			m_isEnded = false;
+			m_flameCnt = 0;
 		}
 
 		//位置を設定
@@ -85,7 +89,8 @@ namespace ShunLib
 		//再生速度を設定
 		void SetSpd(float spd)
 		{
-			manager->SetSpeed(handle, spd);
+			m_spd = spd;
+			manager->SetSpeed(handle, m_spd);
 		}
 
 		//傾きを設定

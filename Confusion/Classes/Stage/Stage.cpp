@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Stage.cpp
-//* @brief :ステージのソース
-//* @date  :2017/05/01
+//* @brief :ステージ描画用のクラス
+//* @date  :2017/05/14
 //* @author:S.Katou
 //************************************************/
 #include "Stage.h"
@@ -11,6 +11,7 @@
 Stage::Stage()
 {
 	using namespace ShunLib;
+	//m_ground = new Texture(L"Images\\glass.jpg");
 	m_ground = new Model(L"CModel\\Glass.cmo");
 	m_tree = new Model(L"CModel\\tree.cmo");
 }
@@ -27,13 +28,14 @@ Stage::~Stage()
 //｜引数  :プロジェクション行列(ShunLib::Matrix)
 //｜戻り値:なし(void)
 //＋ーーーーーーーーーーーーーー＋
-void Stage::Draw(const ShunLib::Matrix& view,
+void Stage::Draw(const ShunLib::Matrix& world,
+				 const ShunLib::Matrix& view,
 				 const ShunLib::Matrix& proj)
 {
 	using namespace ShunLib;
 
 	//地面描画
-	m_ground->Draw(Matrix::Identity, view, proj);
+	m_ground->Draw(world, view, proj);
 
 	//木描画
 	for (int i = 0; i < 20; i++)

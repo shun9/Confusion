@@ -1,14 +1,14 @@
 //************************************************/
 //* @file  :Enemy.cpp
 //* @brief :敵のソースファイル
-//* @date  :2017/05/06
+//* @date  :2017/05/18
 //* @author:S.Katou
 //************************************************/
 #include "Enemy.h"
 #include "../Wrapper/ConstantNumber/ConstantNumber.h"
 
 //速度倍率
-const float Enemy::SPD_MAGNIFICATION = 3.0f;
+const float Enemy::SPD_MAGNIFICATION = 5.0f / 60.0f;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -45,7 +45,7 @@ Enemy::~Enemy()
 void Enemy::Update()
 {
 	//移動
-	*m_pos = *m_pos + (*m_spd * SPD_MAGNIFICATION / 60.0f);
+	*m_pos = *m_pos + ((*m_spd * SPD_MAGNIFICATION));
 
 	//混乱時間経過
 	if (m_isConfused)
@@ -72,6 +72,7 @@ void Enemy::Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 {
 	using namespace ShunLib;
 	
+	//描画
 	Object::Draw(view,proj);
 
 	//混乱していたらエフェクト表示

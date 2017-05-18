@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :SummonMagic.h
 //* @brief :敵を召喚する魔法陣クラス
-//* @date  :2017/05/10
+//* @date  :2017/05/18
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -9,10 +9,12 @@
 #include <memory>
 #include "Enemy.h"
 #include "../Wrapper/Texture/Texture.h"
+#include "../Wrapper/Model/Model.h"
+#include "../Timer/Timer.h"
 
 class SummonMagic
 {
-private:
+protected:
 	ShunLib::Texture* m_texture;
 	ShunLib::Effect* m_summonEffect;
 
@@ -23,35 +25,44 @@ private:
 	float m_scale;
 	float m_maxScale;
 
-
+	//召喚開始したらtrue
 	bool m_isStart;
 
 	//回転用角度
 	float m_angle;
 
-	//召喚間隔 
-	const int m_interval;
-	int m_intervaCnt;
+	//召喚間隔
+	ShunLib::Timer* m_summonIntervalTimer;
 
-	//開始までの待ち時間
-	const int m_firstInterval;
-	int m_firstIntervaCnt;
+
+	//召喚開始までの待ち時間
+	ShunLib::Timer* m_firstIntervalTimer;
+
+	//召喚に必要なパワー
+	float m_summonPower;
 
 public:
-	SummonMagic(ShunLib::Vec3 pos = ShunLib::Vec3(0.0f, 0.0f, 0.0f), int interval = 60, int firstInterval=0,float scale = 5.0f);
+	SummonMagic(ShunLib::Vec3 pos = ShunLib::Vec3(0.0f, 0.0f, 0.0f), int interval = 60, int firstInterval = 0, float scale = 5.0f, float summonPower = 1.0f);
 	~SummonMagic();
 	
-	std::shared_ptr<Enemy> Create();
+	//敵の生成
+	virtual std::shared_ptr<Enemy> SummonEnemy();
+
+	//更新処理
 	void Update();
 
-	void Draw(const ShunLib::Matrix& view,
-			  const ShunLib::Matrix& proj);
+	//描画
+	virtual void Draw(const ShunLib::Matrix& view,
+					  const ShunLib::Matrix& proj);
 
 	//召喚可能かどうか返す
 	bool CanSummon()
 	{
-		if (m_scale <= 0.0f) { return false; }
-		return (m_intervaCnt > m_interval);
+		if (m_scale <= 0.0f){
+			return false;
+		}
+
+		return (m_summonIntervalTimer->IsEnded());
 	}
 
 	//拡大率（パワー）

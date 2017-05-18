@@ -6,20 +6,24 @@
 //************************************************/
 #include "SummonMagic.h"
 #include <random>
+#include "../Timer/Timer.h"
+#include "../RandomNumber/RandomNumber.h"
 
-SummonMagic::SummonMagic(ShunLib::Vec3 pos, int interval, int firstInterval, float scale)
-	: m_interval(interval)
-	, m_intervaCnt(0)
-	, m_firstInterval(firstInterval)
-	, m_firstIntervaCnt(0)
-	, m_scale(0.0f)
+SummonMagic::SummonMagic(ShunLib::Vec3 pos, int interval, int firstInterval, float scale, float summonPower)
+	: m_scale(0.0f)
 	, m_maxScale(scale)
 	, m_angle(0.0f)
 	, m_isStart(false)
+	, m_summonPower(summonPower)
 {
-	m_texture      = new ShunLib::Texture(L"Images\\magic.png");
-	m_pos          = new ShunLib::Vec3(pos);
-	m_summonEffect = new ShunLib::Effect(L"Effect\\Magic.efk",60);
+	using namespace ShunLib;
+	m_texture	   = new Texture(L"Images\\magic.png");
+	m_pos          = new Vec3(pos);
+	m_summonEffect = new Effect(L"Effect\\Magic.efk",60);
+	m_summonIntervalTimer = new Timer();
+	m_summonIntervalTimer->SetTime(interval);
+	m_firstIntervalTimer = new Timer();
+	m_firstIntervalTimer->SetTime(firstInterval);
 }
 
 SummonMagic::~SummonMagic()
@@ -27,6 +31,9 @@ SummonMagic::~SummonMagic()
 	delete m_texture;
 	delete m_pos;
 	delete m_summonEffect;
+
+	delete m_summonIntervalTimer;
+	delete m_firstIntervalTimer;
 }
 
 
@@ -35,16 +42,18 @@ SummonMagic::~SummonMagic()
 //｜引数  :なし(void)
 //｜戻り値:敵(shared_ptr<Enemy>)
 //＋ーーーーーーーーーーーーーー＋
-std::shared_ptr<Enemy> SummonMagic::Create()
+std::shared_ptr<Enemy> SummonMagic::SummonEnemy()
 {
-	//ShunLib::Vec3 randPos((std::rand() % static_cast<int>(m_scale * 20)) / 10.0f - m_scale,
-	//					  0.0f, 
-	//					  (std::rand() % static_cast<int>(m_scale * 20)) / 10.0f - m_scale);
-	ShunLib::Vec3 randPos(0.0f,0.0f,0.0f);
+	using namespace ShunLib;
+
+	RandomNumber randNum;
+	Vec3 randPos(randNum(-m_scale,m_scale),0.0f, randNum(-m_scale, m_scale));
+	Vec3 randSpd(0.0f, 0.0f, randNum(0.1f, 100.0f));
+
 	//敵生成
 	std::shared_ptr<Enemy>enemy = std::make_shared<Enemy>(L"CModel\\Enemy.cmo",
 								  *m_pos+ randPos,
-								  ShunLib::Vec3(0.0f, 0.0f, 0.1f));
+		randSpd);
 	
 	//エフェクト設定
 	m_summonEffect->SetDraw();
@@ -52,10 +61,10 @@ std::shared_ptr<Enemy> SummonMagic::Create()
 	m_summonEffect->SetPos(enemy->Pos());
 
 	//カウントリセット
-	m_intervaCnt = 0;
+	m_summonIntervalTimer->ResetCount();
 
 	//パワーダウン
-	m_scale -= 0.1f;
+	m_scale -= m_summonPower;
 
 	return enemy;
 }
@@ -69,9 +78,9 @@ std::shared_ptr<Enemy> SummonMagic::Create()
 void SummonMagic::Update()
 {
 	//開始まで待つ
-	if (m_firstIntervaCnt<m_firstInterval)
+	if (!(m_firstIntervalTimer->IsEnded()))
 	{
-		m_firstIntervaCnt++;
+		m_firstIntervalTimer->Update();
 		return;
 	}
 
@@ -85,7 +94,7 @@ void SummonMagic::Update()
 	//召喚開始まで待つ
 	if (m_isStart)
 	{
-		m_intervaCnt++;
+		m_summonIntervalTimer->Update();
 	}
 
 	if (!m_isStart)
@@ -96,7 +105,6 @@ void SummonMagic::Update()
 			m_isStart = true;
 		}
 	}
-
 }
 
 //＋ーーーーーーーーーーーーーー＋
@@ -111,8 +119,8 @@ void SummonMagic::Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 
 	Matrix world;
 	world = Matrix::CreateScale(m_scale * 2)
-		* Matrix::CreateRotationY(m_angle)
-		* Matrix::CreateTranslation(*m_pos);
+		  * Matrix::CreateRotationY(m_angle)
+		  * Matrix::CreateTranslation(*m_pos+Vec3(0.0f,1.0f,0.0f));
 
 	m_texture->Draw(world, view, proj);
 

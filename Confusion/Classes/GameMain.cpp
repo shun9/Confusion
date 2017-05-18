@@ -35,13 +35,12 @@ void GameMain::Initialize(int screenW, int screenH)
 	m_view = Matrix::CreateLookAt(Vec3(0.0f,0.0f,5.0f),Vec3::Zero,Vec3::UnitY);
 	m_proj = Matrix::CreateProj(45.0f, static_cast<float>(screenW / screenH), 1.0f, 100.0f);
 	
+	ADX2Le::Initialize("Sounds\\Confusion.acf");
+
 	//最初のシーン
 	m_scene = new TitleScene;
 	m_currentScene = Scene::TITLE;
 	m_nextScene = m_currentScene;
-
-
-	ADX2Le::Initialize("Sounds\\Confusion.acf");
 }
 
 
@@ -55,7 +54,7 @@ void GameMain::Update()
 	//次のシーンを取得
 	m_nextScene = Scene::NextScene();
 
-	//次のシーンと現在のシーンが違う場合
+	//次のシーンと現在のシーンが違う場合シーンを変更する
 	if (m_nextScene != m_currentScene)
 	{
 		m_currentScene = m_nextScene;

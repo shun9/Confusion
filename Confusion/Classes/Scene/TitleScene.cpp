@@ -6,7 +6,13 @@
 //************************************************/
 #include "TitleScene.h"
 #include "../GameMain.h"
+#include "../Sound/PlayScene.h"
+#include "../Sound/TitleScene.h"
+#include "../Sound/ADX2Le.h"
 
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :コンストラクタ
+//＋ーーーーーーーーーーーーーー＋
 TitleScene::TitleScene()
 {
 	using namespace ShunLib;
@@ -19,8 +25,13 @@ TitleScene::TitleScene()
 
 	m_pad = GamePadManager::GetInstance();
 
+	ADX2Le::LoadAcb("Sounds\\TitleScene.acb", "Sounds\\TitleScene.awb");
+	ADX2Le::Play(CRI_TITLESCENE__THE_ROAD_TO_HEAVEN);
 }
 
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :デストラクタ
+//＋ーーーーーーーーーーーーーー＋
 TitleScene::~TitleScene()
 {
 	delete m_stage;
@@ -50,26 +61,7 @@ void TitleScene::Update()
 //＋ーーーーーーーーーーーーーー＋
 void TitleScene::Render()
 {
-	m_stage->Draw(m_view,m_proj);
+	m_stage->Draw(ShunLib::Matrix::Identity,m_view,m_proj);
 
 	m_logo->Draw(0.0f, 0.0f);
-
-	//m_testEffect->Draw(m_view, m_proj, ShunLib::Vec3::Zero, ShunLib::Vec3(1.0f,1.0f,1.0f)* 2.0f , 0.2f);
-
-
-	//static int a = 0;
-	//a++;
-
-	//static float b = 0.0f;
-
-	//if (a > 20)
-	//{
-	//	m_testEffect->ResetDraw(ShunLib::Vec3(b , 0.0f, 0.0f));
-	//	a = 0;
-	//	b++;
-	//	if (b > 20.0f)
-	//	{
-	//		b = 0.0f;
-	//	}
-	//}
 }

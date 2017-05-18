@@ -31,10 +31,11 @@ void ShunLib::Effect::SetDevice(ID3D11Device* device,
 //｜機能  :ファイル指定コンストラクタ	
 //｜引数  :cmoファイルの名前(wchar_t[])
 //＋ーーーーーーーーーーーーーー＋
-ShunLib::Effect::Effect(const wchar_t efk[], int flame,int spriteNum, bool isDrawFirst)
-	:m_flame(flame)
-	,m_flameCnt(0)
-	,m_isEnded(false)
+ShunLib::Effect::Effect(const wchar_t efk[], int flame, int spriteNum, bool isDrawFirst)
+	: m_flame(flame)
+	, m_flameCnt(0)
+	, m_isEnded(false)
+	, m_spd(1.0f)
 {
 	// 描画管理インスタンスの生成
 	renderer = EffekseerRendererDX11::Renderer::Create(m_device, m_context, spriteNum);
@@ -56,10 +57,8 @@ ShunLib::Effect::Effect(const wchar_t efk[], int flame,int spriteNum, bool isDra
 	// エフェクトの読込
 	effect = Effekseer::Effect::Create(manager, (EFK_CHAR*)efk);
 	
-	if (isDrawFirst)
-	{
-		handle = manager->Play(effect, 0.0f, 0.0f, 0.0f);
-	}
+	if (isDrawFirst) { handle = manager->Play(effect, 0.0f, 0.0f, 0.0f); }
+	else { m_isEnded = true; }
 }
 
 
@@ -114,7 +113,7 @@ void ShunLib::Effect::Draw(const ShunLib::Matrix& view,
 
 	m_flameCnt++;
 
-	if (m_flameCnt >= m_flame)
+	if (m_flameCnt >= m_flame / m_spd)
 	{
 		m_isEnded = true;
 	}

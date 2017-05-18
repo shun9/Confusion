@@ -29,9 +29,10 @@ Model::Model(const wchar_t cmo[])
 {
 	//ステート作成
 	m_state = std::make_unique<DirectX::CommonStates>(m_device);
+	
 	//エフェクト作成
 	m_effect = std::make_unique<DirectX::EffectFactory>(m_device);
-	
+
 	//テクスチャの場所を指定
 	m_effect->SetDirectory(L"CModel");
 

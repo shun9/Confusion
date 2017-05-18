@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :TitleScene.h
 //* @brief :タイトル画面のヘッダー
-//* @date  :2017/05/02
+//* @date  :2017/05/16
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -25,9 +25,6 @@ private:
 
 	//ゲームパッド
 	GamePadManager* m_pad;
-
-	ShunLib::Effect* m_testEffect;
-
 
 public:
 	TitleScene();

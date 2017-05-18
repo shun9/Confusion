@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Player.cpp
 //* @brief :プレイヤーのソースファイル
-//* @date  :2017/05/02
+//* @date  :2017/05/17
 //* @author:S.Katou
 //************************************************/
 #include "Player.h"
@@ -12,7 +12,7 @@ const int Player::MAX_PLAYER = 2;
 
 //速度倍率
 const float Player::SPD_MAGNIFICATION = 8.0f;
-const int Player::MAX_HP = 20;
+const int Player::MAX_HP = 50;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -71,6 +71,26 @@ void Player::Update()
 
 	//重力関連の更新
 	UpdateGravity();
+}
+
+//＋ーーーーーーーーーーーーーー＋
+//｜機能  :描画
+//｜引数  :ビュー行列		   (ShunLib::Matrix)
+//｜引数  :プロジェクション行列(ShunLib::Matrix)
+//｜戻り値:なし(void)
+//＋ーーーーーーーーーーーーーー＋
+void Player::Draw(const ShunLib::Matrix & view, const ShunLib::Matrix & proj)
+{
+	//死んでいたら描画しない
+	if (m_hp <= 0) { return; }
+
+	//無敵中は点滅させる
+	if (m_invincibleTime % 2 == 0)
+	{
+		Object::Draw(view, proj);
+	}
+
+	this->DrawHpGauge(view, proj);
 }
 
 
@@ -169,7 +189,6 @@ void Player::UpdateGravity()
 {
 	//重力位置を移動
 	m_gravity->Pos(m_pos->m_x, -1.0f, m_pos->m_z);
-
 
 	//重力の拡大率の更新
 	UpdateGravityScale();

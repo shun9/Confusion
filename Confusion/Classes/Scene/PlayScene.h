@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :PlayScene.h
 //* @brief :プレイ画面のヘッダー
-//* @date  :2017/05/02
+//* @date  :2017/05/17
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -17,6 +17,8 @@
 #include "../Stage/Stage.h"
 #include "../Enemy/SummonMagic.h"
 #include "../Object/HPGauge.h"
+#include "../Enemy/BossMagic.h"
+#include "../Timer/Timer.h"
 
 class PlayScene:public Scene
 {
@@ -36,26 +38,32 @@ private:
 	Stage* m_stage;
 
 	//残り体力
-	int m_stageLife;
+	int m_stageHP;
 	HPGauge* m_hpGauge;
+
+	//ボスのライフゲージ
+	HPGauge* m_bossGauge;
 
 	//プレイヤー＆敵
 	Player** m_player;
 	std::vector<std::shared_ptr<Enemy>> m_enemy;
 
 	//敵召喚魔法陣
-	SummonMagic** m_magic;
-	int m_maxMagic;
+	std::vector<std::shared_ptr<SummonMagic>>m_magic;
+	std::unique_ptr<BossMagic>m_boss;
 
 	//エフェクト
 	ShunLib::Effect* m_blastEffect;
-	ShunLib::Effect* m_clearEffect;
+	ShunLib::Effect* m_endEffect;
 
 	//プレイ開始でtrue
 	bool m_isStarted;
 
 	//クリアorゲームオーバーでtrue
 	bool m_isEnded;
+
+	//魔法陣召喚用
+	ShunLib::Timer* m_createMagicTimer;
 
 public:
 	PlayScene();
@@ -67,6 +75,15 @@ public:
 
 
 private:
+	//敵関連の更新
+	void UpdateEnemy();
+
+	//魔法陣関連の描画
+	void UpdateMagic();
+
+	//ステージの描画
+	void DrawStage();
+
 	//プレイ開始前の処理
 	void PlayAgo();
 
@@ -91,12 +108,14 @@ private:
 	//挟まれているかの判定
 	bool IsSandwiched(bool isHitGravity[],Enemy* enemy);
 
-	//敵を生成
-	void CreateEnemy();
+	//魔法陣生成
+	void CreateMagic();
+
+	//全ての魔法陣を削除
+	void DeleteAllMagic();
 
 	//クリア判定
 	bool IsCleared();
 	bool IsGameOver();
-
 };
 

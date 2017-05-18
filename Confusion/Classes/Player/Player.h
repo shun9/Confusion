@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Player.h
 //* @brief :プレイヤークラス
-//* @date  :2017/05/11
+//* @date  :2017/05/15
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -59,11 +59,12 @@ public:
 	//更新処理
 	void Update()override;
 
-	//重力の描画
-	void DrawGravity(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
-	{	m_gravity->Draw(view, proj);	}
+	//描画処理
+	virtual void Draw(const ShunLib::Matrix& view,
+					  const ShunLib::Matrix& proj);
 
-	void DrawHpGauge(const ShunLib::Matrix& view, const ShunLib::Matrix& proj);
+	//重力の描画(描画順の関係で分;ける)
+	void DrawGravity(const ShunLib::Matrix& view, const ShunLib::Matrix& proj) { m_gravity->Draw(view, proj); }
 
 	//重力の情報を返す
 	Gravity* GetGravity() { return m_gravity; }
@@ -91,4 +92,7 @@ private:
 
 	//重力の拡大率の更新
 	void UpdateGravityScale();
+
+	//ＨＰゲージ描画
+	void DrawHpGauge(const ShunLib::Matrix& view, const ShunLib::Matrix& proj);
 };

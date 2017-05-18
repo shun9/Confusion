@@ -50,9 +50,6 @@
     <Filter Include="Classes\Enemy">
       <UniqueIdentifier>{7161e76b-ca34-47be-bb19-e3bb3663f985}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ShunLib\Wrapper\Conversion">
-      <UniqueIdentifier>{98db4ddd-86e5-4937-bda1-0a08fb8ccf15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\Player">
       <UniqueIdentifier>{2509fc6f-7218-4e48-9e62-47ecde764077}</UniqueIdentifier>
     </Filter>
@@ -73,6 +70,12 @@
     </Filter>
     <Filter Include="Classes\Sound">
       <UniqueIdentifier>{ab906a8d-168d-4199-92fb-5d758dcf15d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib\Conversion">
+      <UniqueIdentifier>{98db4ddd-86e5-4937-bda1-0a08fb8ccf15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShunLib\Timer">
+      <UniqueIdentifier>{4baa96be-ddf0-49f4-bd25-858fbadb3645}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -125,7 +128,7 @@
       <Filter>Classes\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Classes\Conversion\Conversion.h">
-      <Filter>ShunLib\Wrapper\Conversion</Filter>
+      <Filter>ShunLib\Conversion</Filter>
     </ClInclude>
     <ClInclude Include="Classes\Scene\TitleScene.h">
       <Filter>Classes\Scene</Filter>
@@ -156,6 +159,18 @@
     </ClInclude>
     <ClInclude Include="Classes\Sound\PlayScene.h">
       <Filter>Classes\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Enemy\BossMagic.h">
+      <Filter>Classes\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Sound\TitleScene.h">
+      <Filter>Classes\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Timer\Timer.h">
+      <Filter>ShunLib\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\RandomNumber\RandomNumber.h">
+      <Filter>ShunLib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -205,7 +220,7 @@
       <Filter>Classes\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Conversion\Conversion.cpp">
-      <Filter>ShunLib\Wrapper\Conversion</Filter>
+      <Filter>ShunLib\Conversion</Filter>
     </ClCompile>
     <ClCompile Include="Classes\Scene\TitleScene.cpp">
       <Filter>Classes\Scene</Filter>
@@ -225,10 +240,16 @@
     <ClCompile Include="Classes\Enemy\SummonMagic.cpp">
       <Filter>Classes\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\Object\HPGauge.cpp" />
     <ClCompile Include="Classes\Sound\ADX2Le.cpp">
       <Filter>Classes\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\Enemy\BossMagic.cpp">
+      <Filter>Classes\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Object\HPGauge.cpp">
+      <Filter>Classes\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\RandomNumber\RandomNumber.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -260,6 +281,9 @@
     </MeshContentTask>
     <MeshContentTask Include="Model\Glass.FBX">
       <Filter>Assets\Stage</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Model\Magic.FBX">
+      <Filter>Assets</Filter>
     </MeshContentTask>
   </ItemGroup>
 </Project>
