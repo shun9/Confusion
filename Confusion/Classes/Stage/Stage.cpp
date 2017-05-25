@@ -11,7 +11,6 @@
 Stage::Stage()
 {
 	using namespace ShunLib;
-	//m_ground = new Texture(L"Images\\glass.jpg");
 	m_ground = new Model(L"CModel\\Glass.cmo");
 	m_tree = new Model(L"CModel\\tree.cmo");
 }
@@ -30,19 +29,28 @@ Stage::~Stage()
 //＋ーーーーーーーーーーーーーー＋
 void Stage::Draw(const ShunLib::Matrix& world,
 				 const ShunLib::Matrix& view,
-				 const ShunLib::Matrix& proj)
+				 const ShunLib::Matrix& proj,
+				 bool  isDrawTree)
 {
 	using namespace ShunLib;
 
 	//地面描画
 	m_ground->Draw(world, view, proj);
 
-	//木描画
-	for (int i = 0; i < 20; i++)
+	if (!isDrawTree)
 	{
-		Matrix worldLeft = Matrix::CreateTranslation(Vec3(PlayScene::STAGE_LEFT-3.0f, 0.0f, 25.0f - 4 * i));
-		Matrix worldRight = Matrix::CreateTranslation(Vec3(PlayScene::STAGE_RIGHT+3.0f, 0.0f, 25.0f - 4 * i));
-		m_tree->Draw(worldLeft, view, proj);
-		m_tree->Draw(worldRight, view, proj);
+		return;
+	}
+
+	//木描画
+	for (int i = 0; i < 15; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			Matrix worldLeft = Matrix::CreateTranslation(Vec3(PlayScene::STAGE_LEFT - 3.0f*(j+1), 0.0f, 25.0f - 4 * i));
+			Matrix worldRight = Matrix::CreateTranslation(Vec3(PlayScene::STAGE_RIGHT + 3.0f*(j+1), 0.0f, 25.0f - 4 * i));
+			m_tree->Draw(worldLeft, view, proj);
+			m_tree->Draw(worldRight, view, proj);
+		}
 	}
 }

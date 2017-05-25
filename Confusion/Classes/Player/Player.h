@@ -30,7 +30,7 @@ public:
 private:
 	//ゲームパッド
 	GamePadManager* m_gamePad;
-	
+
 	//対応するゲームパッドの番号
 	int m_gamePadNum;
 
@@ -64,11 +64,12 @@ public:
 					  const ShunLib::Matrix& proj);
 
 	//重力の描画(描画順の関係で分;ける)
-	void DrawGravity(const ShunLib::Matrix& view, const ShunLib::Matrix& proj) { m_gravity->Draw(view, proj); }
+	void DrawGravity(const ShunLib::Matrix& view, const ShunLib::Matrix& proj, const ShunLib::Vec3& color=ShunLib::Vec3(1.0f,1.0f,1.0f))
+	{ m_gravity->Draw(view, proj,color); }
 
 	//重力の情報を返す
 	Gravity* GetGravity() { return m_gravity; }
-	
+
 	//ダメージを受ける
 	void TakeDamage(int damage) { m_hp -= damage; }
 

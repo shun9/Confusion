@@ -1,10 +1,12 @@
 //************************************************/
 //* @file  :Object.h
 //* @brief :オブジェクトの基底クラス
-//* @date  :2017/04/20
+//* @date  :2017/05/23
 //* @author:S.Katou
 //************************************************/
 #pragma once
+#include <map>
+#include <memory>
 #include "../Wrapper/Model/Model.h"
 #include "../Wrapper/Vec3/Vec3.h"
 #include "../Wrapper/Matrix/Matrix.h"
@@ -13,8 +15,11 @@
 class Object
 {
 protected:
+	static std::map<const wchar_t*, std::shared_ptr<ShunLib::Model>> m_modelPool;
+
+protected:
 	//モデルデータ
-	ShunLib::Model* m_model;
+	std::shared_ptr<ShunLib::Model>m_model;
 
 	//位置
 	ShunLib::Vec3* m_pos;

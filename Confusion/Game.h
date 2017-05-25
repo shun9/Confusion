@@ -26,6 +26,7 @@ private:
 public:
 
     Game();
+	~Game();
 
     // Initialization and management
     void Initialize(HWND window, int width, int height);
@@ -62,7 +63,7 @@ private:
     int                                             m_outputHeight;
 
     D3D_FEATURE_LEVEL                               m_featureLevel;
-	
+
 
 	Microsoft::WRL::ComPtr<ID3D11Device>            m_d3dDevice;
     Microsoft::WRL::ComPtr<ID3D11Device1>           m_d3dDevice1;
@@ -73,6 +74,9 @@ private:
     Microsoft::WRL::ComPtr<IDXGISwapChain1>         m_swapChain1;
     Microsoft::WRL::ComPtr<ID3D11RenderTargetView>  m_renderTargetView;
     Microsoft::WRL::ComPtr<ID3D11DepthStencilView>  m_depthStencilView;
+
+
+	//ID3D11Debug* debug;
 
     // Rendering loop timer.
     DX::StepTimer                                   m_timer;

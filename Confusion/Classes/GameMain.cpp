@@ -11,6 +11,7 @@
 #include "Scene\PlayScene.h"
 #include "Scene\TitleScene.h"
 #include "Scene\GameOverScene.h"
+#include "Scene\ClearScene.h"
 
 using namespace ShunLib;
 
@@ -34,8 +35,11 @@ void GameMain::Initialize(int screenW, int screenH)
 
 	m_view = Matrix::CreateLookAt(Vec3(0.0f,0.0f,5.0f),Vec3::Zero,Vec3::UnitY);
 	m_proj = Matrix::CreateProj(45.0f, static_cast<float>(screenW / screenH), 1.0f, 100.0f);
-	
+
 	ADX2Le::Initialize("Sounds\\Confusion.acf");
+
+
+	m_isEnded = false;
 
 	//最初のシーン
 	m_scene = new TitleScene;
@@ -59,7 +63,10 @@ void GameMain::Update()
 	{
 		m_currentScene = m_nextScene;
 
-		if (m_scene != nullptr){ delete m_scene; }
+		if (m_scene != nullptr){
+			delete m_scene;
+			m_scene = nullptr;
+		}
 
 		switch (m_nextScene)
 		{
@@ -72,12 +79,16 @@ void GameMain::Update()
 			break;
 
 		case Scene::CLEAR:
-			m_scene = new PlayScene;
+			m_scene = new ClearScene;
 			break;
 
 		case Scene::OVER:
 			m_scene = new GameOverScene;
 			break;
+
+		case Scene::EXIT:
+			m_isEnded = true;
+			return;
 
 		default:
 			break;
@@ -85,7 +96,10 @@ void GameMain::Update()
 	}
 
 	//シーン更新
-	m_scene->Update();
+	if (m_scene != nullptr)
+	{
+		m_scene->Update();
+	}
 
 	ADX2Le::Update();
 }
@@ -99,7 +113,10 @@ void GameMain::Update()
 void GameMain::Render()
 {
 	//シーン描画
-	m_scene->Render();
+	if (m_scene != nullptr)
+	{
+		m_scene->Render();
+	}
 }
 
 
@@ -116,5 +133,11 @@ void GameMain::Finalize()
 		m_scene = nullptr;
 	}
 
+
 	ADX2Le::Finalize();
+}
+
+bool GameMain::IsEnded()
+{
+	return m_isEnded;
 }

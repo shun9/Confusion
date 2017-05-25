@@ -37,9 +37,7 @@ std::shared_ptr<Enemy> BossMagic::SummonEnemy()
 		*m_pos + randPos,randSpd);
 
 	//エフェクト設定
-	m_summonEffect->SetDraw();
-	m_summonEffect->SetScale(2.0f);
-	m_summonEffect->SetPos(enemy->Pos());
+	DrawSummonEffect(enemy->Pos());
 
 	//カウントリセット
 	m_summonIntervalTimer->ResetCount();
@@ -61,7 +59,7 @@ void BossMagic::Draw(const ShunLib::Matrix & view, const ShunLib::Matrix & proj)
 {
 	if (m_isDead)
 	{
-		return; 
+		return;
 	}
 
 	using namespace ShunLib;
@@ -111,7 +109,7 @@ std::shared_ptr<SummonMagic> BossMagic::CreateMagic(float stageX, float stageW, 
 	float posX = stageX > stageW ? randNum(stageW + scale, stageX - scale) : randNum(stageX + scale, stageW - scale);
 	float posZ = stageY > stageH ? randNum(stageH + scale, stageY - scale) : randNum(stageY + scale, stageH - scale);
 	Vec3 pos(posX,0.0f, posZ);
-	
+
 	//召喚間隔
 	int summonInterval = randNum(60,500);
 

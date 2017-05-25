@@ -27,7 +27,7 @@ const float PlayScene::STAGE_LEFT   = -15.0f;
 PlayScene::PlayScene()
 	:m_isStarted(false)
 	,m_isEnded(false)
-	,m_stageHP(300)
+	,m_stageHP(30)
 {
 	using namespace ShunLib;
 	m_view = Matrix::CreateLookAt(Vec3(0.0f, 30.0f, 50.0f), Vec3::Zero, Vec3::UnitY);
@@ -44,13 +44,14 @@ PlayScene::PlayScene()
 	m_endEffect = new ShunLib::Effect(L"Effect\\GameClear2.efk", 120, 512);
 
 	//ボス魔法陣生成
-	m_boss = std::make_unique<BossMagic>(ShunLib::Vec3(0.0f, 0.0f, STAGE_BOTTOM), 90, 0, 15.0f, 500);
+	m_boss = std::make_unique<BossMagic>(ShunLib::Vec3(0.0f, 0.0f, STAGE_BOTTOM), 90, 0, 15.0f, 50);
 
 	m_hpGauge = new HPGauge(m_stageHP, Vec3(0.0f, 0.0f, 26.7f), Vec3(29.5f, 1.0f, 2.0f), Vec3(-55.0f, 0.0f, 0.0f));
 	m_bossGauge = new HPGauge(m_boss->HP(), Vec3(0.0f, 26.0f, 26.7f), Vec3(10.5f, 0.8f, 1.0f), Vec3(-55.0f, 0.0f, 0.0f));
 
 	//ステージ生成
 	m_stage = new Stage;
+	m_backGround = new Texture(L"Images\\backGround.png");
 
 	m_createMagicTimer = new Timer();
 	m_createMagicTimer->SetTime(600);
@@ -75,6 +76,7 @@ PlayScene::~PlayScene()
 
 	//ステージ削除
 	if (m_stage != nullptr) { delete m_stage; }
+	if (m_backGround != nullptr) { delete m_backGround; }
 
 	//HPゲージ削除
 	if (m_hpGauge != nullptr) { delete m_hpGauge; }
@@ -148,7 +150,8 @@ void PlayScene::Render()
 	//重力描画（描画順の関係でPlayerと分ける）
 	for (int i = 0; i < Player::MAX_PLAYER; i++)
 	{
-		m_player[i]->DrawGravity(m_view, m_proj);
+		ShunLib::Vec3 color(1.5f * i, 0.0f, 1.5f*(1-i));
+		m_player[i]->DrawGravity(m_view, m_proj, color);
 	}
 
 	//エフェクト表示
@@ -194,12 +197,12 @@ void PlayScene::UpdateEnemy()
 	{
 		m_enemy[i]->Update();
 		int dir = m_enemy[i]->Dead(STAGE_TOP, STAGE_BOTTOM, STAGE_RIGHT, STAGE_LEFT);
-		//敵が下に当たって死んだらダメージ	
+		//敵が下に当たって死んだらダメージ
 		if (dir == ShunLib::DIRECTION_2D::BOTTOM)
 		{
 			m_stageHP--;
 		}
-		//敵が下に当たって死んだらボス魔法陣にダメージ	
+		//敵が下に当たって死んだらボス魔法陣にダメージ
 		if (dir == ShunLib::DIRECTION_2D::TOP)
 		{
 			m_boss->TakeDamage(20);
@@ -235,8 +238,10 @@ void PlayScene::UpdateMagic()
 		m_magic[i]->Update();
 		if (!(m_magic[i]->IsStarted())) { continue; }
 
+		//敵召喚
 		if (m_magic[i]->CanSummon())
 		{
+			ADX2Le::Play(CRI_PLAYSCENE_MAGIC_WORP1);
 			m_enemy.push_back(m_magic[i]->SummonEnemy());
 		}
 
@@ -250,7 +255,9 @@ void PlayScene::UpdateMagic()
 		m_magic.push_back(m_boss->CreateMagic(STAGE_LEFT,STAGE_RIGHT,0.0f,STAGE_BOTTOM));
 	}
 	m_boss->Update();
-	if (m_boss->CanSummon()) { m_enemy.push_back(m_boss->SummonEnemy()); }
+	if (m_boss->CanSummon()) {
+		ADX2Le::Play(CRI_PLAYSCENE_MAGIC_WORP1);
+		m_enemy.push_back(m_boss->SummonEnemy()); }
 
 }
 
@@ -266,9 +273,17 @@ void PlayScene::DrawStage()
 	using namespace ShunLib;
 	using namespace std;
 
+
+	//遠景描画
+	Matrix backWorld;
+	backWorld = Matrix::CreateRotationX(30.0f)
+		* Matrix::CreateScale(Vec3(65.0f, 21.0f, 1.0f))
+		* Matrix::CreateTranslation(Vec3(0.0f, 13.0f, STAGE_BOTTOM));
+	m_backGround->Draw(backWorld, m_view, m_proj);
+
 	//ステージ奥描画
 	Matrix stageScale = Matrix::CreateScale(Vec3(120.0f, 1.0f, abs(STAGE_BOTTOM) * 2));
-	m_stage->Draw(stageScale*Matrix::CreateTranslation(Vec3(0.0f, 0.0f, STAGE_BOTTOM)), m_view, m_proj);
+	m_stage->Draw(stageScale*Matrix::CreateTranslation(Vec3(0.0f, 0.0f, STAGE_BOTTOM)), m_view, m_proj,false);
 
 	if (m_boss != nullptr)
 	{
@@ -276,7 +291,7 @@ void PlayScene::DrawStage()
 	}
 
 	//ステージ描画 表示がバグるので少しだけずらす
-	m_stage->Draw(stageScale*Matrix::CreateTranslation(Vec3(0.0f, 0.01f, 0.0f)), m_view, m_proj);
+	m_stage->Draw(stageScale*Matrix::CreateTranslation(Vec3(0.0f, 0.01f, 0.0f)), m_view, m_proj,true);
 }
 
 
@@ -300,7 +315,7 @@ void PlayScene::PlayAgo()
 	{
 		//魔法陣更新
 		(*magicItr)->Update();
-		
+
 		//魔法陣が出現していなかったら始まらない
 		if (!((*magicItr)->IsStarted()))
 		{
@@ -396,7 +411,7 @@ void PlayScene::Collision()
 			{
 				m_player[j]->TakeDamage(1);
 				m_player[j]->InvincibleTime(60);
-			
+
 				m_enemy[i]->Dead();
 				ADX2Le::Play(CRI_PLAYSCENE_BOMB2);
 			}
@@ -570,7 +585,7 @@ bool PlayScene::IsCleared()
 			//効果音
 			ADX2Le::Play(CRI_PLAYSCENE_MAGIC_CHANT2);
 			m_isEnded = true;
-		}		
+		}
 		return true;
 	}
 	return false;
@@ -610,7 +625,7 @@ bool PlayScene::IsGameOver()
 
 			//エフェクト再生
 			m_endEffect->SetDraw(ShunLib::Vec3(0.0f, 1.0f, STAGE_TOP));
-			m_endEffect->SetScale(8.0f);
+			m_endEffect->SetScale(6.0f);
 			m_endEffect->SetSpd(0.3f);
 
 			m_isEnded = true;

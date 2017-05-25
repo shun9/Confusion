@@ -6,6 +6,7 @@
 //************************************************/
 #pragma once
 #include <d3d11.h>
+#include <wrl.h>
 #include <memory>
 #include <Effekseer.h>
 #include <EffekseerRendererDX11.h>
@@ -18,17 +19,17 @@ namespace ShunLib
 		/*--静的変数--*/
 	private:
 		// デバイス
-		static ID3D11Device* m_device;
+		static Microsoft::WRL::ComPtr<ID3D11Device>m_device;
 
 		//デバイスコンテキスト
-		static ID3D11DeviceContext* m_context;
+		static Microsoft::WRL::ComPtr<ID3D11DeviceContext>m_context;
 
 
 		/*--静的関数--*/
 	public:
 		//デバイスの設定
-		static void SetDevice(ID3D11Device* device,
-							  ID3D11DeviceContext* context);
+		static void SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
+							  Microsoft::WRL::ComPtr<ID3D11DeviceContext> context);
 
 		/*--メンバ変数--*/
 	private:

@@ -31,6 +31,7 @@ namespace ShunLib
 		static Matrix CreateScale(const Vec3& scale);
 		static Matrix CreateScale(float scale);
 
+		//射影行列
 		static Matrix CreateProj(float fov,
 								 float aspectRatio,
 							     float nearPlane,
@@ -38,8 +39,8 @@ namespace ShunLib
 
 		// ビュー行列の作成
 		static Matrix CreateLookAt(
-			ShunLib::Vec3 eye, 
-			ShunLib::Vec3 target, 
+			ShunLib::Vec3 eye,
+			ShunLib::Vec3 target,
 			ShunLib::Vec3 up);
 
 

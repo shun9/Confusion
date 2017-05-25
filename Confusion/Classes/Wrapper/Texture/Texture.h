@@ -22,14 +22,16 @@ namespace ShunLib
 		/*--静的変数--*/
 	private:
 		// デバイス
-		static ID3D11Device* m_device;
-		static ID3D11DeviceContext* m_context;
+		static Microsoft::WRL::ComPtr<ID3D11Device>m_device;
+
+		//デバイスコンテキスト
+		static Microsoft::WRL::ComPtr<ID3D11DeviceContext>m_context;
 
 		/*--静的関数--*/
 	public:
 		//デバイスの設定
-		static void SetDevice(ID3D11Device* device,
-							  ID3D11DeviceContext* context);
+		static void SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
+							  Microsoft::WRL::ComPtr<ID3D11DeviceContext> context);
 
 
 		/*--メンバ変数--*/
@@ -38,13 +40,13 @@ namespace ShunLib
 
 		//スプライトバッチ
 		std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
-		
+
 		//ステート作成
 		std::unique_ptr<DirectX::CommonStates> m_state;
 
 		//エフェクト
 		std::unique_ptr<DirectX::AlphaTestEffect> m_alphaTestEffect;
-	
+
 		//プリミティブバッチ
 		std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>> m_primitiveBatch;
 
@@ -58,7 +60,7 @@ namespace ShunLib
 		~Texture();
 
 		//描画
-		void Draw(float x, float y, float scale = 1.0f, const RECT* rect = nullptr);
-		void Draw(const Matrix& world, const Matrix& view, const Matrix& proj);
+		void Draw(float x, float y, float scale = 1.0f,const RECT* rect = nullptr);
+		void Draw(const Matrix& world, const Matrix& view, const Matrix& proj, const Vec3& color=Vec3(1.0f,1.0f,1.0f), float alpha = 1.0f);
 	};
 }

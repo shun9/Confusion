@@ -56,14 +56,14 @@ void Gravity::Update()
 //｜引数  :射影行列(Matrix)
 //｜戻り値:なし(void)
 //＋ーーーーーーーーーーーーーー＋
-void Gravity::Draw(Matrix view, Matrix proj)
+void Gravity::Draw(const Matrix& view, const Matrix& proj, const ShunLib::Vec3& color)
 {
 	Matrix world;
 	world = Matrix::CreateScale(m_radius*2)
 		  * Matrix::CreateRotationY(m_angle)
     	  * Matrix::CreateTranslation(m_pos);
 
-	m_texture->Draw(world, view, proj);
+	m_texture->Draw(world, view, proj,color);
 }
 
 
@@ -74,8 +74,6 @@ void Gravity::Draw(Matrix view, Matrix proj)
 //＋ーーーーーーーーーーーーーー＋
 void Gravity::Attract(ShunLib::Vec3* objPos)
 {
-	using namespace ShunLib;
-
 	//重力が発生していなければ終了
 	if (m_radius <= 0.0f)
 	{

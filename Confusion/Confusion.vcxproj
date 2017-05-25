@@ -175,17 +175,21 @@
     <ClInclude Include="Classes\Object\Object.h" />
     <ClInclude Include="Classes\Player\Player.h" />
     <ClInclude Include="Classes\RandomNumber\RandomNumber.h" />
+    <ClInclude Include="Classes\Scene\ClearScene.h" />
     <ClInclude Include="Classes\Scene\GameOverScene.h" />
     <ClInclude Include="Classes\Scene\PlayScene.h" />
     <ClInclude Include="Classes\Scene\Scene.h" />
     <ClInclude Include="Classes\Scene\TitleScene.h" />
     <ClInclude Include="Classes\Sound\ADX2Le.h" />
+    <ClInclude Include="Classes\Sound\ClearScene.h" />
     <ClInclude Include="Classes\Sound\Confusion_acf.h" />
+    <ClInclude Include="Classes\Sound\GameOverScene.h" />
     <ClInclude Include="Classes\Sound\PlayScene.h" />
     <ClInclude Include="Classes\Sound\TitleScene.h" />
     <ClInclude Include="Classes\Stage\Stage.h" />
     <ClInclude Include="Classes\Timer\Timer.h" />
     <ClInclude Include="Classes\Wrapper\ConstantNumber\ConstantNumber.h" />
+    <ClInclude Include="Classes\Wrapper\ConstantNumber\MacroConstants.h" />
     <ClInclude Include="Classes\Wrapper\Effekseer\Effect.h" />
     <ClInclude Include="Classes\Wrapper\GamePad\GamePadManager.h" />
     <ClInclude Include="Classes\Wrapper\Matrix\Matrix.h" />
@@ -208,6 +212,7 @@
     <ClCompile Include="Classes\Object\Object.cpp" />
     <ClCompile Include="Classes\Player\Player.cpp" />
     <ClCompile Include="Classes\RandomNumber\RandomNumber.cpp" />
+    <ClCompile Include="Classes\Scene\ClearScene.cpp" />
     <ClCompile Include="Classes\Scene\GameOverScene.cpp" />
     <ClCompile Include="Classes\Scene\PlayScene.cpp" />
     <ClCompile Include="Classes\Scene\Scene.cpp" />
@@ -245,6 +250,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Model\Arrow.FBX" />
     <MeshContentTask Include="Model\Enemy.FBX" />
     <MeshContentTask Include="Model\Glass.FBX" />
     <MeshContentTask Include="Model\Magic.FBX" />

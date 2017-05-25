@@ -4,9 +4,12 @@
 
 using namespace ShunLib;
 
-//デバイス関連
-ID3D11Device* Model::m_device;
-ID3D11DeviceContext* Model::m_context;
+// デバイス
+Microsoft::WRL::ComPtr<ID3D11Device>Model::m_device;
+
+//デバイスコンテキスト
+Microsoft::WRL::ComPtr<ID3D11DeviceContext>Model::m_context;
+
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :デバイスの設定
@@ -14,30 +17,30 @@ ID3D11DeviceContext* Model::m_context;
 //｜引数  :デバイスコンテキスト
 //｜戻り値:なし(void)
 //＋ーーーーーーーーーーーーーー＋
-void ShunLib::Model::SetDevice(ID3D11Device* device, 
-							   ID3D11DeviceContext* context)
+void ShunLib::Model::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
+							   Microsoft::WRL::ComPtr<ID3D11DeviceContext> context)
 {
 	m_device  = device;
 	m_context = context;
 }
 
 //＋ーーーーーーーーーーーーーー＋
-//｜機能  :ファイル指定コンストラクタ	
+//｜機能  :ファイル指定コンストラクタ
 //｜引数  :cmoファイルの名前(wchar_t[])
 //＋ーーーーーーーーーーーーーー＋
 Model::Model(const wchar_t cmo[])
 {
 	//ステート作成
-	m_state = std::make_unique<DirectX::CommonStates>(m_device);
-	
+	m_state = std::make_unique<DirectX::CommonStates>(m_device.Get());
+
 	//エフェクト作成
-	m_effect = std::make_unique<DirectX::EffectFactory>(m_device);
+	m_effect = std::make_unique<DirectX::EffectFactory>(m_device.Get());
 
 	//テクスチャの場所を指定
 	m_effect->SetDirectory(L"CModel");
 
 	//モデルの作成
-	m_model = DirectX::Model::CreateFromCMO(m_device,cmo, *m_effect);
+	m_model = DirectX::Model::CreateFromCMO(m_device.Get(),cmo, *m_effect);
 }
 
 
@@ -56,7 +59,7 @@ Model::~Model()
 //｜引数  :ワールド行列	(Matrix)
 //｜引数  :ビュー行列	(Matrix)
 //｜引数  :射影行列		(Matrix)
-//｜戻り値:なし(void)	
+//｜戻り値:なし(void)
 //＋ーーーーーーーーーーーーーー＋
 void Model::Draw(const Matrix& world,
 				 const Matrix& view,
@@ -67,5 +70,5 @@ void Model::Draw(const Matrix& world,
 	DirectX::SimpleMath::Matrix p = proj.GetDirectMatrix();		// プロジェクション
 
 	// 描画		 コンテキスト,ステート,ワールド,ビュー,プロジェクション
-	m_model->Draw(m_context, *m_state, w, v, p);
+	m_model->Draw(m_context.Get(), *m_state, w, v, p);
 }

@@ -9,6 +9,9 @@
 #include "../Timer/Timer.h"
 #include "../RandomNumber/RandomNumber.h"
 
+std::unique_ptr<ShunLib::Texture> SummonMagic::m_texture = nullptr;
+std::unique_ptr<ShunLib::Effect> SummonMagic::m_summonEffect = nullptr;
+
 SummonMagic::SummonMagic(ShunLib::Vec3 pos, int interval, int firstInterval, float scale, float summonPower)
 	: m_scale(0.0f)
 	, m_maxScale(scale)
@@ -17,9 +20,16 @@ SummonMagic::SummonMagic(ShunLib::Vec3 pos, int interval, int firstInterval, flo
 	, m_summonPower(summonPower)
 {
 	using namespace ShunLib;
-	m_texture	   = new Texture(L"Images\\magic.png");
+	if (m_texture == nullptr)
+	{
+		m_texture = std::make_unique<Texture>(L"Images\\magic.png");
+	}
+	if (m_summonEffect == nullptr)
+	{
+		m_summonEffect = std::make_unique<Effect>(L"Effect\\Summon.efk", 35,64);
+	}
+
 	m_pos          = new Vec3(pos);
-	m_summonEffect = new Effect(L"Effect\\Magic.efk",60);
 	m_summonIntervalTimer = new Timer();
 	m_summonIntervalTimer->SetTime(interval);
 	m_firstIntervalTimer = new Timer();
@@ -28,9 +38,7 @@ SummonMagic::SummonMagic(ShunLib::Vec3 pos, int interval, int firstInterval, flo
 
 SummonMagic::~SummonMagic()
 {
-	delete m_texture;
 	delete m_pos;
-	delete m_summonEffect;
 
 	delete m_summonIntervalTimer;
 	delete m_firstIntervalTimer;
@@ -51,13 +59,11 @@ std::shared_ptr<Enemy> SummonMagic::SummonEnemy()
 	Vec3 randSpd(0.0f, 0.0f, randNum(0.1f, 100.0f));
 
 	//敵生成
-	std::shared_ptr<Enemy>enemy = 
+	std::shared_ptr<Enemy>enemy =
 		std::make_shared<Enemy>(L"CModel\\Enemy.cmo",*m_pos+ randPos,randSpd);
-	
-	//エフェクト設定
-	m_summonEffect->SetDraw();
-	m_summonEffect->SetScale(2.0f);
-	m_summonEffect->SetPos(enemy->Pos());
+
+	//エフェクト描画
+	DrawSummonEffect(enemy->Pos() + ShunLib::Vec3(0.0f, 2.0f, 0.0f));
 
 	//カウントリセット
 	m_summonIntervalTimer->ResetCount();
@@ -124,4 +130,15 @@ void SummonMagic::Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 	m_texture->Draw(world, view, proj);
 
 	m_summonEffect->Draw(view, proj);
+}
+
+void SummonMagic::DrawSummonEffect(const ShunLib::Vec3 & pos)
+{
+	//エフェクト設定
+	m_summonEffect->SetDraw();
+	//m_summonEffect->SetRotate(ShunLib::Vec3(1.0f,0.0f,0.0f),-90.0f);
+	m_summonEffect->SetSpd(0.5f);
+	m_summonEffect->SetScale(2.0f);
+	m_summonEffect->SetPos(ShunLib::Vec3(0.0f,1.0f,0.0f)+pos);
+
 }

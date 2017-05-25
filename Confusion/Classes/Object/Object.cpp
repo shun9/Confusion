@@ -1,11 +1,13 @@
 //************************************************/
 //* @file  :Object.cpp
 //* @brief :オブジェクトの基底クラス
-//* @date  :2017/05/02
+//* @date  :2017/05/23
 //* @author:S.Katou
 //************************************************/
 #include "Object.h"
 #include "../Conversion/Conversion.h"
+
+std::map<const wchar_t*, std::shared_ptr<ShunLib::Model>> Object::m_modelPool;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -17,8 +19,11 @@ Object::Object(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 {
 	using namespace ShunLib;
 
+	m_modelPool.insert(std::make_pair(model, std::make_shared<ShunLib::Model>(model)));
+
+	m_model = m_modelPool[model];
+
 	//delete -> ~Object
-	m_model = new Model(model);
 	m_pos   = new Vec3(pos);
 	m_spd   = new Vec3(spd);
 }
@@ -29,7 +34,6 @@ Object::Object(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 //＋ーーーーーーーーーーーーーー＋
 Object::~Object()
 {
-	delete m_model;
 	delete m_pos;
 	delete m_spd;
 }

@@ -62,12 +62,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         RECT rc;
         rc.top = 0;
         rc.left = 0;
-        rc.right = static_cast<LONG>(w); 
+        rc.right = static_cast<LONG>(w);
         rc.bottom = static_cast<LONG>(h);
 
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-        HWND hwnd = CreateWindowEx(0, L"GameEngineTKWindowClass", L"GameEngineTK", WS_OVERLAPPEDWINDOW,
+        HWND hwnd = CreateWindowEx(0, L"GameEngineTKWindowClass", L"ボウエイクエスト", WS_OVERLAPPEDWINDOW,
             CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
             nullptr);
         // TODO: Change to CreateWindowEx(WS_EX_TOPMOST, L"GameEngineTKWindowClass", L"GameEngineTK", WS_POPUP,

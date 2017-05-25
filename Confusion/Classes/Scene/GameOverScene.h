@@ -6,12 +6,16 @@
 //************************************************/
 #pragma once
 #include "Scene.h"
+#include "../Wrapper/Texture/Texture.h"
+
 class GamePadManager;
 
 class GameOverScene:public Scene
 {
 private:
 	GamePadManager* m_gamePad;
+	ShunLib::Texture* m_playerDownGrp;
+	ShunLib::Texture* m_gameOverGrp;
 
 public:
 	GameOverScene();

@@ -12,7 +12,7 @@ const int Player::MAX_PLAYER = 2;
 
 //速度倍率
 const float Player::SPD_MAGNIFICATION = 8.0f;
-const int Player::MAX_HP = 50;
+const int Player::MAX_HP = 30;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -161,7 +161,7 @@ void Player::UpdateSpd()
 	switch (m_stick)
 	{
 	case DIRECTION_2D::RIGHT://右スティック
-		m_spd->m_x = state.thumbSticks.rightX;	
+		m_spd->m_x = state.thumbSticks.rightX;
 		m_spd->m_z = -(state.thumbSticks.rightY);
 		break;
 

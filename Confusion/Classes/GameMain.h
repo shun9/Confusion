@@ -7,6 +7,7 @@
 #pragma once
 #include "Scene\Scene.h"
 #include "Wrapper\Matrix\Matrix.h"
+#include "Wrapper\Texture\Texture.h"
 
 class GameMain
 {
@@ -24,8 +25,13 @@ private:
 	//次のシーン
 	int m_nextScene;
 
-	ShunLib::Matrix m_view;	//ビュー行列
-	ShunLib::Matrix m_proj;	//プロジェクション行列
+	//ビュー行列
+	ShunLib::Matrix m_view;	
+
+	//プロジェクション行列
+	ShunLib::Matrix m_proj;	
+
+	bool m_isEnded;
 
 public:
 	//初期化処理
@@ -40,6 +46,8 @@ public:
 	//終了処理
 	void Finalize();
 
+	//終了したかどうか
+	bool IsEnded();
 
 	//コンストラクタ＆デストラクタ
 	GameMain() {};

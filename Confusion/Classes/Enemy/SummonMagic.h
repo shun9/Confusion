@@ -15,8 +15,8 @@
 class SummonMagic
 {
 protected:
-	ShunLib::Texture* m_texture;
-	ShunLib::Effect* m_summonEffect;
+	static std::unique_ptr<ShunLib::Texture> m_texture;
+	static std::unique_ptr<ShunLib::Effect> m_summonEffect;
 
 	//à íu
 	ShunLib::Vec3* m_pos;
@@ -44,7 +44,7 @@ protected:
 public:
 	SummonMagic(ShunLib::Vec3 pos = ShunLib::Vec3(0.0f, 0.0f, 0.0f), int interval = 60, int firstInterval = 0, float scale = 5.0f, float summonPower = 1.0f);
 	~SummonMagic();
-	
+
 	//ìGÇÃê∂ê¨
 	virtual std::shared_ptr<Enemy> SummonEnemy();
 
@@ -71,4 +71,7 @@ public:
 
 	//è¢ä´äJénÇµÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
 	bool IsStarted() { return m_isStart; }
+
+protected:
+	void DrawSummonEffect(const ShunLib::Vec3& pos);
 };

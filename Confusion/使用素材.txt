@@ -5,9 +5,9 @@
 使用素材
 <エフェクト>
 Effekseer 投稿エフェクト
-・Effekseer様　 Simple_Sprite_BillBoard
-・BirdStrike様　AddEnemy
-・BrokenDesk様　Magic2_fire
+・Effekseer様　 「Simple_Sprite_BillBoard」
+・BirdStrike様　「AddEnemy」
+・BrokenDesk様　「Magic2_fire」
 ・
 
 <音>
@@ -16,9 +16,12 @@ Effekseer 投稿エフェクト
 ・詠唱2
 ・ワープ
 
+
 DOVA-SYNDROME
-・佐久間ユウキ様　The Road to Heaven
-・Chang_Nao様　Damons Dance
+・佐久間ユウキ様　	「The Road to Heaven」
+		　	「One Day」
+・Chang_Nao様		「Damons Dance」
+・チョコミント様	「真実」
 
 <画像>
 あやえも研究所

@@ -35,7 +35,7 @@ public:
 	void Update();
 
 	//•`‰æ
-	void Draw(ShunLib::Matrix view, ShunLib::Matrix proj);
+	void Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj, const ShunLib::Vec3& color);
 
 	//”¼Œa
 	void Radius(float radius) { m_radius = radius; }
@@ -43,9 +43,9 @@ public:
 
 	//ˆÊ’u
 	void Pos(ShunLib::Vec3 pos) { m_pos = pos; }
-	void Pos(float x,float y,float z) 
+	void Pos(float x,float y,float z)
 	{
-		m_pos.m_x = x; 
+		m_pos.m_x = x;
 		m_pos.m_y = y;
 		m_pos.m_z = z;
 	}

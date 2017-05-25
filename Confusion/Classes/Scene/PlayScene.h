@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :PlayScene.h
 //* @brief :プレイ画面のヘッダー
-//* @date  :2017/05/17
+//* @date  :2017/05/23
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -28,14 +28,15 @@ public:
 	static const float STAGE_BOTTOM;
 	static const float STAGE_RIGHT;
 	static const float STAGE_LEFT;
-	
-	
+
+
 private:
 	ShunLib::Matrix m_view;	//ビュー行列
 	ShunLib::Matrix m_proj;	//プロジェクション行列
 
 	//ステージ
 	Stage* m_stage;
+	ShunLib::Texture* m_backGround;
 
 	//残り体力
 	int m_stageHP;

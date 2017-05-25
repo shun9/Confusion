@@ -77,6 +77,9 @@
     <Filter Include="ShunLib\Timer">
       <UniqueIdentifier>{4baa96be-ddf0-49f4-bd25-858fbadb3645}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ShunLib\RandamNumber">
+      <UniqueIdentifier>{0af67ca4-281e-4b97-b065-a26afa882caf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\GameMain.h">
@@ -170,7 +173,19 @@
       <Filter>ShunLib\Timer</Filter>
     </ClInclude>
     <ClInclude Include="Classes\RandomNumber\RandomNumber.h">
-      <Filter>ShunLib</Filter>
+      <Filter>ShunLib\RandamNumber</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Scene\ClearScene.h">
+      <Filter>Classes\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Sound\ClearScene.h">
+      <Filter>Classes\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Sound\GameOverScene.h">
+      <Filter>Classes\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\Wrapper\ConstantNumber\MacroConstants.h">
+      <Filter>ShunLib\Wrapper\Constant</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -249,7 +264,12 @@
     <ClCompile Include="Classes\Object\HPGauge.cpp">
       <Filter>Classes\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\RandomNumber\RandomNumber.cpp" />
+    <ClCompile Include="Classes\RandomNumber\RandomNumber.cpp">
+      <Filter>ShunLib\RandamNumber</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\Scene\ClearScene.cpp">
+      <Filter>Classes\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -283,6 +303,9 @@
       <Filter>Assets\Stage</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Model\Magic.FBX">
+      <Filter>Assets</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Model\Arrow.FBX">
       <Filter>Assets</Filter>
     </MeshContentTask>
   </ItemGroup>

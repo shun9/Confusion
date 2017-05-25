@@ -1,7 +1,7 @@
 //************************************************/
 //* @file  :Stage.h
 //* @brief :ステージ描画用のクラス
-//* @date  :2017/05/14
+//* @date  :2017/05/24
 //* @author:S.Katou
 //************************************************/
 #pragma once
@@ -12,7 +12,6 @@ class Stage
 {
 private:
 	//地面と木のモデル
-	//ShunLib::Texture* m_ground;
 	ShunLib::Model* m_ground;
 	ShunLib::Model* m_tree;
 
@@ -23,5 +22,6 @@ public:
 	//描画
 	void Draw(const ShunLib::Matrix& world,
 			  const ShunLib::Matrix& view,
-			  const ShunLib::Matrix& proj);
+			  const ShunLib::Matrix& proj,
+			  bool  isDrawTree = true);
 };
