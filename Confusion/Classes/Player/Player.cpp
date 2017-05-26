@@ -13,7 +13,7 @@ const int Player::MAX_PLAYER = 2;
 
 //速度倍率
 const float Player::SPD_MAGNIFICATION = 8.0f;
-const int Player::MAX_HP = 30;
+const int Player::MAX_HP = 20;
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ

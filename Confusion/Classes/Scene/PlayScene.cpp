@@ -40,25 +40,27 @@ PlayScene::PlayScene()
 	m_player[0] = new Player(L"CModel\\Player.cmo", Vec3(-5.0f, 0.0f, 0.0f), 0, LEFT);
 	m_player[1] = new Player(L"CModel\\PlayerB.cmo", Vec3(5.0f, 0.0f, 0.0f), 0, RIGHT);
 
-	//エフェクト生成
+	//エフェクト生成  delete ー> ~PlayScene
 	m_blastEffect = new ShunLib::Effect(L"Effect\\Blast.efk", 0, 512*2);
 	m_endEffect = new ShunLib::Effect(L"Effect\\GameClear2.efk", 120, 512);
 
 	//ボス魔法陣生成
-	m_boss = std::make_unique<BossMagic>(ShunLib::Vec3(0.0f, 0.0f, STAGE_BOTTOM), 90, 0, 15.0f, 50);
+	m_boss = std::make_unique<BossMagic>(ShunLib::Vec3(0.0f, 0.0f, STAGE_BOTTOM), 90, 0, 15.0f, 90);
 
+	//HPゲージ  delete ー> ~PlayScene
 	m_hpGauge = new HPGauge(m_stageHP, Vec3(0.0f, 0.0f, 26.7f), Vec3(29.5f, 1.0f, 2.0f), Vec3(-55.0f, 0.0f, 0.0f));
 	m_bossGauge = new HPGauge(m_boss->HP(), Vec3(0.0f, 26.0f, 26.7f), Vec3(10.5f, 0.8f, 1.0f), Vec3(-55.0f, 0.0f, 0.0f));
 
-	//ステージ生成
+	//ステージ生成  delete ー> ~PlayScene
 	m_stage = new Stage;
 	m_backGround = new Texture(L"Images\\backGround.png");
 
+	//魔法陣の召喚間隔
 	m_createMagicTimer = new Timer();
 	m_createMagicTimer->SetTime(600);
 
 	ADX2Le::LoadAcb("Sounds\\PlayScene.acb", "Sounds\\PlayScene.awb");
-	ADX2Le::Play(CRI_PLAYSCENE_DAMONS_DANCE);
+	ADX2Le::Play(CRI_PLAYSCENE_DAMONS_DANCE,0.1f);
 }
 
 
@@ -206,10 +208,10 @@ void PlayScene::UpdateEnemy()
 		{
 			m_stageHP--;
 		}
-		//敵が下に当たって死んだらボス魔法陣にダメージ
+		//敵が上に当たって死んだらボス魔法陣にダメージ
 		if (dir == ShunLib::DIRECTION_2D::TOP)
 		{
-			m_boss->TakeDamage(20);
+			m_boss->TakeDamage(10);
 		}
 
 		//死んでいた時の処理
@@ -217,7 +219,7 @@ void PlayScene::UpdateEnemy()
 		{
 			//爆破エフェクト設定
 			m_blastEffect->SetDraw(m_enemy[i]->Pos() + ShunLib::Vec3(0.0f, 1.0f, 0.0f));
-			ADX2Le::Play(CRI_PLAYSCENE_BOMB2);
+			ADX2Le::Play(CRI_PLAYSCENE_BOMB2,0.5f);
 
 			//敵削除
 			m_enemy.erase(m_enemy.begin() + i);
@@ -245,7 +247,7 @@ void PlayScene::UpdateMagic()
 		//敵召喚
 		if (m_magic[i]->CanSummon())
 		{
-			ADX2Le::Play(CRI_PLAYSCENE_MAGIC_WORP1);
+			ADX2Le::Play(CRI_PLAYSCENE_MAGIC_WORP1,0.5f);
 			m_enemy.push_back(m_magic[i]->SummonEnemy());
 		}
 
@@ -260,7 +262,7 @@ void PlayScene::UpdateMagic()
 	}
 	m_boss->Update();
 	if (m_boss->CanSummon()) {
-		ADX2Le::Play(CRI_PLAYSCENE_MAGIC_WORP1);
+		ADX2Le::Play(CRI_PLAYSCENE_MAGIC_WORP1,0.5f);
 		m_enemy.push_back(m_boss->SummonEnemy()); }
 
 }

@@ -16,7 +16,7 @@ GameOverScene::GameOverScene()
 	m_playerDownGrp = new ShunLib::Texture(L"Images\\GameOver.png");
 	m_gameOverGrp = new ShunLib::Texture(L"Images\\Over.png");
 	ADX2Le::LoadAcb("Sounds\\GameOverScene.acb", "Sounds\\GameOverScene.awb");
-	ADX2Le::Play(CRI_GAMEOVERSCENE_GAMEOVER);
+	ADX2Le::Play(CRI_GAMEOVERSCENE_GAMEOVER,0.3f);
 }
 
 GameOverScene::~GameOverScene()

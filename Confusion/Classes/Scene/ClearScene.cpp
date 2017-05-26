@@ -15,7 +15,7 @@ ClearScene::ClearScene()
 	m_playerRejoiceGrp = new ShunLib::Texture(L"Images\\GameClear.png");
 	m_clearGrp = new ShunLib::Texture(L"Images\\Clear.png");
 	ADX2Le::LoadAcb("Sounds\\ClearScene.acb", "Sounds\\ClearScene.awb");
-	ADX2Le::Play(CRI_CLEARSCENE_CLEAR);
+	ADX2Le::Play(CRI_CLEARSCENE_CLEAR,0.3f);
 }
 
 ClearScene::~ClearScene()

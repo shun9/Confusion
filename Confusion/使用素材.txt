@@ -1,28 +1,24 @@
-使用ツール
-・Effekseer
-・
-
 使用素材
+
 <エフェクト>
-Effekseer 投稿エフェクト
+-Effekseer 投稿エフェクト-
 ・Effekseer様　 「Simple_Sprite_BillBoard」
 ・BirdStrike様　「AddEnemy」
-・BrokenDesk様　「Magic2_fire」
-・
+・tktk様	「Light2」
 
 <音>
-効果音ラボ
+-効果音ラボ-
 ・爆発2
 ・詠唱2
 ・ワープ
 
 
-DOVA-SYNDROME
+-DOVA-SYNDROME-
 ・佐久間ユウキ様　	「The Road to Heaven」
 		　	「One Day」
 ・Chang_Nao様		「Damons Dance」
 ・チョコミント様	「真実」
 
 <画像>
-あやえも研究所
+-あやえも研究所-
 ・魔法陣

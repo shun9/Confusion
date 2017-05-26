@@ -36,7 +36,7 @@ TitleScene::TitleScene():
 	m_waitingTimer->SetTime(10);
 
 	ADX2Le::LoadAcb("Sounds\\TitleScene.acb", "Sounds\\TitleScene.awb");
-	ADX2Le::Play(CRI_TITLESCENE__THE_ROAD_TO_HEAVEN);
+	ADX2Le::Play(CRI_TITLESCENE__THE_ROAD_TO_HEAVEN,0.2f);
 }
 
 //＋ーーーーーーーーーーーーーー＋
