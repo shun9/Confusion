@@ -6,6 +6,7 @@
 //************************************************/
 #include "Enemy.h"
 #include "../Wrapper/ConstantNumber/ConstantNumber.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 //速度倍率
 const float Enemy::SPD_MAGNIFICATION = 5.0f / 60.0f;
@@ -24,7 +25,7 @@ Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 	m_radius = 1.0f;
 	m_firstSpd = spd;
 
-	m_confusionEffect = new ShunLib::Effect(L"Effect\\Confusion.efk",130,256,true);	
+	m_confusionEffect = new ShunLib::Effect(L"Effect\\Confusion.efk",130,256,true);
 }
 
 
@@ -33,7 +34,7 @@ Enemy::Enemy(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 //＋ーーーーーーーーーーーーーー＋
 Enemy::~Enemy()
 {
-	delete m_confusionEffect;
+	DELETE_POINTER(m_confusionEffect);
 }
 
 
@@ -71,7 +72,7 @@ void Enemy::Update()
 void Enemy::Draw(const ShunLib::Matrix& view, const ShunLib::Matrix& proj)
 {
 	using namespace ShunLib;
-	
+
 	//描画
 	Object::Draw(view,proj);
 
@@ -118,7 +119,7 @@ int Enemy::Dead(float top, float bottom, float right, float left)
 	//Ｚ軸正側判定
 	if (m_pos->m_z > top)
 	{
-		Dead();	
+		Dead();
 		return ShunLib::DIRECTION_2D::BOTTOM;
 	}
 

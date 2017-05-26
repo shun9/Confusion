@@ -7,6 +7,7 @@
 #include "ClearScene.h"
 #include "../Sound/ADX2Le.h"
 #include "../Sound/ClearScene.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 ClearScene::ClearScene()
 {
@@ -19,8 +20,8 @@ ClearScene::ClearScene()
 
 ClearScene::~ClearScene()
 {
-	delete m_playerRejoiceGrp;
-	delete m_clearGrp;
+	DELETE_POINTER(m_playerRejoiceGrp);
+	DELETE_POINTER(m_clearGrp);
 }
 
 void ClearScene::Update()

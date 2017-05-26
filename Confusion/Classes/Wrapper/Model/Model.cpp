@@ -49,9 +49,9 @@ Model::Model(const wchar_t cmo[])
 //＋ーーーーーーーーーーーーーー＋
 Model::~Model()
 {
-	m_state.reset();
-	m_effect.reset();
-	m_model.reset();
+	//m_state.reset();
+	//m_effect.reset();
+	//m_model.reset();
 }
 
 //＋ーーーーーーーーーーーーーー＋

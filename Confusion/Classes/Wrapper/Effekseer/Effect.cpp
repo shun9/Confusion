@@ -26,6 +26,11 @@ void ShunLib::Effect::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 	m_context = context;
 }
 
+void ShunLib::Effect::ResetDevice()
+{
+	m_device.Reset();
+	m_context.Reset();
+}
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :ファイル指定コンストラクタ

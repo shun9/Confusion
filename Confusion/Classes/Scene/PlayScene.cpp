@@ -13,6 +13,7 @@
 #include "../GameMain.h"
 #include "../Conversion/Conversion.h"
 #include "../Enemy/BossMagic.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 //ステージの上下左右
 const float PlayScene::STAGE_TOP    =  25.0f;
@@ -69,22 +70,25 @@ PlayScene::~PlayScene()
 	//プレイヤー削除
 	for (int i = 0; i < Player::MAX_PLAYER; i++)
 	{
-		if (m_player[i] != nullptr) { delete m_player[i]; }
+		DELETE_POINTER(m_player[i]);
 	}
-	if (m_player != nullptr) { delete[] m_player; }
+	DELETE_POINTER(m_player);
 
 
 	//ステージ削除
-	if (m_stage != nullptr) { delete m_stage; }
-	if (m_backGround != nullptr) { delete m_backGround; }
+	DELETE_POINTER(m_stage);
+	DELETE_POINTER(m_backGround);
 
 	//HPゲージ削除
-	if (m_hpGauge != nullptr) { delete m_hpGauge; }
-	if (m_bossGauge != nullptr) { delete m_bossGauge; }
+	DELETE_POINTER(m_hpGauge);
+	DELETE_POINTER(m_bossGauge);
 
 	//エフェクト削除
-	if (m_blastEffect != nullptr) { delete m_blastEffect; }
-	if (m_endEffect != nullptr) { delete m_endEffect; }
+	DELETE_POINTER(m_blastEffect);
+	DELETE_POINTER(m_endEffect);
+
+	//タイマー消去
+	DELETE_POINTER(m_createMagicTimer);
 }
 
 

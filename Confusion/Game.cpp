@@ -11,6 +11,7 @@
 #include "Classes\Wrapper\Model\Model.h"
 #include "Classes\Wrapper\Texture\Texture.h"
 #include "Classes\Wrapper\Effekseer\Effect.h"
+#include "Classes\Wrapper\ConstantNumber\MacroConstants.h"
 
 extern void ExitGame();
 
@@ -29,14 +30,9 @@ Game::Game() :
 
 Game::~Game()
 {
-	if (m_gameMain != nullptr)
-	{
-		m_gameMain->Finalize();
-		delete m_gameMain;
-	}
-	//debug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
 
-	//delete debug;
+	m_gameMain->Finalize();
+	DELETE_POINTER(m_gameMain);
 }
 
 // Initialize the Direct3D resources required to run.
@@ -50,7 +46,6 @@ void Game::Initialize(HWND window, int width, int height)
 
     CreateResources();
 
-	//debug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
     // TODO: Change the timer settings if you want something other than the default variable timestep mode.
     // e.g. for 60 FPS fixed timestep update logic, call:
     /*
@@ -59,7 +54,7 @@ void Game::Initialize(HWND window, int width, int height)
     */
 
 
-	//モデルにデバイスを設定
+	//デバイスを設定
 	ShunLib::Model::SetDevice(m_d3dDevice,m_d3dContext);
 	ShunLib::Texture::SetDevice(m_d3dDevice, m_d3dContext);
 	ShunLib::Effect::SetDevice(m_d3dDevice, m_d3dContext);
@@ -77,7 +72,7 @@ void Game::Tick()
 {
     m_timer.Tick([&]()
     {
-        Update(m_timer);
+       Update(m_timer);
     });
 
     Render();
@@ -288,10 +283,6 @@ void Game::CreateDevice()
         (void)m_d3dContext.As(&m_d3dContext1);
 
     // TODO: Initialize device dependent objects here (independent of window size).
-	//m_d3dDevice.Get()->QueryInterface(__uuidof(ID3D11Debug), (void**)&debug);
-
-	//debug->ReportLiveDeviceObjects(D3D11_RLDO_SUMMARY); /*サマリモード*/
-	//debug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
 }
 
 // Allocate all memory resources that change on a window SizeChanged event.

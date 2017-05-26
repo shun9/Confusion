@@ -76,7 +76,7 @@ private:
     Microsoft::WRL::ComPtr<ID3D11DepthStencilView>  m_depthStencilView;
 
 
-	//ID3D11Debug* debug;
+	ID3D11Debug* debug;
 
     // Rendering loop timer.
     DX::StepTimer                                   m_timer;

@@ -9,6 +9,7 @@
 #include "../Sound/PlayScene.h"
 #include "../Sound/TitleScene.h"
 #include "../Sound/ADX2Le.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
@@ -43,14 +44,13 @@ TitleScene::TitleScene():
 //＋ーーーーーーーーーーーーーー＋
 TitleScene::~TitleScene()
 {
-	delete m_stage;
-	delete m_logo;
-	delete m_backGround;
-
-	delete m_startButton;
-	delete m_endButton;
-
-	delete m_arrow;
+	DELETE_POINTER(m_stage);
+	DELETE_POINTER(m_logo);
+	DELETE_POINTER(m_backGround);
+	DELETE_POINTER(m_startButton);
+	DELETE_POINTER(m_endButton);
+	DELETE_POINTER(m_arrow);
+	DELETE_POINTER(m_waitingTimer);
 }
 
 //＋ーーーーーーーーーーーーーー＋

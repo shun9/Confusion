@@ -30,6 +30,7 @@ namespace ShunLib
 		//デバイスの設定
 		static void SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 							  Microsoft::WRL::ComPtr<ID3D11DeviceContext> context);
+		static void ResetDevice();
 
 		/*--メンバ変数--*/
 	private:

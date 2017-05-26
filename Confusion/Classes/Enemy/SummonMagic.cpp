@@ -8,6 +8,7 @@
 #include <random>
 #include "../Timer/Timer.h"
 #include "../RandomNumber/RandomNumber.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 std::unique_ptr<ShunLib::Texture> SummonMagic::m_texture = nullptr;
 std::unique_ptr<ShunLib::Effect> SummonMagic::m_summonEffect = nullptr;
@@ -38,10 +39,9 @@ SummonMagic::SummonMagic(ShunLib::Vec3 pos, int interval, int firstInterval, flo
 
 SummonMagic::~SummonMagic()
 {
-	delete m_pos;
-
-	delete m_summonIntervalTimer;
-	delete m_firstIntervalTimer;
+	DELETE_POINTER(m_pos);
+	DELETE_POINTER(m_summonIntervalTimer);
+	DELETE_POINTER(m_firstIntervalTimer);
 }
 
 

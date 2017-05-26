@@ -7,6 +7,7 @@
 #include "Stage.h"
 
 #include "../Scene/PlayScene.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 Stage::Stage()
 {
@@ -17,8 +18,8 @@ Stage::Stage()
 
 Stage::~Stage()
 {
-	delete m_ground;
-	delete m_tree;
+	DELETE_POINTER(m_ground);
+	DELETE_POINTER(m_tree);
 }
 
 //＋ーーーーーーーーーーーーーー＋

@@ -6,6 +6,7 @@
 //************************************************/
 #include "Object.h"
 #include "../Conversion/Conversion.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 std::map<const wchar_t*, std::shared_ptr<ShunLib::Model>> Object::m_modelPool;
 
@@ -34,8 +35,8 @@ Object::Object(const wchar_t* model, ShunLib::Vec3 pos, ShunLib::Vec3 spd)
 //＋ーーーーーーーーーーーーーー＋
 Object::~Object()
 {
-	delete m_pos;
-	delete m_spd;
+	DELETE_POINTER(m_pos);
+	DELETE_POINTER(m_spd);
 }
 
 

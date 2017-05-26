@@ -6,6 +6,7 @@
 //************************************************/
 #include "Player.h"
 #include "../Wrapper/GamePad/GamePadManager.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 //プレイヤー最大数
 const int Player::MAX_PLAYER = 2;
@@ -44,9 +45,8 @@ Player::Player(const wchar_t* model, ShunLib::Vec3 pos, int gamePadNum, ShunLib:
 //＋ーーーーーーーーーーーーーー＋
 Player::~Player()
 {
-	delete m_gravity;
-
-	delete m_hpGauge;
+	DELETE_POINTER(m_gravity);
+	DELETE_POINTER(m_hpGauge);
 }
 
 

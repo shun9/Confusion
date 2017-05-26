@@ -5,6 +5,7 @@
 //* @author:S.Katou
 //************************************************/
 #include "HPGauge.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 HPGauge::HPGauge(int max, ShunLib::Vec3 pos, ShunLib::Vec3 scale, ShunLib::Vec3 rotate)
 	:MAX_HP(max)
@@ -23,11 +24,11 @@ HPGauge::HPGauge(int max, ShunLib::Vec3 pos, ShunLib::Vec3 scale, ShunLib::Vec3 
 
 HPGauge::~HPGauge()
 {
-	delete m_red;
-	delete m_green;
-	delete m_pos;
-	delete m_scale;
-	delete m_rotate;
+	DELETE_POINTER(m_red);
+	DELETE_POINTER(m_green);
+	DELETE_POINTER(m_pos);
+	DELETE_POINTER(m_scale);
+	DELETE_POINTER(m_rotate);
 }
 
 
@@ -46,16 +47,16 @@ void HPGauge::Draw(const ShunLib::Matrix & view, const ShunLib::Matrix & proj)
 	Matrix rotate = Matrix::CreateRotationZ(m_rotate->m_z)
 				  * Matrix::CreateRotationX(m_rotate->m_x)
 				  * Matrix::CreateRotationY(m_rotate->m_y);
-	Matrix trans  = Matrix::CreateTranslation(Vec3(m_pos->m_x, 
-												   m_pos->m_y, 
+	Matrix trans  = Matrix::CreateTranslation(Vec3(m_pos->m_x,
+												   m_pos->m_y,
 												   m_pos->m_z));
 
 	//—Î—p
-	Matrix scale2  = Matrix::CreateScale(Vec3(m_scale->m_x*m_hp / MAX_HP, 
-											  m_scale->m_y, 
+	Matrix scale2  = Matrix::CreateScale(Vec3(m_scale->m_x*m_hp / MAX_HP,
+											  m_scale->m_y,
 											  m_scale->m_z));
 	Matrix trans2  = Matrix::CreateTranslation(Vec3(m_pos->m_x - ((1.0f - m_hp / (float)MAX_HP)*(m_scale->m_x/2)),
-													m_pos->m_y, 
+													m_pos->m_y,
 													m_pos->m_z));
 	//‡Z
 	Matrix worldRed = scale*rotate*trans;

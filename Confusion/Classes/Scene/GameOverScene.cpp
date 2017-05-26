@@ -8,6 +8,7 @@
 #include "../Wrapper/GamePad/GamePadManager.h"
 #include "../Sound/ADX2Le.h"
 #include "../Sound/GameOverScene.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 GameOverScene::GameOverScene()
 {
@@ -20,7 +21,7 @@ GameOverScene::GameOverScene()
 
 GameOverScene::~GameOverScene()
 {
-	delete m_playerDownGrp;
+	DELETE_POINTER(m_playerDownGrp);
 }
 
 void GameOverScene::Update()

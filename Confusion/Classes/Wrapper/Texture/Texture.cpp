@@ -26,7 +26,6 @@ void Texture::SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 	m_context = context;
 }
 
-
 //＋ーーーーーーーーーーーーーー＋
 //｜機能  :コンストラクタ
 //｜引数  :画像のパス(wchar_t*)
@@ -53,10 +52,10 @@ Texture::Texture(const wchar_t* texture)
 
 	//インプットレイアウト作成
 	m_device->CreateInputLayout(DirectX::VertexPositionTexture::InputElements,
-		DirectX::VertexPositionTexture::InputElementCount,
-		shaderByteCode,
-		byteCodeLength,
-		m_input.GetAddressOf());
+							    DirectX::VertexPositionTexture::InputElementCount,
+								shaderByteCode,
+								byteCodeLength,
+								m_input.GetAddressOf());
 }
 
 
@@ -65,12 +64,7 @@ Texture::Texture(const wchar_t* texture)
 //＋ーーーーーーーーーーーーーー＋
 Texture::~Texture()
 {
-	m_texture.Reset();
-	m_spriteBatch.release();
-	m_input.Reset();
-	m_alphaTestEffect.reset();
-	m_primitiveBatch.reset();
-	m_state.reset();
+
 }
 
 

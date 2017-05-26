@@ -12,6 +12,7 @@
 #include "Scene\TitleScene.h"
 #include "Scene\GameOverScene.h"
 #include "Scene\ClearScene.h"
+#include "Wrapper\ConstantNumber\MacroConstants.h"
 
 using namespace ShunLib;
 
@@ -63,10 +64,7 @@ void GameMain::Update()
 	{
 		m_currentScene = m_nextScene;
 
-		if (m_scene != nullptr){
-			delete m_scene;
-			m_scene = nullptr;
-		}
+		DELETE_POINTER(m_scene);
 
 		switch (m_nextScene)
 		{
@@ -127,12 +125,7 @@ void GameMain::Render()
 //＋ーーーーーーーーーーーーーー＋
 void GameMain::Finalize()
 {
-	if (m_scene != nullptr)
-	{
-		delete m_scene;
-		m_scene = nullptr;
-	}
-
+	DELETE_POINTER(m_scene);
 
 	ADX2Le::Finalize();
 }

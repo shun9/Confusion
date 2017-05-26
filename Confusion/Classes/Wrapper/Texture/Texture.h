@@ -33,7 +33,6 @@ namespace ShunLib
 		static void SetDevice(Microsoft::WRL::ComPtr<ID3D11Device> device,
 							  Microsoft::WRL::ComPtr<ID3D11DeviceContext> context);
 
-
 		/*--ƒƒ“ƒo•Ï”--*/
 	private:
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture;

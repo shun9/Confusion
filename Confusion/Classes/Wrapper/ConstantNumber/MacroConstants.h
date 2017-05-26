@@ -10,4 +10,5 @@ namespace ShunLib
 {
 	//ポインター消去用
 #define DELETE_POINTER(p) if (p!=nullptr){delete p; p = nullptr;}
+
 }

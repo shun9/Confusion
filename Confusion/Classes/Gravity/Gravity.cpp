@@ -5,6 +5,7 @@
 //* @author:S.Katou
 //************************************************/
 #include "Gravity.h"
+#include "../Wrapper/ConstantNumber/MacroConstants.h"
 
 using namespace ShunLib;
 const float Gravity::POWER = 0.07f;
@@ -29,7 +30,7 @@ Gravity::Gravity(const wchar_t* texture, const Vec3 & pos)
 //＋ーーーーーーーーーーーーーー＋
 Gravity::~Gravity()
 {
-	delete m_texture;
+	DELETE_POINTER(m_texture);
 }
 
 
